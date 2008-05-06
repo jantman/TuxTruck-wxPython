@@ -1,0 +1,8 @@
+Time spent on TuxTruck-wxPython
+Last Updated:
+Time-stamp: "2008-05-06 17:02:09 jantman"
+
+2008-05-04	1900-0100	6h
+2008-05-05	2300-0200	3h
+2008-05-06	1100-1300	2h
+2008-05-06	1500-1700	2h
