@@ -8,6 +8,7 @@ class TuxTruck_SkinManager:
     # current skin information
     currentSkinName = "" # declare it empty
     currentSkinFile = "" # declare it empty
+    buttonImagePath = ""
 
     # primary (day) color scheme
     bgColor = "" # declare it empty
@@ -38,6 +39,7 @@ class TuxTruck_SkinManager:
         # DEBUG TEST SETTINGS
         self.currentSkinName = name
         self.currentSkinFile = file
+        self.buttonImagePath = "/home/jantman/cvs-temp/TuxTruck-wxPython/buttons/"
 
         self.bgColor = wx.Colour(22,127,230)
         self.fgColor = wx.Colour(3,90,166)
@@ -52,12 +54,13 @@ class TuxTruck_SkinManager:
         self.topWindowPos = wx.Size(100,100)
         self.topWindowCentered = 1
 
-        self.butn_home_size = (100, 70)
-        self.butn_home_pos = (10, 410)
-        self.butn_gps_size = (100, 70)
-        self.butn_gps_pos = (110, 410)
-        self.butn_audio_size = (100, 70)
-        self.butn_audio_pos = (210, 410)
+        # DEBUG: all image sizes are currently 108wX60h
+        #self.butn_home_size = (100, 70)
+        self.butn_home_pos = (238, 420)
+        #self.butn_gps_size = (100, 70)
+        self.butn_gps_pos = (346, 420)
+        #self.butn_audio_size = (100, 70)
+        self.butn_audio_pos = (454, 420)
 
     def __init__(self, parent):
         #get the default skin name and file from settings

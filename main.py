@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Time-stamp: "2008-05-06 16:59:18 jantman"
+# Time-stamp: "2008-05-06 18:28:27 jantman"
 
 import wx
 
@@ -25,54 +25,69 @@ class TuxTruck_MainApp(wx.Frame):
             self.CenterOnScreen()
         self.SetWindowStyle(wx.NO_BORDER)
 
+        # load the button images
+        self.loadButtonImages()
+
         # create buttons
         # buttons also have to be added to switchColorScheme and setButtonsColor
-        self.butn_home = wx.Button(self, 1, 'Home', settings.skin.butn_home_pos, settings.skin.butn_home_size)
-        self.butn_gps = wx.Button(self, 2, 'GPS', settings.skin.butn_gps_pos, settings.skin.butn_gps_size)
-        self.butn_audio = wx.Button(self, 3, 'Audio', settings.skin.butn_audio_pos, settings.skin.butn_audio_size)
+        self.butn_home = wx.BitmapButton(self, id=1, bitmap=self.butn_home_image, pos=settings.skin.butn_home_pos, size = (self.butn_home_image.GetWidth(), self.butn_home_image.GetHeight()))
+        self.butn_gps = wx.BitmapButton(self, id=2, bitmap=self.butn_gps_image, pos=settings.skin.butn_gps_pos, size = (self.butn_gps_image.GetWidth(), self.butn_gps_image.GetHeight()))
+        self.butn_audio = wx.BitmapButton(self, id=3, bitmap=self.butn_audio_image, pos=settings.skin.butn_audio_pos, size = (self.butn_audio_image.GetWidth(), self.butn_audio_image.GetHeight()))
 
         # bind buttons
         self.Bind(wx.EVT_BUTTON, self.OnClick_home, id=1)
         self.Bind(wx.EVT_BUTTON, self.OnClick_gps, id=2)
         self.Bind(wx.EVT_BUTTON, self.OnClick_audio, id=3)
 
+        # set initial button
+        self.currentButton = self.butn_home
+        
 
     def OnClick_gps(self, event):
         print "GPS clicked" # DEBUG
-        self.butn_gps.SetBackgroundColour(settings.skin.fgColor)
-        self.Refresh()
-        self.currentButton = "butn_gps"
+        self.currentButton = self.butn_gps
 
     def OnClick_audio(self, event):
         print "Audio clicked" # DEBUG
-        self.currentButton = "butn_audio"
+        self.currentButton = self.butn_audio
 
     def OnClick_home(self, event):
         print "Home clicked" # DEBUG
         self.switchColorScheme()
-        self.currentButton = "butn_home"
+        self.currentButton = self.butn_home
 
-    def setButtonsColor(self, buttonColor, textColor):
+    def setButtonImages(self, colorSchemeName):
         """ sets all buttons to the specified color"""
-        self.butn_home.SetBackgroundColour(buttonColor)
-        self.butn_home.SetForegroundColour(textColor)
-        self.butn_home.Refresh()
-        self.butn_gps.SetBackgroundColour(buttonColor)
-        self.butn_gps.SetForegroundColour(textColor)
-        self.butn_audio.SetBackgroundColour(buttonColor)
-        self.butn_audio.SetForegroundColour(textColor)
+        if colorSchemeName == "day":
+            # set day images
+            print "day" # DEBUG
+        else:
+            # set night images
+            print "night" # DEBUG
 
     def switchColorScheme(self):
+        """ does everything needed to switch color schemes"""
         if self.currentColorScheme == "day":
-            self.setButtonsColor(settings.skin.night_fgColor, settings.skin.night_highlightColor)
+            # TODO - make night images
+            print "night mode not setup, need to make images"
             self.SetBackgroundColour(settings.skin.night_bgColor)
             self.currentColorScheme = "night"
             self.Refresh()
         else:
-            self.setButtonsColor(settings.skin.fgColor, settings.skin.highlightColor)
+
             self.SetBackgroundColour(settings.skin.bgColor)
             self.currentColorScheme = "day"
             self.Refresh()
+            
+    def loadButtonImages(self):
+        """Load all of the button images"""
+        self.butn_home_image = wx.Image(settings.skin.buttonImagePath+"home.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_audio_image = wx.Image(settings.skin.buttonImagePath+"audio.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_gps_image = wx.Image(settings.skin.buttonImagePath+"nav.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_home_active_image = wx.Image(settings.skin.buttonImagePath+"home.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_audio_active_image = wx.Image(settings.skin.buttonImagePath+"audio.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_gps_active_image = wx.Image(settings.skin.buttonImagePath+"nav.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+
 
 # test it ...
 if __name__ == '__main__':
