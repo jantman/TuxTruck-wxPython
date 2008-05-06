@@ -1,0 +1,42 @@
+Pymp: A Gtk interface for MPlayer
+(c) Jay Dolan 2004-2007
+
+http://jaydolan.com/pymp.html
+
+Pymp is a simple, clean Gtk2 interface for MPlayer.  It supports 
+any media type MPlayer does, and has nice features like:
+
+-Opening files on the command line: pymp *.mp3
+
+-Open files or locations, i.e.: http://x.com/foo.avi, dvd://1
+
+-Drag and drop files or folders to playlist
+
+-Remote commands on a running instance:
+	pymp -remote pause
+	pymp -remote stop
+	pymp -remote play 12
+	pymp -remote status
+	pymp -remote seek 20
+
+-Simple playlist format:
+	find ~/ -name "*.mp3" > playlist.m3u
+
+-Auto save/restore last playlist
+
+-Continuous, random, and repeat play
+
+-Interactive progress bar
+
+-Find file in list: <ctrl+f>
+
+-Really freakin' tiny
+
+Credits:
+Matt Housh - the name pymp
+Lucas Hazel - mplayer io, ui enhancements
+Greg Harris - mplayer io, playback status
+
+Pymp's released under the GPL.  Improvements and feedback are very
+welcome.  Contact me at jay@jaydolan.com.
+

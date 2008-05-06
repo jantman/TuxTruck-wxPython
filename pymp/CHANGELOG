@@ -1,0 +1,35 @@
+Changelog
+
+Version 1.0
+----
+Added time to progress bar since MPlayer finally supports it.  Users with
+older MPlayers should still get the percentage readout.
+
+Removed popup tip.  A proper implementation of the widgets required to do
+this correctly is slated for gtk+ 2.12, at which time I'll revisit it.
+
+Starting pymp with targets specified on the command line now checks for a
+running instance and remotely adds targets, rather than starting a new 
+instance.  This is very handy if you open a playlist while you're listening
+to something else.
+
+Added Gtk AboutDialog, ability to visit website via click.
+
+Fixed small non-crash bug when quitting while not playing a track.
+
+Version 0.9
+----
+Added .pls playlist file support
+
+Popup tip only shows with user event
+
+Playlist scrolls with mouse wheel
+
+Many new key controls:
+  <, > previous, next target
+  <left>, <right> rewind, forward
+  s, p stop, pause
+
+New Gtk+ 2.6 stock buttons in control panel
+
+Url targets are no longer basename'd

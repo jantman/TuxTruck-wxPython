@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+#  pymp - Pymp Media Player startup script
+#
+
+`which python` PREFIX/lib/pymp/pymp.pyc "$@"
+
+#End of file
