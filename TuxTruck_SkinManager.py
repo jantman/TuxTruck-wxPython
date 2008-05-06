@@ -26,12 +26,13 @@ class TuxTruck_SkinManager:
     topWindowCentered = 0
 
     #buttons
-    butn_home_size = (0, 0)
     butn_home_pos = (0, 0)
-    butn_gps_size = (0, 0)
     butn_gps_pos = (0, 0)
-    butn_audio_size = (0, 0)
     butn_audio_pos = (0, 0)
+    butn_obd_pos = (0, 0)
+    butn_phone_pos = (0, 0)
+    butn_tools_pos = (0, 0)
+    butn_weather_pos = (0, 0)
 
     def loadSkin(self, name, file):
         # load the skin with given name at given location
@@ -52,15 +53,16 @@ class TuxTruck_SkinManager:
 
         self.topWindowSize = wx.Size(800, 480)
         self.topWindowPos = wx.Size(100,100)
-        self.topWindowCentered = 1
+        #self.topWindowCentered = 1
 
-        # DEBUG: all image sizes are currently 108wX60h
-        #self.butn_home_size = (100, 70)
-        self.butn_home_pos = (238, 420)
-        #self.butn_gps_size = (100, 70)
-        self.butn_gps_pos = (346, 420)
-        #self.butn_audio_size = (100, 70)
-        self.butn_audio_pos = (454, 420)
+        # DEBUG: all image sizes are currently 106wX58h
+        self.butn_home_pos = (29, 422)
+        self.butn_gps_pos = (135, 422)
+        self.butn_audio_pos = (241, 422)
+        self.butn_phone_pos = (347, 422)
+        self.butn_weather_pos = (453, 422)
+        self.butn_obd_pos = (559, 422)
+        self.butn_tools_pos = (665, 422)
 
     def __init__(self, parent):
         #get the default skin name and file from settings
