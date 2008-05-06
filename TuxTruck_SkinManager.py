@@ -43,6 +43,11 @@ class TuxTruck_SkinManager:
         self.fgColor = wx.Colour(3,90,166)
         self.highlightColor = wx.Colour(211,235,253)
 
+        # DEBUG as a test, just swap colors
+        self.night_bgColor = wx.Colour(3,90,166)
+        self.night_fgColor = wx.Colour(22,127,230)
+        self.night_highlightColor = wx.Colour(0,0,0)
+
         self.topWindowSize = wx.Size(800, 480)
         self.topWindowPos = wx.Size(100,100)
         self.topWindowCentered = 1
