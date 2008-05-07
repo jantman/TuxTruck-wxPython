@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-07 15:04:40 jantman"
-# $Id: main.py,v 1.12 2008-05-07 19:03:54 jantman Exp $
+# Time-stamp: "2008-05-07 16:09:30 jantman"
+# $Id: main.py,v 1.13 2008-05-07 20:13:28 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -17,6 +17,7 @@ import wx # import wx for the GUI
 # application includes
 from TuxTruck_Settings import * # import TuxTruck_Settings to get user settings
 from TuxTruck_AudioPanel_Main import *
+from TuxTruck_HomePanel_Clock import *
 
 class TuxTruck_MainApp(wx.Frame):
     """
@@ -85,6 +86,9 @@ class TuxTruck_MainApp(wx.Frame):
 
         # add main audio panel
         self.audioPanel_main = TuxTruck_AudioPanel_Main(self, -1, self.settings.skin.bgColor)
+        # add home clock panel
+        # TODO: figure out how to skin this
+        self.homePanel_clock = TuxTruck_HomePanel_Clock(self, -1)
 
         
     def OnClick_gps(self, event):
@@ -106,7 +110,9 @@ class TuxTruck_MainApp(wx.Frame):
         self._currentButton = self.butn_home # update reference to current button
         # DEBUG - testing only since we only have one panel
         self.audioPanel_main.Hide()
-        setButtonImages(self._currentColorScheme)
+        self.setButtonImages(self._currentColorScheme)
+        # TODO: what do we show at startup? default? selection from settings? last?
+        self.homePanel_clock.Show()
 
     def OnClick_obd(self, event):
         """Handles click of the OBD button, switching to the OBD screen"""
@@ -183,6 +189,7 @@ class TuxTruck_MainApp(wx.Frame):
         """Hides all of the top-level mode panels and then shows the one we want"""
         # hide all of the top-level mode panels
         self.audioPanel_main.Hide()
+        self.homePanel_clock.Hide()
         activePanel.Show()
 
 
