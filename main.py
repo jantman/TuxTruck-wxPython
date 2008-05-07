@@ -1,35 +1,59 @@
 #! /usr/bin/env python
+# TuxTruck Main Application (this is what you run!)
+# Time-stamp: "2008-05-06 20:25:56 jantman"
+# $Id: main.py,v 1.6 2008-05-07 00:24:56 jantman Exp $
+#
+# Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
+# Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
+# Project web site at http://www.jasonantman.com/tuxtruck/
 
-# Time-stamp: "2008-05-06 19:04:44 jantman"
-
-import wx
+import wx # import wx for the GUI
 
 # application includes
-from TuxTruck_Settings import *
+from TuxTruck_Settings import * # import TuxTruck_Settings to get user settings
 
 class TuxTruck_MainApp(wx.Frame):
-    """The top-level frame for TuxTruck. This is the top-level component of the application"""
+    """
+    This is the top-level frame/window/app for TuxTruck. It's the root of everything
+    and everything happens (or is strated here). 
+    This should just handle building the base GUI (blank main panel), and then instantiate
+    child classes to do EVERYTHING else. Each part of the GUI should be its own class, that 
+    holds a main panel and then does everything relating to that component (hopefully with 
+    multiple child classes).
+    NOTE: This should ONLY
+      a) start the GUI, and init everything
+      b) init TuxTruck_Settings to get user settings
+      c) init any of the elements/categories that need to be constantly running (gps, phone, audio, obd)
+      d) handle ALL of the communication/events that require interaction between categories, or
+         require interrupts (GPS instructions, pop-ups, phone calls, etc.)
+    """
 
-    # variables holding state
-    currentColorScheme = "day"
-    currentButton = ""
+    # variables holding state of the program
+    currentColorScheme = "day" # holds the name of the current color scheme
+    currentButton = "" # reference to the currently selected button, default to Home
 
     def __init__(self, parent, id):
-        wx.Frame.__init__(self, parent, id, '', style=wx.NO_BORDER)
+        """
+        This is the BIG function. It initiates EVERYTHING that gets initiated at start, 
+        including settings, and all components that must run as long as the app is running.
+        It SHOULD initiate GPS, Phone, and anything else that could take a while to start,
+        as soon as possible.
+        """
+        wx.Frame.__init__(self, parent, id, '', style=wx.NO_BORDER) # init the main frame
 
         # setup the main frame
-        self.SetPosition(wx.Point(0,0))
-        self.SetSize(settings.skin.topWindowSize)
-        self.SetBackgroundColour(settings.skin.bgColor)
+        self.SetPosition(settings.skin.topWindowPos) # set the main window position
+        self.SetSize(settings.skin.topWindowSize) # set the main window size
+        self.SetBackgroundColour(settings.skin.bgColor) # set the main window background color
         if settings.skin.topWindowCentered == 1:
+            # check whether to center the window or not
             self.CenterOnScreen()
-        self.SetWindowStyle(wx.NO_BORDER)
+        self.SetWindowStyle(wx.NO_BORDER) # set window style to have no border
 
-        # load the button images
-        self.loadButtonImages()
+        self.loadButtonImages() # load the button images
 
-        # create buttons
-        # buttons also have to be added to switchColorScheme and setButtonsColor
+        # create each of the buttons individually
+        # NOTE: buttons must be explicitly added to switchColorScheme and loadButtonImages
         self.butn_home = wx.BitmapButton(self, id=1, bitmap=self.butn_home_image, pos=settings.skin.butn_home_pos, size = (self.butn_home_image.GetWidth(), self.butn_home_image.GetHeight()))
         self.butn_gps = wx.BitmapButton(self, id=2, bitmap=self.butn_gps_image, pos=settings.skin.butn_gps_pos, size = (self.butn_gps_image.GetWidth(), self.butn_gps_image.GetHeight()))
         self.butn_audio = wx.BitmapButton(self, id=3, bitmap=self.butn_audio_image, pos=settings.skin.butn_audio_pos, size = (self.butn_audio_image.GetWidth(), self.butn_audio_image.GetHeight()))
@@ -38,7 +62,7 @@ class TuxTruck_MainApp(wx.Frame):
         self.butn_tools = wx.BitmapButton(self, id=6, bitmap=self.butn_tools_image, pos=settings.skin.butn_tools_pos, size = (self.butn_tools_image.GetWidth(), self.butn_tools_image.GetHeight()))
         self.butn_weather = wx.BitmapButton(self, id=7, bitmap=self.butn_weather_image, pos=settings.skin.butn_weather_pos, size = (self.butn_weather_image.GetWidth(), self.butn_weather_image.GetHeight()))
 
-        # bind buttons
+        # bind each of the buttons to its' click handler
         self.Bind(wx.EVT_BUTTON, self.OnClick_home, id=1)
         self.Bind(wx.EVT_BUTTON, self.OnClick_gps, id=2)
         self.Bind(wx.EVT_BUTTON, self.OnClick_audio, id=3)
@@ -47,42 +71,50 @@ class TuxTruck_MainApp(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnClick_tools, id=6)
         self.Bind(wx.EVT_BUTTON, self.OnClick_weather, id=7)
 
-
-        # set initial button
-        self.currentButton = self.butn_home
+        self.currentButton = self.butn_home # set butn_home to be our initial button
         
-
     def OnClick_gps(self, event):
+        """ Handles click of the GPS button, switching to the GPS screen"""
         print "GPS clicked" # DEBUG
         self.currentButton = self.butn_gps
 
     def OnClick_audio(self, event):
+        """ Handles click of the Audio button, switching to the audio screen (panel/frame)"""
+        # TODO: update the docs for proper use of words application, window, panel, frame
         print "Audio clicked" # DEBUG
         self.currentButton = self.butn_audio
 
     def OnClick_home(self, event):
+        """ Handles click of the home button, switching to the home screen"""
         print "Home clicked" # DEBUG
         self.switchColorScheme()
         self.currentButton = self.butn_home
 
     def OnClick_obd(self, event):
+        """Handles click of the OBD button, switching to the OBD screen"""
         print "obd clicked" # DEBUG
         self.currentButton = self.butn_obd
 
     def OnClick_phone(self, event):
+        """ Handles click of the phone button, switching to the phone screen"""
         print "phone clicked" # DEBUG
         self.currentButton = self.butn_phone
 
     def OnClick_tools(self, event):
+        """Handles click of the tools button, switching to the tools screen"""
         print "tools clicked" # DEBUG
         self.currentButton = self.butn_tools
 
     def OnClick_weather(self, event):
+        """Handles click of the weather button, switching to the weather screen"""
         print "weather clicked" # DEBUG
         self.currentButton = self.butn_weather
 
     def setButtonImages(self, colorSchemeName):
-        """ sets all buttons to the specified color"""
+        """
+        This method sets the images of all of the buttons to the correct images
+        for the selected color scheme (day/night within a specific skin). 
+        """
         if colorSchemeName == "day":
             # set day images
             print "day" # DEBUG
@@ -91,7 +123,10 @@ class TuxTruck_MainApp(wx.Frame):
             print "night" # DEBUG
 
     def switchColorScheme(self):
-        """ does everything needed to switch color schemes"""
+        """
+        This method does everything needed to toggle between day/night modes
+        in the current skin
+        """
         if self.currentColorScheme == "day":
             # TODO - make night images
             print "night mode not setup, need to make images"
@@ -105,7 +140,10 @@ class TuxTruck_MainApp(wx.Frame):
             self.Refresh()
             
     def loadButtonImages(self):
-        """Load all of the button images"""
+        """
+        This method loads all of the button images into wx.Image objects, so they can
+        quickly be changed on the display.
+        """
         self.butn_home_image = wx.Image(settings.skin.buttonImagePath+"home.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         self.butn_audio_image = wx.Image(settings.skin.buttonImagePath+"audio.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         self.butn_gps_image = wx.Image(settings.skin.buttonImagePath+"gps.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
@@ -122,8 +160,11 @@ class TuxTruck_MainApp(wx.Frame):
         self.butn_weather_active_image = wx.Image(settings.skin.buttonImagePath+"weather_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
 
 
-# test it ...
 if __name__ == '__main__':
+    """ 
+    main method for the whole program. This gets called when we start this application,
+    and it instantiates all of the necessary classes and starts the GUI and backend code.
+    """
     app = wx.App()
     settings = TuxTruck_Settings() # application-wide settings
     print "Loaded skin "+settings.skin.currentSkinName+" from file "+settings.skin.currentSkinFile
