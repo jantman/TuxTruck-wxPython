@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<TuxTruckSkin>
+  <globalSkin>
+    <skinName>Default Skin</skinName>
+    <buttonPath>buttons/</buttonPath>
+  </globalSkin>
+  <window>
+    <height>480</height>
+    <width>800</width>
+    <pos_X>100</pos_X>
+    <pos_Y>200</pos_Y>
+    <centered>0</centered>
+  </window>
+  <daySkin>
+    <bgColor>22,127,230</bgColor>
+    <fgColor>3,90,166</fgColor>
+    <toolbarColor>22,127,230</toolbarColor>
+    <textColor>0,0,0</textColor>
+    <highlightColor>255,0,0</highlightColor>
+  </daySkin>
+  <nightSkin>
+    <fgColor>22,127,230</fgColor>
+    <bgColor>3,90,166</bgColor>
+    <toolbarColor>22,127,230</toolbarColor>
+    <textColor>0,0,0</textColor>
+    <highlightColor>255,0,0</highlightColor>
+  </nightSkin>
+  <button_positions>
+    <home>29,422</home>
+    <gps>135,422</gps>
+    <audio>241,422</audio>
+    <phone>347,422</phone>
+    <weather>453,422</weather>
+    <obd>559,422</obd>
+    <tools>665,422</tools>
+  </button_positions>
+</TuxTruckSkin>
