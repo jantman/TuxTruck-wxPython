@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-07 14:45:58 jantman"
-# $Id: main.py,v 1.11 2008-05-07 18:44:59 jantman Exp $
+# Time-stamp: "2008-05-07 15:04:40 jantman"
+# $Id: main.py,v 1.12 2008-05-07 19:03:54 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -12,6 +12,7 @@ import wx # import wx for the GUI
 # TODO: do we need all of the self. here?
 # TODO: need to update buttons to use a sizer
 # TODO: rename MainApp to MainFrame
+# TODO: use active images for buttons
 
 # application includes
 from TuxTruck_Settings import * # import TuxTruck_Settings to get user settings
@@ -34,8 +35,8 @@ class TuxTruck_MainApp(wx.Frame):
     """
 
     # variables holding state of the program
-    currentColorScheme = "day" # holds the name of the current color scheme
-    currentButton = "" # reference to the currently selected button, default to Home
+    _currentColorScheme = "day" # holds the name of the current color scheme
+    _currentButton = "" # reference to the currently selected button, default to Home
     settings = TuxTruck_Settings() # application-wide settings
 
     def __init__(self, parent, id):
@@ -80,51 +81,52 @@ class TuxTruck_MainApp(wx.Frame):
         self.butn_tools.Bind(wx.EVT_BUTTON, self.OnClick_tools)
         self.butn_weather.Bind(wx.EVT_BUTTON, self.OnClick_weather)
 
-        self.currentButton = self.butn_home # set butn_home to be our initial button
+        self._currentButton = self.butn_home # set butn_home to be our initial button
 
-        #DEBUG - add a audio panel
-        self.audioPanel_main = TuxTruck_AudioPanel_Main(self, -1)
+        # add main audio panel
+        self.audioPanel_main = TuxTruck_AudioPanel_Main(self, -1, self.settings.skin.bgColor)
 
         
     def OnClick_gps(self, event):
         """ Handles click of the GPS button, switching to the GPS screen"""
         print "GPS clicked" # DEBUG
-        self.currentButton = self.butn_gps
+        self._currentButton = self.butn_gps
 
     def OnClick_audio(self, event):
         """ Handles click of the Audio button, switching to the audio screen (panel/frame)"""
         # TODO: update the docs for proper use of words application, window, panel, frame
         print "Audio clicked" # DEBUG
-        self.currentButton = self.butn_audio
+        self._currentButton = self.butn_audio
         self.switchToModePanel(self.audioPanel_main) # show the main audio panel
 
     def OnClick_home(self, event):
         """ Handles click of the home button, switching to the home screen"""
         print "Home clicked" # DEBUG
-        self.switchColorScheme()
-        self.currentButton = self.butn_home
+        self.switchColorScheme() # DEBUG
+        self._currentButton = self.butn_home # update reference to current button
         # DEBUG - testing only since we only have one panel
         self.audioPanel_main.Hide()
+        setButtonImages(self._currentColorScheme)
 
     def OnClick_obd(self, event):
         """Handles click of the OBD button, switching to the OBD screen"""
         print "obd clicked" # DEBUG
-        self.currentButton = self.butn_obd
+        self._currentButton = self.butn_obd
 
     def OnClick_phone(self, event):
         """ Handles click of the phone button, switching to the phone screen"""
         print "phone clicked" # DEBUG
-        self.currentButton = self.butn_phone
+        self._currentButton = self.butn_phone
 
     def OnClick_tools(self, event):
         """Handles click of the tools button, switching to the tools screen"""
         print "tools clicked" # DEBUG
-        self.currentButton = self.butn_tools
+        self._currentButton = self.butn_tools
 
     def OnClick_weather(self, event):
         """Handles click of the weather button, switching to the weather screen"""
         print "weather clicked" # DEBUG
-        self.currentButton = self.butn_weather
+        self._currentButton = self.butn_weather
 
     def setButtonImages(self, colorSchemeName):
         """
@@ -143,16 +145,18 @@ class TuxTruck_MainApp(wx.Frame):
         This method does everything needed to toggle between day/night modes
         in the current skin
         """
-        if self.currentColorScheme == "day":
+        if self._currentColorScheme == "day":
             # TODO - make night images
             print "night mode not setup, need to make images"
             self.SetBackgroundColour(self.settings.skin.night_bgColor)
-            self.currentColorScheme = "night"
+            self.audioPanel_main.setBgColor(self.settings.skin.night_bgColor)
+            self._currentColorScheme = "night"
             self.Refresh()
         else:
 
             self.SetBackgroundColour(self.settings.skin.bgColor)
-            self.currentColorScheme = "day"
+            self.audioPanel_main.setBgColor(self.settings.skin.bgColor)
+            self._currentColorScheme = "day"
             self.Refresh()
             
     def loadButtonImages(self):
