@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck clock panel for home view
-# Time-stamp: "2008-05-07 16:42:33 jantman"
-# $Id: TuxTruck_HomePanel_Clock.py,v 1.3 2008-05-07 20:43:09 jantman Exp $
+# Time-stamp: "2008-05-07 19:04:20 jantman"
+# $Id: TuxTruck_HomePanel_Clock.py,v 1.4 2008-05-07 23:03:17 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -44,14 +44,7 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
         # digital clock
         self.myled = led.LEDCtrl(self)
         
-        self.bsizer2.Add(self.myled, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL|wx.SHAPED, 10)        
-
-
-        self.SetSizer(self.bsizer2)
-        
-
-        style = led.LED_DRAW_FADED|   \
-                led.LED_ALIGN_CENTRE| \
+        style = led.LED_ALIGN_CENTRE| \
                 led.LED_AGG|          \
                 led.LED_ALLOW_COLONS| \
                 led.LED_SLANT
@@ -63,12 +56,18 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
         #self.fg.SetColour(self.fg)
         #self.fd.SetColour(self.myled.GetFadeColour())
         
-        self.size = self.myled.GetSize()
+        # TODO: need to get aggdraw working for this.
+
+        #self.size = self.myled.GetSize()
         self.myled.Freeze()
         self.myled.SetWindowStyle(wx.SUNKEN_BORDER)
-        self.myled.SetSize((10, 10))
-        self.myled.SetSize(self.size)
+        self.myled.SetSize((600, 100))
+        self.myled.SetDigits(6)
+        #self.myled.SetSize(self.size)
         self.myled.Thaw()
+
+        self.bsizer2.Add(self.myled, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL|wx.SHAPED, 10)        
+        self.SetSizer(self.bsizer2)
 
         self.tc = -1
         self.timer = wx.Timer(self)
