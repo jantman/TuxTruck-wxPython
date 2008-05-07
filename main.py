@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-07 14:41:33 jantman"
-# $Id: main.py,v 1.10 2008-05-07 18:40:36 jantman Exp $
+# Time-stamp: "2008-05-07 14:45:58 jantman"
+# $Id: main.py,v 1.11 2008-05-07 18:44:59 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -96,7 +96,7 @@ class TuxTruck_MainApp(wx.Frame):
         # TODO: update the docs for proper use of words application, window, panel, frame
         print "Audio clicked" # DEBUG
         self.currentButton = self.butn_audio
-        self.audioPanel_main.Show()
+        self.switchToModePanel(self.audioPanel_main) # show the main audio panel
 
     def OnClick_home(self, event):
         """ Handles click of the home button, switching to the home screen"""
@@ -174,6 +174,12 @@ class TuxTruck_MainApp(wx.Frame):
         self.butn_phone_active_image = wx.Image(self.settings.skin.buttonImagePath+"phone_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         self.butn_tools_active_image = wx.Image(self.settings.skin.buttonImagePath+"tools_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         self.butn_weather_active_image = wx.Image(self.settings.skin.buttonImagePath+"weather_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        
+    def switchToModePanel(self, activePanel):
+        """Hides all of the top-level mode panels and then shows the one we want"""
+        # hide all of the top-level mode panels
+        self.audioPanel_main.Hide()
+        activePanel.Show()
 
 
 if __name__ == '__main__':
