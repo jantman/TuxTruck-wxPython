@@ -1,6 +1,6 @@
 Time spent on TuxTruck-wxPython
 Last Updated:
-Time-stamp: "2008-05-07 11:55:07 jantman"
+Time-stamp: "2008-05-07 12:50:52 jantman"
 
 2008-05-04	1900-0100	6h
 2008-05-05	2300-0200	3h
@@ -8,3 +8,6 @@ Time-stamp: "2008-05-07 11:55:07 jantman"
 2008-05-06	1500-1700	2h
 2008-05-06	1730-2030	3h
 2008-05-06	2130-0030	3h
+!!! THIS FILE IS DEPRECATED !!!!!!!!!
+Enter time in Eventum, either for a specific issue 
+or for Issue 140 as a catch-all
