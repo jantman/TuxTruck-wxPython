@@ -1,0 +1,5 @@
+TuxTruck wxPython GUI
+
+External Dependencies:
+wx (GUI)
+elementtree (parsing settings XML)
