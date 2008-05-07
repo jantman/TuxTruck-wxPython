@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-07 14:33:38 jantman"
-# $Id: TuxTruck_AudioPanel_Main.py,v 1.1 2008-05-07 18:36:38 jantman Exp $
+# Time-stamp: "2008-05-07 14:38:42 jantman"
+# $Id: TuxTruck_AudioPanel_Main.py,v 1.2 2008-05-07 18:40:36 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -26,3 +26,4 @@ class TuxTruck_AudioPanel_Main(wx.Panel):
         self.SetBackgroundColour(wx.Colour(0,0,0)) # set the main window background color
         #self.SetWindowStyle(wx.NO_BORDER) # set window style to have no border
         self.Hide()
+        print parent.settings.skin.currentSkinName

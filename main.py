@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-07 14:37:11 jantman"
-# $Id: main.py,v 1.9 2008-05-07 18:36:38 jantman Exp $
+# Time-stamp: "2008-05-07 14:41:33 jantman"
+# $Id: main.py,v 1.10 2008-05-07 18:40:36 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -36,6 +36,7 @@ class TuxTruck_MainApp(wx.Frame):
     # variables holding state of the program
     currentColorScheme = "day" # holds the name of the current color scheme
     currentButton = "" # reference to the currently selected button, default to Home
+    settings = TuxTruck_Settings() # application-wide settings
 
     def __init__(self, parent, id):
         """
@@ -46,11 +47,14 @@ class TuxTruck_MainApp(wx.Frame):
         """
         wx.Frame.__init__(self, parent, id, '', style=wx.NO_BORDER) # init the main frame
 
+        # setup the settings
+        print "Loaded skin "+self.settings.skin.currentSkinName+" from file "+self.settings.skin.currentSkinFile
+
         # setup the main frame
-        self.SetPosition(settings.skin.topWindowPos) # set the main window position
-        self.SetSize(settings.skin.topWindowSize) # set the main window size
-        self.SetBackgroundColour(settings.skin.bgColor) # set the main window background color
-        if settings.skin.topWindowCentered == 1:
+        self.SetPosition(self.settings.skin.topWindowPos) # set the main window position
+        self.SetSize(self.settings.skin.topWindowSize) # set the main window size
+        self.SetBackgroundColour(self.settings.skin.bgColor) # set the main window background color
+        if self.settings.skin.topWindowCentered == 1:
             # check whether to center the window or not
             self.CenterOnScreen()
         self.SetWindowStyle(wx.NO_BORDER) # set window style to have no border
@@ -59,13 +63,13 @@ class TuxTruck_MainApp(wx.Frame):
 
         # create each of the buttons individually
         # NOTE: buttons must be explicitly added to switchColorScheme and loadButtonImages
-        self.butn_home = wx.BitmapButton(self, bitmap=self.butn_home_image, pos=settings.skin.butn_home_pos, size = (self.butn_home_image.GetWidth(), self.butn_home_image.GetHeight()))
-        self.butn_gps = wx.BitmapButton(self, bitmap=self.butn_gps_image, pos=settings.skin.butn_gps_pos, size = (self.butn_gps_image.GetWidth(), self.butn_gps_image.GetHeight()))
-        self.butn_audio = wx.BitmapButton(self, bitmap=self.butn_audio_image, pos=settings.skin.butn_audio_pos, size = (self.butn_audio_image.GetWidth(), self.butn_audio_image.GetHeight()))
-        self.butn_obd = wx.BitmapButton(self, bitmap=self.butn_obd_image, pos=settings.skin.butn_obd_pos, size = (self.butn_obd_image.GetWidth(), self.butn_obd_image.GetHeight()))
-        self.butn_phone = wx.BitmapButton(self, bitmap=self.butn_phone_image, pos=settings.skin.butn_phone_pos, size = (self.butn_phone_image.GetWidth(), self.butn_phone_image.GetHeight()))
-        self.butn_tools = wx.BitmapButton(self, bitmap=self.butn_tools_image, pos=settings.skin.butn_tools_pos, size = (self.butn_tools_image.GetWidth(), self.butn_tools_image.GetHeight()))
-        self.butn_weather = wx.BitmapButton(self, bitmap=self.butn_weather_image, pos=settings.skin.butn_weather_pos, size = (self.butn_weather_image.GetWidth(), self.butn_weather_image.GetHeight()))
+        self.butn_home = wx.BitmapButton(self, bitmap=self.butn_home_image, pos=self.settings.skin.butn_home_pos, size = (self.butn_home_image.GetWidth(), self.butn_home_image.GetHeight()))
+        self.butn_gps = wx.BitmapButton(self, bitmap=self.butn_gps_image, pos=self.settings.skin.butn_gps_pos, size = (self.butn_gps_image.GetWidth(), self.butn_gps_image.GetHeight()))
+        self.butn_audio = wx.BitmapButton(self, bitmap=self.butn_audio_image, pos=self.settings.skin.butn_audio_pos, size = (self.butn_audio_image.GetWidth(), self.butn_audio_image.GetHeight()))
+        self.butn_obd = wx.BitmapButton(self, bitmap=self.butn_obd_image, pos=self.settings.skin.butn_obd_pos, size = (self.butn_obd_image.GetWidth(), self.butn_obd_image.GetHeight()))
+        self.butn_phone = wx.BitmapButton(self, bitmap=self.butn_phone_image, pos=self.settings.skin.butn_phone_pos, size = (self.butn_phone_image.GetWidth(), self.butn_phone_image.GetHeight()))
+        self.butn_tools = wx.BitmapButton(self, bitmap=self.butn_tools_image, pos=self.settings.skin.butn_tools_pos, size = (self.butn_tools_image.GetWidth(), self.butn_tools_image.GetHeight()))
+        self.butn_weather = wx.BitmapButton(self, bitmap=self.butn_weather_image, pos=self.settings.skin.butn_weather_pos, size = (self.butn_weather_image.GetWidth(), self.butn_weather_image.GetHeight()))
 
         # bind each of the buttons to its' click handler
         self.butn_home.Bind(wx.EVT_BUTTON, self.OnClick_home)
@@ -142,12 +146,12 @@ class TuxTruck_MainApp(wx.Frame):
         if self.currentColorScheme == "day":
             # TODO - make night images
             print "night mode not setup, need to make images"
-            self.SetBackgroundColour(settings.skin.night_bgColor)
+            self.SetBackgroundColour(self.settings.skin.night_bgColor)
             self.currentColorScheme = "night"
             self.Refresh()
         else:
 
-            self.SetBackgroundColour(settings.skin.bgColor)
+            self.SetBackgroundColour(self.settings.skin.bgColor)
             self.currentColorScheme = "day"
             self.Refresh()
             
@@ -156,20 +160,20 @@ class TuxTruck_MainApp(wx.Frame):
         This method loads all of the button images into wx.Image objects, so they can
         quickly be changed on the display.
         """
-        self.butn_home_image = wx.Image(settings.skin.buttonImagePath+"home.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_audio_image = wx.Image(settings.skin.buttonImagePath+"audio.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_gps_image = wx.Image(settings.skin.buttonImagePath+"gps.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_obd_image = wx.Image(settings.skin.buttonImagePath+"obd.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_phone_image = wx.Image(settings.skin.buttonImagePath+"phone.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_tools_image = wx.Image(settings.skin.buttonImagePath+"tools.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_weather_image = wx.Image(settings.skin.buttonImagePath+"weather.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_home_active_image = wx.Image(settings.skin.buttonImagePath+"home_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_audio_active_image = wx.Image(settings.skin.buttonImagePath+"audio_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_gps_active_image = wx.Image(settings.skin.buttonImagePath+"gps_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_obd_active_image = wx.Image(settings.skin.buttonImagePath+"obd_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_phone_active_image = wx.Image(settings.skin.buttonImagePath+"phone_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_tools_active_image = wx.Image(settings.skin.buttonImagePath+"tools_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_weather_active_image = wx.Image(settings.skin.buttonImagePath+"weather_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_home_image = wx.Image(self.settings.skin.buttonImagePath+"home.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_audio_image = wx.Image(self.settings.skin.buttonImagePath+"audio.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_gps_image = wx.Image(self.settings.skin.buttonImagePath+"gps.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_obd_image = wx.Image(self.settings.skin.buttonImagePath+"obd.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_phone_image = wx.Image(self.settings.skin.buttonImagePath+"phone.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_tools_image = wx.Image(self.settings.skin.buttonImagePath+"tools.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_weather_image = wx.Image(self.settings.skin.buttonImagePath+"weather.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_home_active_image = wx.Image(self.settings.skin.buttonImagePath+"home_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_audio_active_image = wx.Image(self.settings.skin.buttonImagePath+"audio_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_gps_active_image = wx.Image(self.settings.skin.buttonImagePath+"gps_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_obd_active_image = wx.Image(self.settings.skin.buttonImagePath+"obd_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_phone_active_image = wx.Image(self.settings.skin.buttonImagePath+"phone_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_tools_active_image = wx.Image(self.settings.skin.buttonImagePath+"tools_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.butn_weather_active_image = wx.Image(self.settings.skin.buttonImagePath+"weather_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
 
 
 if __name__ == '__main__':
@@ -178,8 +182,7 @@ if __name__ == '__main__':
     and it instantiates all of the necessary classes and starts the GUI and backend code.
     """
     app = wx.App()
-    settings = TuxTruck_Settings() # application-wide settings
-    print "Loaded skin "+settings.skin.currentSkinName+" from file "+settings.skin.currentSkinFile
+
     frame = TuxTruck_MainApp(parent=None, id=-1)
 
     frame.Show()
