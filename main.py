@@ -1,13 +1,16 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-07 12:19:14 jantman"
-# $Id: main.py,v 1.7 2008-05-07 16:19:03 jantman Exp $
+# Time-stamp: "2008-05-07 12:44:39 jantman"
+# $Id: main.py,v 1.8 2008-05-07 16:43:46 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
 # Project web site at http://www.jasonantman.com/tuxtruck/
 
 import wx # import wx for the GUI
+
+# TODO: do we need all of the self. here?
+# TODO: need to update buttons to use a sizer
 
 # application includes
 from TuxTruck_Settings import * # import TuxTruck_Settings to get user settings
@@ -54,24 +57,24 @@ class TuxTruck_MainApp(wx.Frame):
 
         # create each of the buttons individually
         # NOTE: buttons must be explicitly added to switchColorScheme and loadButtonImages
-        butn_home = wx.BitmapButton(self, bitmap=self.butn_home_image, pos=settings.skin.butn_home_pos, size = (self.butn_home_image.GetWidth(), self.butn_home_image.GetHeight()))
-        butn_gps = wx.BitmapButton(self, bitmap=self.butn_gps_image, pos=settings.skin.butn_gps_pos, size = (self.butn_gps_image.GetWidth(), self.butn_gps_image.GetHeight()))
-        butn_audio = wx.BitmapButton(self, bitmap=self.butn_audio_image, pos=settings.skin.butn_audio_pos, size = (self.butn_audio_image.GetWidth(), self.butn_audio_image.GetHeight()))
-        butn_obd = wx.BitmapButton(self, bitmap=self.butn_obd_image, pos=settings.skin.butn_obd_pos, size = (self.butn_obd_image.GetWidth(), self.butn_obd_image.GetHeight()))
-        butn_phone = wx.BitmapButton(self, bitmap=self.butn_phone_image, pos=settings.skin.butn_phone_pos, size = (self.butn_phone_image.GetWidth(), self.butn_phone_image.GetHeight()))
-        butn_tools = wx.BitmapButton(self, bitmap=self.butn_tools_image, pos=settings.skin.butn_tools_pos, size = (self.butn_tools_image.GetWidth(), self.butn_tools_image.GetHeight()))
-        butn_weather = wx.BitmapButton(self, bitmap=self.butn_weather_image, pos=settings.skin.butn_weather_pos, size = (self.butn_weather_image.GetWidth(), self.butn_weather_image.GetHeight()))
+        self.butn_home = wx.BitmapButton(self, bitmap=self.butn_home_image, pos=settings.skin.butn_home_pos, size = (self.butn_home_image.GetWidth(), self.butn_home_image.GetHeight()))
+        self.butn_gps = wx.BitmapButton(self, bitmap=self.butn_gps_image, pos=settings.skin.butn_gps_pos, size = (self.butn_gps_image.GetWidth(), self.butn_gps_image.GetHeight()))
+        self.butn_audio = wx.BitmapButton(self, bitmap=self.butn_audio_image, pos=settings.skin.butn_audio_pos, size = (self.butn_audio_image.GetWidth(), self.butn_audio_image.GetHeight()))
+        self.butn_obd = wx.BitmapButton(self, bitmap=self.butn_obd_image, pos=settings.skin.butn_obd_pos, size = (self.butn_obd_image.GetWidth(), self.butn_obd_image.GetHeight()))
+        self.butn_phone = wx.BitmapButton(self, bitmap=self.butn_phone_image, pos=settings.skin.butn_phone_pos, size = (self.butn_phone_image.GetWidth(), self.butn_phone_image.GetHeight()))
+        self.butn_tools = wx.BitmapButton(self, bitmap=self.butn_tools_image, pos=settings.skin.butn_tools_pos, size = (self.butn_tools_image.GetWidth(), self.butn_tools_image.GetHeight()))
+        self.butn_weather = wx.BitmapButton(self, bitmap=self.butn_weather_image, pos=settings.skin.butn_weather_pos, size = (self.butn_weather_image.GetWidth(), self.butn_weather_image.GetHeight()))
 
         # bind each of the buttons to its' click handler
-        butn_home.Bind(wx.EVT_BUTTON, self.OnClick_home)
-        butn_gps.Bind(wx.EVT_BUTTON, self.OnClick_gps)
-        butn_audio.Bind(wx.EVT_BUTTON, self.OnClick_audio)
-        butn_obd.Bind(wx.EVT_BUTTON, self.OnClick_obd)
-        butn_phone.Bind(wx.EVT_BUTTON, self.OnClick_phone)
-        butn_tools.Bind(wx.EVT_BUTTON, self.OnClick_tools)
-        butn_weather.Bind(wx.EVT_BUTTON, self.OnClick_weather)
+        self.butn_home.Bind(wx.EVT_BUTTON, self.OnClick_home)
+        self.butn_gps.Bind(wx.EVT_BUTTON, self.OnClick_gps)
+        self.butn_audio.Bind(wx.EVT_BUTTON, self.OnClick_audio)
+        self.butn_obd.Bind(wx.EVT_BUTTON, self.OnClick_obd)
+        self.butn_phone.Bind(wx.EVT_BUTTON, self.OnClick_phone)
+        self.butn_tools.Bind(wx.EVT_BUTTON, self.OnClick_tools)
+        self.butn_weather.Bind(wx.EVT_BUTTON, self.OnClick_weather)
 
-        self.currentButton = butn_home # set butn_home to be our initial button
+        self.currentButton = self.butn_home # set butn_home to be our initial button
         
     def OnClick_gps(self, event):
         """ Handles click of the GPS button, switching to the GPS screen"""
