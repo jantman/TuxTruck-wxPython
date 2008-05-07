@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-07 12:44:39 jantman"
-# $Id: main.py,v 1.8 2008-05-07 16:43:46 jantman Exp $
+# Time-stamp: "2008-05-07 14:37:11 jantman"
+# $Id: main.py,v 1.9 2008-05-07 18:36:38 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -11,9 +11,11 @@ import wx # import wx for the GUI
 
 # TODO: do we need all of the self. here?
 # TODO: need to update buttons to use a sizer
+# TODO: rename MainApp to MainFrame
 
 # application includes
 from TuxTruck_Settings import * # import TuxTruck_Settings to get user settings
+from TuxTruck_AudioPanel_Main import *
 
 class TuxTruck_MainApp(wx.Frame):
     """
@@ -75,6 +77,10 @@ class TuxTruck_MainApp(wx.Frame):
         self.butn_weather.Bind(wx.EVT_BUTTON, self.OnClick_weather)
 
         self.currentButton = self.butn_home # set butn_home to be our initial button
+
+        #DEBUG - add a audio panel
+        self.audioPanel_main = TuxTruck_AudioPanel_Main(self, -1)
+
         
     def OnClick_gps(self, event):
         """ Handles click of the GPS button, switching to the GPS screen"""
@@ -86,12 +92,15 @@ class TuxTruck_MainApp(wx.Frame):
         # TODO: update the docs for proper use of words application, window, panel, frame
         print "Audio clicked" # DEBUG
         self.currentButton = self.butn_audio
+        self.audioPanel_main.Show()
 
     def OnClick_home(self, event):
         """ Handles click of the home button, switching to the home screen"""
         print "Home clicked" # DEBUG
         self.switchColorScheme()
         self.currentButton = self.butn_home
+        # DEBUG - testing only since we only have one panel
+        self.audioPanel_main.Hide()
 
     def OnClick_obd(self, event):
         """Handles click of the OBD button, switching to the OBD screen"""
@@ -172,5 +181,6 @@ if __name__ == '__main__':
     settings = TuxTruck_Settings() # application-wide settings
     print "Loaded skin "+settings.skin.currentSkinName+" from file "+settings.skin.currentSkinFile
     frame = TuxTruck_MainApp(parent=None, id=-1)
+
     frame.Show()
     app.MainLoop()
