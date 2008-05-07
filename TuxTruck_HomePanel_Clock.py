@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck clock panel for home view
-# Time-stamp: "2008-05-07 16:21:11 jantman"
-# $Id: TuxTruck_HomePanel_Clock.py,v 1.2 2008-05-07 20:20:15 jantman Exp $
+# Time-stamp: "2008-05-07 16:42:33 jantman"
+# $Id: TuxTruck_HomePanel_Clock.py,v 1.3 2008-05-07 20:43:09 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -12,6 +12,9 @@
 import wx # import wx for the GUI
 
 from wx.lib.analogclock import *
+
+import LEDCtrl as led
+import time
 
 class TuxTruck_HomePanel_Clock(wx.Panel):
     """
@@ -31,13 +34,63 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
         #self.SetWindowStyle(wx.NO_BORDER) # set window style to have no border
         self.Hide()
 
+        # analog clock
         self.clock = AnalogClockWindow(self)
         self.clock.SetBackgroundColour("yellow")
 
         self.bsizer2 = wx.BoxSizer(wx.VERTICAL)
         self.bsizer2.Add(self.clock, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL|wx.SHAPED, 10)        
+
+        # digital clock
+        self.myled = led.LEDCtrl(self)
+        
+        self.bsizer2.Add(self.myled, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL|wx.SHAPED, 10)        
+
+
         self.SetSizer(self.bsizer2)
         
+
+        style = led.LED_DRAW_FADED|   \
+                led.LED_ALIGN_CENTRE| \
+                led.LED_AGG|          \
+                led.LED_ALLOW_COLONS| \
+                led.LED_SLANT
+        
+        self.myled.SetLedStyle(style)
+
+        #self.fg = (22, 253, 240)
+        #self.myled.SetForegroundColour(self.fg)
+        #self.fg.SetColour(self.fg)
+        #self.fd.SetColour(self.myled.GetFadeColour())
+        
+        self.size = self.myled.GetSize()
+        self.myled.Freeze()
+        self.myled.SetWindowStyle(wx.SUNKEN_BORDER)
+        self.myled.SetSize((10, 10))
+        self.myled.SetSize(self.size)
+        self.myled.Thaw()
+
+        self.tc = -1
+        self.timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self.OnTimer)
+        self.StartTimer()
+
+    def StartTimer(self):
+        self.timer.Start(500)
+
+
+    def StopTimer(self):
+        self.timer.Stop()
+
+
+    def OnTimer(self, evt):
+        self.tc = -self.tc
+        t = time.localtime(time.time())
+        if self.tc > 0:
+            st = time.strftime("%H:%M:%S", t)
+        else:
+            st = time.strftime("%H%M%S", t)
+        self.myled.SetValue(st)
         
 
 
