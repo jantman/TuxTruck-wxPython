@@ -34,4 +34,25 @@
     <obd>559,422</obd>
     <tools>665,422</tools>
   </button_positions>
+  <digitalClock>
+    <dayFgColor>0,255,0</dayFgColor>
+    <dayBgColor>255,255,255</dayBgColor>
+    <dayFadeColor>0,0,0</dayFadeColor>
+    <nightFgColor>255,0,0</nightFgColor>
+    <nightFgColor>0,0,0</nightFgColor>
+    <nightFadeColor>255,255,255</nightFadeColor>
+    <fadeFactor>25</fadeFactor>
+  </digitalClock>
+  <analogClock>
+    <day_handColor_h>255,255,255</day_handColor_h>
+    <day_handColor_m>255,255,255</day_handColor_m>
+    <day_handColor_s>255,255,255</day_handColor_s>
+    <day_shadowColor>200,200,200</day_shadowColor>
+    <day_bgColor>51,51,51</day_bgColor>
+    <night_handColor_h>0,0,0</night_handColor_h>
+    <night_handColor_m>0,0,0</night_handColor_m>
+    <night_handColor_s>0,0,0</night_handColor_s>
+    <night_shadowColor>100,100,100</night_shadowColor>
+    <night_bgColor>204,204,204</night_bgColor>
+  </analogClock>
 </TuxTruckSkin>

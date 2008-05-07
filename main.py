@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-07 16:09:30 jantman"
-# $Id: main.py,v 1.13 2008-05-07 20:13:28 jantman Exp $
+# Time-stamp: "2008-05-07 19:43:20 jantman"
+# $Id: main.py,v 1.14 2008-05-07 23:59:38 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -106,11 +106,9 @@ class TuxTruck_MainApp(wx.Frame):
     def OnClick_home(self, event):
         """ Handles click of the home button, switching to the home screen"""
         print "Home clicked" # DEBUG
-        self.switchColorScheme() # DEBUG
         self._currentButton = self.butn_home # update reference to current button
         # DEBUG - testing only since we only have one panel
         self.audioPanel_main.Hide()
-        self.setButtonImages(self._currentColorScheme)
         # TODO: what do we show at startup? default? selection from settings? last?
         self.homePanel_clock.Show()
 
@@ -128,6 +126,7 @@ class TuxTruck_MainApp(wx.Frame):
         """Handles click of the tools button, switching to the tools screen"""
         print "tools clicked" # DEBUG
         self._currentButton = self.butn_tools
+        self.switchColorScheme() # DEBUG
 
     def OnClick_weather(self, event):
         """Handles click of the weather button, switching to the weather screen"""
@@ -151,18 +150,38 @@ class TuxTruck_MainApp(wx.Frame):
         This method does everything needed to toggle between day/night modes
         in the current skin
         """
+        self.setButtonImages(self._currentColorScheme) # set toolbar button images
+
+        # DEBUG
+        print "in main.py switching color scheme from "+self._currentColorScheme
+        # END DEBUG
+
         if self._currentColorScheme == "day":
             # TODO - make night images
-            print "night mode not setup, need to make images"
-            self.SetBackgroundColour(self.settings.skin.night_bgColor)
-            self.audioPanel_main.setBgColor(self.settings.skin.night_bgColor)
-            self._currentColorScheme = "night"
+            print "night mode not setup, need to make images" # DEBUG
+
+            self.SetBackgroundColour(self.settings.skin.night_bgColor) # reskin myself
+
+
+            self._currentColorScheme = "night" # keep track of what skin I'm using now
+
+            # reskin EVERYTHING else
+            self.audioPanel_main.reSkin(self, "night")
+            self.homePanel_clock.reSkin(self, "night")
+
+            # refresh myself
             self.Refresh()
         else:
-
+            # reskin myself
             self.SetBackgroundColour(self.settings.skin.bgColor)
-            self.audioPanel_main.setBgColor(self.settings.skin.bgColor)
-            self._currentColorScheme = "day"
+            
+            # reskin EVERYTHING else
+            self.audioPanel_main.reSkin(self, "day")
+            self.homePanel_clock.reSkin(self, "day")
+
+            self._currentColorScheme = "day" # keep track of what skin I'm using now
+
+            # refresh myself
             self.Refresh()
             
     def loadButtonImages(self):

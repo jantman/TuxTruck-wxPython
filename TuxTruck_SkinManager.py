@@ -1,12 +1,17 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-06 20:37:46 jantman"
-# $Id: TuxTruck_SkinManager.py,v 1.7 2008-05-07 00:36:35 jantman Exp $
+# Time-stamp: "2008-05-07 19:55:43 jantman"
+# $Id: TuxTruck_SkinManager.py,v 1.8 2008-05-07 23:59:38 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
 # Project web site at http://www.jasonantman.com/tuxtruck/
 
 import wx
+
+# TODO: get rid of all these variables, have a subclass for each main element in the XML
+#     i.e. digiclock.day_bgColor
+
+# TODO: all var names should be of form {day|night}_propertyName
 
 class TuxTruck_SkinManager:
     """
@@ -56,6 +61,27 @@ class TuxTruck_SkinManager:
     butn_tools_pos = (0, 0)
     butn_weather_pos = (0, 0)
 
+    # digital clock settings
+    digiclock_day_fgColor = wx.Colour(0,0,0)
+    digiclock_day_bgColor = wx.Colour(0,0,0)
+    digiclock_day_FadeColor = wx.Colour(0,0,0)
+    digiclock_night_fgColor = wx.Colour(0,0,0)
+    digiclock_night_bgColor = wx.Colour(0,0,0)
+    digiclock_night_FadeColor = wx.Colour(0,0,0)
+    digiclock_fadeFactor = 0
+
+    # analog clock settings
+    analogclock_day_handColor_h = wx.Colour(0,0,0)
+    analogclock_day_handColor_m = wx.Colour(0,0,0)
+    analogclock_day_handColor_s = wx.Colour(0,0,0)
+    analogclock_day_shadowColor = wx.Colour(0,0,0)
+    analogclock_day_bgColor = wx.Colour(0,0,0)
+    analogclock_night_handColor_h = wx.Colour(0,0,0)
+    analogclock_night_handColor_m = wx.Colour(0,0,0)
+    analogclock_night_handColor_s = wx.Colour(0,0,0)
+    analogclock_night_shadowColor = wx.Colour(0,0,0)
+    analogclock_night_bgColor = wx.Colour(0,0,0)
+
     def loadSkin(self, file):
         """
         This function loads a new skin by reading and parsing the file, and then
@@ -64,6 +90,8 @@ class TuxTruck_SkinManager:
         and doesn't make any changes to the GUI.
         NOTE: The size of buttons is exactly the size of the image used for the button.
         """
+
+        # TODO: parse the XML and read the values
 
         # DEBUG TEST SETTINGS
         self.currentSkinName = "skinname"
@@ -94,6 +122,27 @@ class TuxTruck_SkinManager:
         self.butn_weather_pos = (453, 422)
         self.butn_obd_pos = (559, 422)
         self.butn_tools_pos = (665, 422)
+
+        # digital clock settings
+        self.digiclock_day_fgColor = wx.Colour(0,0,255)
+        self.digiclock_day_bgColor = wx.Colour(204,204,204)
+        self.digiclock_day_FadeColor = wx.Colour(51,153,255)
+        self.digiclock_night_fgColor = wx.Colour(255,0,0)
+        self.digiclock_night_bgColor = wx.Colour(51,51,51)
+        self.digiclock_night_FadeColor = wx.Colour(51,153,255)
+        self.digiclock_fadeFactor = 25
+
+        # analog clock settings
+        self.analogclock_day_handColor_h = wx.Colour(255,255,255)
+        self.analogclock_day_handColor_m = wx.Colour(255,255,255)
+        self.analogclock_day_handColor_s = wx.Colour(255,255,255)
+        self.analogclock_day_shadowColor = wx.Colour(200,200,200)
+        self.analogclock_day_bgColor = wx.Colour(51,51,51)
+        self.analogclock_night_handColor_h = wx.Colour(0,0,0)
+        self.analogclock_night_handColor_m = wx.Colour(0,0,0)
+        self.analogclock_night_handColor_s = wx.Colour(0,0,0)
+        self.analogclock_night_shadowColor = wx.Colour(100,100,100)
+        self.analogclock_night_bgColor = wx.Colour(204,204,204)
 
     def __init__(self, parent):
         """

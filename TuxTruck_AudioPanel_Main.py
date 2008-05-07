@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-07 15:02:38 jantman"
-# $Id: TuxTruck_AudioPanel_Main.py,v 1.3 2008-05-07 19:03:54 jantman Exp $
+# Time-stamp: "2008-05-07 19:44:04 jantman"
+# $Id: TuxTruck_AudioPanel_Main.py,v 1.4 2008-05-07 23:59:38 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -41,8 +41,18 @@ class TuxTruck_AudioPanel_Main(wx.Panel):
         # END DEBUG
         print parent.settings.skin.currentSkinName
 
-    def setBgColor(self, mycolor):
-        """
-        This is called on a skin change to update my background color
-        """
-        self.SetBackgroundColour(mycolor)
+    def reSkin(self, parent, colorSchemeName):
+        # re-skin me
+        
+        # DEBUG
+        print "in TuxTruck_AudioPanel_Main switching color scheme to "+colorSchemeName
+        # END DEBUG
+
+        if colorSchemeName == "day":
+            # switch to day
+            self.SetBackgroundColour(parent.settings.skin.bgColor)
+        else:
+            # switch to night
+            self.SetBackgroundColour(parent.settings.skin.night_bgColor)
+        self.Refresh()
+
