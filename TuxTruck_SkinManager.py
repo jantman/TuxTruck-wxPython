@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-06 20:18:51 jantman"
-# $Id: TuxTruck_SkinManager.py,v 1.6 2008-05-07 00:24:56 jantman Exp $
+# Time-stamp: "2008-05-06 20:37:46 jantman"
+# $Id: TuxTruck_SkinManager.py,v 1.7 2008-05-07 00:36:35 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -32,13 +32,15 @@ class TuxTruck_SkinManager:
     bgColor = "" # background color for the day mode skin
     fgColor = "" # foreground color for the day mode skin
     toolbarColor = "" # toolbar color for the day mode skin
-    highlightColor = "" # highlighted color for the day mode skin
+    textColor = "" # main text color for the day mode skin
+    highlightColor = "" # highlighted text color for the day mode skin
 
     # secondary (night) color scheme
     night_bgColor = "" # background color for the night mode skin
     night_fgColor = "" # foreground color for the night mode skin
     night_toolbarColor = "" # toolbar color for the night mode skin
-    night_highlightColor = "" # highlighted color for the night mode skin
+    night_textColor = "" # main text color for the night mode skin
+    night_highlightColor = "" # highlighted text color for the night mode skin
 
     # main window settings
     topWindowSize = 0 # size of the main program window/frame
@@ -71,13 +73,15 @@ class TuxTruck_SkinManager:
         self.bgColor = wx.Colour(22,127,230)
         self.fgColor = wx.Colour(3,90,166)
         self.toolbarColor = wx.Colour(22,127,230)
-        self.highlightColor = wx.Colour(211,235,253)
+        self.textColor = wx.Colour(0,0,0)
+        self.highlightColor = wx.Colour(255,0,0)
 
         # DEBUG as a test, just swap colors
         self.night_bgColor = wx.Colour(3,90,166)
         self.night_fgColor = wx.Colour(22,127,230)
         self.night_toolbarColor = wx.Colour(3,90,166)
-        self.night_highlightColor = wx.Colour(0,0,0)
+        self.night_textColor = wx.Colour(0,0,0)
+        self.night_highlightColor = wx.Colour(255,0,0)
 
         self.topWindowSize = wx.Size(800, 480)
         self.topWindowPos = wx.Point(100,100)
