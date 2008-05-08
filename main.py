@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-07 21:14:14 jantman"
-# $Id: main.py,v 1.15 2008-05-08 01:14:11 jantman Exp $
+# Time-stamp: "2008-05-08 19:14:57 jantman"
+# $Id: main.py,v 1.16 2008-05-08 23:13:46 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -65,13 +65,30 @@ class TuxTruck_MainApp(wx.Frame):
 
         # create each of the buttons individually
         # NOTE: buttons must be explicitly added to switchColorScheme and loadButtonImages
-        self.butn_home = wx.BitmapButton(self, bitmap=self.butn_home_image, pos=self.settings.skin.butn_home_pos, size = (self.butn_home_image.GetWidth(), self.butn_home_image.GetHeight()))
-        self.butn_gps = wx.BitmapButton(self, bitmap=self.butn_gps_image, pos=self.settings.skin.butn_gps_pos, size = (self.butn_gps_image.GetWidth(), self.butn_gps_image.GetHeight()))
-        self.butn_audio = wx.BitmapButton(self, bitmap=self.butn_audio_image, pos=self.settings.skin.butn_audio_pos, size = (self.butn_audio_image.GetWidth(), self.butn_audio_image.GetHeight()))
-        self.butn_obd = wx.BitmapButton(self, bitmap=self.butn_obd_image, pos=self.settings.skin.butn_obd_pos, size = (self.butn_obd_image.GetWidth(), self.butn_obd_image.GetHeight()))
-        self.butn_phone = wx.BitmapButton(self, bitmap=self.butn_phone_image, pos=self.settings.skin.butn_phone_pos, size = (self.butn_phone_image.GetWidth(), self.butn_phone_image.GetHeight()))
-        self.butn_tools = wx.BitmapButton(self, bitmap=self.butn_tools_image, pos=self.settings.skin.butn_tools_pos, size = (self.butn_tools_image.GetWidth(), self.butn_tools_image.GetHeight()))
-        self.butn_weather = wx.BitmapButton(self, bitmap=self.butn_weather_image, pos=self.settings.skin.butn_weather_pos, size = (self.butn_weather_image.GetWidth(), self.butn_weather_image.GetHeight()))
+        self.butn_home = wx.BitmapButton(self, bitmap=self.butn_home_image, size = (self.butn_home_image.GetWidth(), self.butn_home_image.GetHeight()))
+        self.butn_gps = wx.BitmapButton(self, bitmap=self.butn_gps_image, size = (self.butn_gps_image.GetWidth(), self.butn_gps_image.GetHeight()))
+        self.butn_audio = wx.BitmapButton(self, bitmap=self.butn_audio_image, size = (self.butn_audio_image.GetWidth(), self.butn_audio_image.GetHeight()))
+        self.butn_obd = wx.BitmapButton(self, bitmap=self.butn_obd_image, size = (self.butn_obd_image.GetWidth(), self.butn_obd_image.GetHeight()))
+        self.butn_phone = wx.BitmapButton(self, bitmap=self.butn_phone_image, size = (self.butn_phone_image.GetWidth(), self.butn_phone_image.GetHeight()))
+        self.butn_tools = wx.BitmapButton(self, bitmap=self.butn_tools_image, size = (self.butn_tools_image.GetWidth(), self.butn_tools_image.GetHeight()))
+        self.butn_weather = wx.BitmapButton(self, bitmap=self.butn_weather_image, size = (self.butn_weather_image.GetWidth(), self.butn_weather_image.GetHeight()))
+
+        self.box = wx.BoxSizer(wx.HORIZONTAL) # TODO: give this a meaningful name
+        self.box.Add(self.butn_home, proportion=0)
+        self.box.Add(self.butn_gps, proportion=0)
+        self.box.Add(self.butn_audio, proportion=0)
+        self.box.Add(self.butn_obd, proportion=0)
+        self.box.Add(self.butn_phone, proportion=0)
+        self.box.Add(self.butn_tools, proportion=0)
+        self.box.Add(self.butn_weather, proportion=0)
+
+        self.SetAutoLayout(True)
+        self.SetSizer(self.box)
+        self.Layout()
+
+        # DEBUG
+        print self.box.GetSizeTuple()
+        print self.box.GetPositionTuple()
 
         # bind each of the buttons to its' click handler
         self.butn_home.Bind(wx.EVT_BUTTON, self.OnClick_home)
