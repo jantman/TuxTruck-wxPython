@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-07 19:55:43 jantman"
-# $Id: TuxTruck_SkinManager.py,v 1.8 2008-05-07 23:59:38 jantman Exp $
+# Time-stamp: "2008-05-07 21:00:56 jantman"
+# $Id: TuxTruck_SkinManager.py,v 1.9 2008-05-08 01:14:11 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -8,8 +8,8 @@
 
 import wx
 
-# TODO: get rid of all these variables, have a subclass for each main element in the XML
-#     i.e. digiclock.day_bgColor
+# NOTE: This depends on elementtree from <http://effbot.org/zone/element-index.htm>
+from elementtree import ElementTree
 
 # TODO: all var names should be of form {day|night}_propertyName
 
@@ -34,18 +34,18 @@ class TuxTruck_SkinManager:
     buttonImagePath = "" # path, relative to ~/.tuxtruck/skins/ to the images for this skin
 
     # primary (day) color scheme
-    bgColor = "" # background color for the day mode skin
-    fgColor = "" # foreground color for the day mode skin
-    toolbarColor = "" # toolbar color for the day mode skin
-    textColor = "" # main text color for the day mode skin
-    highlightColor = "" # highlighted text color for the day mode skin
+    day_bgColor = (0,0,0) # background color for the day mode skin
+    day_fgColor = (0,0,0) # foreground color for the day mode skin
+    day_toolbarColor = (0,0,0) # toolbar color for the day mode skin
+    day_textColor = (0,0,0) # main text color for the day mode skin
+    day_highlightColor = (0,0,0) # highlighted text color for the day mode skin
 
     # secondary (night) color scheme
-    night_bgColor = "" # background color for the night mode skin
-    night_fgColor = "" # foreground color for the night mode skin
-    night_toolbarColor = "" # toolbar color for the night mode skin
-    night_textColor = "" # main text color for the night mode skin
-    night_highlightColor = "" # highlighted text color for the night mode skin
+    night_bgColor = (0,0,0) # background color for the night mode skin
+    night_fgColor = (0,0,0) # foreground color for the night mode skin
+    night_toolbarColor = (0,0,0) # toolbar color for the night mode skin
+    night_textColor = (0,0,0) # main text color for the night mode skin
+    night_highlightColor = (0,0,0) # highlighted text color for the night mode skin
 
     # main window settings
     topWindowSize = 0 # size of the main program window/frame
@@ -93,26 +93,6 @@ class TuxTruck_SkinManager:
 
         # TODO: parse the XML and read the values
 
-        # DEBUG TEST SETTINGS
-        self.currentSkinName = "skinname"
-        self.currentSkinFile = file
-        self.buttonImagePath = "/home/jantman/cvs-temp/TuxTruck-wxPython/buttons/"
-
-        self.bgColor = wx.Colour(22,127,230)
-        self.fgColor = wx.Colour(3,90,166)
-        self.toolbarColor = wx.Colour(22,127,230)
-        self.textColor = wx.Colour(0,0,0)
-        self.highlightColor = wx.Colour(255,0,0)
-
-        # DEBUG as a test, just swap colors
-        self.night_bgColor = wx.Colour(3,90,166)
-        self.night_fgColor = wx.Colour(22,127,230)
-        self.night_toolbarColor = wx.Colour(3,90,166)
-        self.night_textColor = wx.Colour(0,0,0)
-        self.night_highlightColor = wx.Colour(255,0,0)
-
-        self.topWindowSize = wx.Size(800, 480)
-        self.topWindowPos = wx.Point(100,100)
 
         # DEBUG: all image sizes are currently 106wX58h
         self.butn_home_pos = (29, 422)
@@ -144,6 +124,56 @@ class TuxTruck_SkinManager:
         self.analogclock_night_shadowColor = wx.Colour(100,100,100)
         self.analogclock_night_bgColor = wx.Colour(204,204,204)
 
+    def loadMainSkin(self, file):
+        """
+        This parses your skin file for global settings, such as name,
+        background and foreground colors, size, button info, etc.
+        """
+        
+        skinTree = ElementTree.parse(file).getroot()
+
+        # parse the window information
+        windowTree = skinTree.find('window')
+        self.topWindowSize = wx.Size(int(windowTree.findtext("width")), int(windowTree.findtext("height")))
+        self.topWindowPos = wx.Point(int(windowTree.findtext("pos_X")), int(windowTree.findtext("pos_Y")))
+        # TODO: add the centered part
+
+        # parse the main colors
+        self.day_bgColor = self.str2tuple(windowTree.findtext("day_bgColor"), "window.day_bgColor")
+        self.day_fgColor = self.str2tuple(windowTree.findtext("day_fgColor"), "window.day_fgColor")
+        self.day_toolbarColor = self.str2tuple(windowTree.findtext("day_toolbarColor"), "window.day_toolbarColor")
+        self.day_textColor = self.str2tuple(windowTree.findtext("day_textColor"), "window.day_textColor")
+        self.day_highlightColor = self.str2tuple(windowTree.findtext("day_highlightColor"), "window.day_highlightColor")
+        self.night_bgColor = self.str2tuple(windowTree.findtext("night_bgColor"), "window.night_bgColor")
+        self.night_fgColor = self.str2tuple(windowTree.findtext("night_fgColor"), "window.night_fgColor")
+        self.night_toolbarColor = self.str2tuple(windowTree.findtext("night_toolbarColor"), "window.night_toolbarColor")
+        self.night_textColor = self.str2tuple(windowTree.findtext("night_textColor"), "window.night_textColor")
+        self.night_highlightColor = self.str2tuple(windowTree.findtext("night_highlightColor"), "window.night_highlightColor")
+
+        # parse global information
+        globalTree = skinTree.find('globalSkin')
+        self.currentSkinName = globalTree.findtext("skinName")
+        self.currentSkinFile = file
+        self.buttonImagePath = globalTree.findtext("buttonPath")
+
+    def str2tuple(self, s, fieldName):
+        """
+        Convert tuple-like strings to real tuples.
+        eg '(1,2,3,4)' -> (1, 2, 3, 4)
+        s is the string to parse
+
+        This is used to parse the XML skin data.
+        Got it from Steven D'Aprano, posted to python-list@python.org 2005-07-19
+        TODO: this needs better error checking
+        """
+        if s[0] + s[-1] != "()":
+            raise ValueError("Badly formatted string (missing brackets) in skin field "+fieldName+".")
+        items = s[1:-1]  # removes the leading and trailing brackets
+        items = items.split(',')
+        L = [int(x.strip()) for x in items] # clean up spaces, convert to ints
+        return tuple(L) 
+
+
     def __init__(self, parent):
         """
         Here, we get the default skin name from settings, then load that file.
@@ -151,5 +181,6 @@ class TuxTruck_SkinManager:
         """
         #get the default skin name and file from settings
         #load the skin file. make changes to default, anything not specified stays default
-        self.loadSkin("testSkin.nofile")
-    
+        self.loadMainSkin("defaultSkin.xml")
+
+        self.loadSkin("defaultSkin.xml") # DEBUG - everything else

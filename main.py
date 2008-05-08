@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-07 19:43:20 jantman"
-# $Id: main.py,v 1.14 2008-05-07 23:59:38 jantman Exp $
+# Time-stamp: "2008-05-07 21:14:14 jantman"
+# $Id: main.py,v 1.15 2008-05-08 01:14:11 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -38,7 +38,7 @@ class TuxTruck_MainApp(wx.Frame):
     # variables holding state of the program
     _currentColorScheme = "day" # holds the name of the current color scheme
     _currentButton = "" # reference to the currently selected button, default to Home
-    settings = TuxTruck_Settings() # application-wide settings
+    settings = TuxTruck_Settings()
 
     def __init__(self, parent, id):
         """
@@ -55,12 +55,12 @@ class TuxTruck_MainApp(wx.Frame):
         # setup the main frame
         self.SetPosition(self.settings.skin.topWindowPos) # set the main window position
         self.SetSize(self.settings.skin.topWindowSize) # set the main window size
-        self.SetBackgroundColour(self.settings.skin.bgColor) # set the main window background color
         if self.settings.skin.topWindowCentered == 1:
             # check whether to center the window or not
             self.CenterOnScreen()
         self.SetWindowStyle(wx.NO_BORDER) # set window style to have no border
 
+        # TODO: we need to load the right images for our skin. figure out how.
         self.loadButtonImages() # load the button images
 
         # create each of the buttons individually
@@ -85,11 +85,13 @@ class TuxTruck_MainApp(wx.Frame):
         self._currentButton = self.butn_home # set butn_home to be our initial button
 
         # add main audio panel
-        self.audioPanel_main = TuxTruck_AudioPanel_Main(self, -1, self.settings.skin.bgColor)
+        self.audioPanel_main = TuxTruck_AudioPanel_Main(self, -1)
         # add home clock panel
         # TODO: figure out how to skin this
         self.homePanel_clock = TuxTruck_HomePanel_Clock(self, -1)
 
+        # now SET THE SKINS on EVERYTHING
+        self.reSkin("day")
         
     def OnClick_gps(self, event):
         """ Handles click of the GPS button, switching to the GPS screen"""
@@ -155,7 +157,14 @@ class TuxTruck_MainApp(wx.Frame):
         # DEBUG
         print "in main.py switching color scheme from "+self._currentColorScheme
         # END DEBUG
+        
+        if self._currentColorScheme == "day":
+            self.reSkin("night")
+        else:
+            self.reSkin("day")
 
+
+    def reSkin(self, colorSchemeName):
         if self._currentColorScheme == "day":
             # TODO - make night images
             print "night mode not setup, need to make images" # DEBUG
@@ -173,7 +182,7 @@ class TuxTruck_MainApp(wx.Frame):
             self.Refresh()
         else:
             # reskin myself
-            self.SetBackgroundColour(self.settings.skin.bgColor)
+            self.SetBackgroundColour(self.settings.skin.day_bgColor)
             
             # reskin EVERYTHING else
             self.audioPanel_main.reSkin(self, "day")
@@ -182,7 +191,7 @@ class TuxTruck_MainApp(wx.Frame):
             self._currentColorScheme = "day" # keep track of what skin I'm using now
 
             # refresh myself
-            self.Refresh()
+            self.Refresh()        
             
     def loadButtonImages(self):
         """

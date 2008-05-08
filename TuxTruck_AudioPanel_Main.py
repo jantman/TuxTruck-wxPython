@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-07 19:44:04 jantman"
-# $Id: TuxTruck_AudioPanel_Main.py,v 1.4 2008-05-07 23:59:38 jantman Exp $
+# Time-stamp: "2008-05-07 21:13:50 jantman"
+# $Id: TuxTruck_AudioPanel_Main.py,v 1.5 2008-05-08 01:14:11 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -15,7 +15,7 @@ class TuxTruck_AudioPanel_Main(wx.Panel):
     This panel should hold a main page with buttons that show sub-panels.
     """
 
-    def __init__(self, parent, id, color):
+    def __init__(self, parent, id):
         """
         TODO: This needs to be documented.
         """
@@ -24,7 +24,6 @@ class TuxTruck_AudioPanel_Main(wx.Panel):
         # setup the main frame
         self.SetPosition(wx.Point(0,0)) # set the main window position
         self.SetSize(wx.Size(800,420)) # set the main window size TODO: use settings
-        self.SetBackgroundColour(color) # set the main window background color
         #self.SetWindowStyle(wx.NO_BORDER) # set window style to have no border
         self.Hide()
         # DEBUG
@@ -40,6 +39,7 @@ class TuxTruck_AudioPanel_Main(wx.Panel):
         debugText.SetForegroundColour(wx.Colour(255,0,0))
         # END DEBUG
         print parent.settings.skin.currentSkinName
+        self.reSkin(parent, parent._currentColorScheme)
 
     def reSkin(self, parent, colorSchemeName):
         # re-skin me
@@ -50,7 +50,7 @@ class TuxTruck_AudioPanel_Main(wx.Panel):
 
         if colorSchemeName == "day":
             # switch to day
-            self.SetBackgroundColour(parent.settings.skin.bgColor)
+            self.SetBackgroundColour(parent.settings.skin.day_bgColor)
         else:
             # switch to night
             self.SetBackgroundColour(parent.settings.skin.night_bgColor)

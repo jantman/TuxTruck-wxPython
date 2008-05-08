@@ -2,7 +2,7 @@
 <TuxTruckSkin>
   <globalSkin>
     <skinName>Default Skin</skinName>
-    <buttonPath>buttons/</buttonPath>
+    <buttonPath>/home/jantman/cvs-temp/TuxTruck-wxPython/buttons/</buttonPath>
   </globalSkin>
   <window>
     <height>480</height>
@@ -10,21 +10,17 @@
     <pos_X>100</pos_X>
     <pos_Y>200</pos_Y>
     <centered>0</centered>
+    <day_bgColor>(22,127,230)</day_bgColor>
+    <day_fgColor>(3,90,166)</day_fgColor>
+    <day_toolbarColor>(22,127,230)</day_toolbarColor>
+    <day_textColor>(0,0,0)</day_textColor>
+    <day_highlightColor>(255,0,0)</day_highlightColor>
+    <night_fgColor>(22,127,230)</night_fgColor>
+    <night_bgColor>(3,90,166)</night_bgColor>
+    <night_toolbarColor>(22,127,230)</night_toolbarColor>
+    <night_textColor>(0,0,0)</night_textColor>
+    <night_highlightColor>(255,0,0)</night_highlightColor>
   </window>
-  <daySkin>
-    <bgColor>22,127,230</bgColor>
-    <fgColor>3,90,166</fgColor>
-    <toolbarColor>22,127,230</toolbarColor>
-    <textColor>0,0,0</textColor>
-    <highlightColor>255,0,0</highlightColor>
-  </daySkin>
-  <nightSkin>
-    <fgColor>22,127,230</fgColor>
-    <bgColor>3,90,166</bgColor>
-    <toolbarColor>22,127,230</toolbarColor>
-    <textColor>0,0,0</textColor>
-    <highlightColor>255,0,0</highlightColor>
-  </nightSkin>
   <button_positions>
     <home>29,422</home>
     <gps>135,422</gps>

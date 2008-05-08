@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-06 19:58:53 jantman"
-# $Id: TuxTruck_Settings.py,v 1.2 2008-05-07 00:24:56 jantman Exp $
+# Time-stamp: "2008-05-07 20:46:10 jantman"
+# $Id: TuxTruck_Settings.py,v 1.3 2008-05-08 01:14:11 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
