@@ -1,4 +1,7 @@
 TuxTruck wxPython GUI
+http://www.jasonantman.com
+Time-stamp: "2008-05-08 19:15:57 jantman"
+$Id: externalDependencies.txt,v 1.2 2008-05-08 23:30:32 jantman Exp $
 
 External Dependencies:
 wx (GUI)

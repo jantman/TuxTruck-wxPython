@@ -1,0 +1,16 @@
+TuxTruck wxPython GUI
+http://www.jasonantman.com
+Time-stamp: "2008-05-08 19:31:38 jantman"
+$Id: licenses.txt,v 1.1 2008-05-08 23:30:32 jantman Exp $
+
+My code is distributed under GNU GPLv3 or newer.
+
+Licenses:
+X11/MIT (http://www.opensource.org/licenses/mit-license.php), OSI-approved
+	elementtree <http://effbot.org/zone/element-index.htm>
+	wxagg <http://www.averdevelopment.com/python/wxAGG.html>
+
+wxWindows/wxWidgets (http://www.opensource.org/licenses/wxwindows.php), OSI-approved
+	wx <http://www.wxpython.org>
+	LEDCtrl <http://j.domaindlx.com/elements28/wxpython/LEDCtrl.html>
+
