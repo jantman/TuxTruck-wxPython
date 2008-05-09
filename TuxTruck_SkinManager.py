@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-08 20:14:49 jantman"
-# $Id: TuxTruck_SkinManager.py,v 1.11 2008-05-09 00:16:45 jantman Exp $
+# Time-stamp: "2008-05-08 20:52:21 jantman"
+# $Id: TuxTruck_SkinManager.py,v 1.12 2008-05-09 01:22:06 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -16,6 +16,8 @@ import TuxTruck_Utility as utility
 
 # sub-classes
 from TuxTruck_Skin_Button import *
+from TuxTruck_Skin_DigitalClock import *
+from TuxTruck_Skin_AnalogClock import *
 
 class TuxTruck_SkinManager:
     """
@@ -52,6 +54,7 @@ class TuxTruck_SkinManager:
         windowTree = skinTree.find('window')
         self.topWindowSize = wx.Size(int(windowTree.findtext("width")), int(windowTree.findtext("height")))
         self.topWindowPos = wx.Point(int(windowTree.findtext("pos_X")), int(windowTree.findtext("pos_Y")))
+        self.topWindowCentered = windowTree.findtext("is_centered")
         # TODO: add the centered part
 
         # parse the main colors
@@ -85,3 +88,5 @@ class TuxTruck_SkinManager:
 
         self.loadSkin(skinFile) # Load MY MAIN skin
         self.butn = TuxTruck_Skin_Button(self, skinFile) # load the buttons information
+        self.digiClock = TuxTruck_Skin_DigitalClock(self, skinFile) # load the buttons information
+        self.anaClock = TuxTruck_Skin_AnalogClock(self, skinFile) # load the buttons information

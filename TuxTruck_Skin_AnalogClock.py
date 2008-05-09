@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-08 20:22:25 jantman"
-# $Id: TuxTruck_Skin_AnalogClock.py,v 1.1 2008-05-09 00:21:28 jantman Exp $
+# Time-stamp: "2008-05-08 21:07:31 jantman"
+# $Id: TuxTruck_Skin_AnalogClock.py,v 1.2 2008-05-09 01:22:06 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -13,11 +13,9 @@ from elementtree import ElementTree
 # application-wide utilities
 import TuxTruck_Utility as utility
 
-# TODO: EVERYTHING!!!
-
 class TuxTruck_Skin_AnalogClock:
     """
-    This class handles skin settings for the digital clock
+    This class handles skin settings for the analog clock
     """
 
     def loadSkin(self, file):
@@ -29,31 +27,25 @@ class TuxTruck_Skin_AnalogClock:
         NOTE: The size of buttons is exactly the size of the image used for the button.
         """
 
-        # TODO: parse the XML and read the values
+        skinTree = ElementTree.parse(file).getroot()
+        analogClockTree = skinTree.find('analogClock')
 
         # analog clock settings
-        self.analogclock_day_handColor_h = wx.Colour(255,255,255)
-        self.analogclock_day_handColor_m = wx.Colour(255,255,255)
-        self.analogclock_day_handColor_s = wx.Colour(255,255,255)
-        self.analogclock_day_shadowColor = wx.Colour(200,200,200)
-        self.analogclock_day_bgColor = wx.Colour(51,51,51)
-        self.analogclock_night_handColor_h = wx.Colour(0,0,0)
-        self.analogclock_night_handColor_m = wx.Colour(0,0,0)
-        self.analogclock_night_handColor_s = wx.Colour(0,0,0)
-        self.analogclock_night_shadowColor = wx.Colour(100,100,100)
-        self.analogclock_night_bgColor = wx.Colour(204,204,204)
+        self.day_handColor_h = utility.str2tuple(analogClockTree.findtext("day_handColor_h"), "analogClock.day_handColor_h")
+        self.day_handColor_m = utility.str2tuple(analogClockTree.findtext("day_handColor_m"), "analogClock.day_handColor_m")
+        self.day_handColor_s = utility.str2tuple(analogClockTree.findtext("day_handColor_s"), "analogClock.day_handColor_s")
+        self.day_shadowColor = utility.str2tuple(analogClockTree.findtext("day_shadowColor"), "analogClock.day_shadowColor")
+        self.day_bgColor = utility.str2tuple(analogClockTree.findtext("day_bgColor"), "analogClock.day_bgColor")
+        self.night_handColor_h = utility.str2tuple(analogClockTree.findtext("night_handColor_h"), "analogClock.night_handColor_h")
+        self.night_handColor_m = utility.str2tuple(analogClockTree.findtext("night_handColor_m"), "analogClock.night_handColor_m")
+        self.night_handColor_s = utility.str2tuple(analogClockTree.findtext("night_handColor_s"), "analogClock.night_handColor_s")
+        self.night_shadowColor = utility.str2tuple(analogClockTree.findtext("night_shadowColor"), "analogClock.night_shadowColor")
+        self.night_bgColor = utility.str2tuple(analogClockTree.findtext("night_bgColor"), "analogClock.night_bgColor")
 
-        skinTree = ElementTree.parse(file).getroot()
-
-        # parse the window information
-        windowTree = skinTree.find('window')
-        #self.topWindowSize = wx.Size(int(windowTree.findtext("width")), int(windowTree.findtext("height")))
-        #self.topWindowPos = wx.Point(int(windowTree.findtext("pos_X")), int(windowTree.findtext("pos_Y")))
-
-    def __init__(self, parent):
+    def __init__(self, parent, file):
         """
         Here, we get the default skin name from settings, then load that file.
         This must happen before we build any of the GUI.
         """
 
-        self.loadSkin("defaultSkin.xml") # DEBUG - everything else
+        self.loadSkin(file) # DEBUG - everything else

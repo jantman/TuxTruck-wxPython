@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-08 20:03:25 jantman"
-# $Id: TuxTruck_Skin_Button.py,v 1.1 2008-05-09 00:21:28 jantman Exp $
+# Time-stamp: "2008-05-08 20:42:10 jantman"
+# $Id: TuxTruck_Skin_Button.py,v 1.2 2008-05-09 01:22:06 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -32,33 +32,34 @@ class TuxTruck_Skin_Button:
         # parse the window information
         buttonTree = skinTree.find('button_images')
 
-        self.day_home = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_home"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_gps = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_gps"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_audio = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_audio"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_phone = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_phone"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_weather = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_weather"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_obd = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_obd"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_tools = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_tools"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_home_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_home_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_audio_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_audio_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_phone_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_phone_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_weather_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_weather_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_obd_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_obd_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.day_tools_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("day_tools_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_home = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_home"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_gps = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_gps"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_audio = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_audio"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_phone = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_phone"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_weather = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_weather"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_obd = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_obd"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_tools = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_tools"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_home_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_home_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_audio_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_audio_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_phone_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_phone_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_weather_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_weather_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_obd_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_obd_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.night_tools_active = wx.Image(parent.buttonImagePath+buttonTree.findtext("night_tools_active"), wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        # TODO: add the centered part
+        self.width = int(buttonTree.findtext("image_width"))
+        self.height = int(buttonTree.findtext("image_height"))
+        self.day_home = buttonTree.findtext("day_home")
+        self.day_gps = buttonTree.findtext("day_gps")
+        self.day_audio = buttonTree.findtext("day_audio")
+        self.day_phone = buttonTree.findtext("day_phone")
+        self.day_weather = buttonTree.findtext("day_weather")
+        self.day_obd = buttonTree.findtext("day_obd")
+        self.day_tools = buttonTree.findtext("day_tools")
+        self.day_home_active = buttonTree.findtext("day_home_active")
+        self.day_audio_active = buttonTree.findtext("day_audio_active")
+        self.day_phone_active = buttonTree.findtext("day_phone_active")
+        self.day_weather_active = buttonTree.findtext("day_weather_active")
+        self.day_obd_active = buttonTree.findtext("day_obd_active")
+        self.day_tools_active = buttonTree.findtext("day_tools_active")
+        self.night_home = buttonTree.findtext("night_home")
+        self.night_gps = buttonTree.findtext("night_gps")
+        self.night_audio = buttonTree.findtext("night_audio")
+        self.night_phone = buttonTree.findtext("night_phone")
+        self.night_weather = buttonTree.findtext("night_weather")
+        self.night_obd = buttonTree.findtext("night_obd")
+        self.night_tools = buttonTree.findtext("night_tools")
+        self.night_home_active = buttonTree.findtext("night_home_active")
+        self.night_audio_active = buttonTree.findtext("night_audio_active")
+        self.night_phone_active = buttonTree.findtext("night_phone_active")
+        self.night_weather_active = buttonTree.findtext("night_weather_active")
+        self.night_obd_active = buttonTree.findtext("night_obd_active")
+        self.night_tools_active = buttonTree.findtext("night_tools_active")
 
     def __init__(self, parent, file):
         """

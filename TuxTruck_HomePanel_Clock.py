@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck clock panel for home view
-# Time-stamp: "2008-05-07 19:59:26 jantman"
-# $Id: TuxTruck_HomePanel_Clock.py,v 1.5 2008-05-07 23:59:38 jantman Exp $
+# Time-stamp: "2008-05-08 21:03:49 jantman"
+# $Id: TuxTruck_HomePanel_Clock.py,v 1.6 2008-05-09 01:22:06 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -104,21 +104,21 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
         # END DEBUG
         
         if colorSchemeName == "day":
-            self.myled.SetForegroundColour(parent.settings.skin.digiclock_day_fgColor)
-            self.myled.SetBackgroundColour(parent.settings.skin.digiclock_day_bgColor)
-            self.myled.SetFadeColour(parent.settings.skin.digiclock_day_FadeColor)
-            self.myled.SetFadeFactor(parent.settings.skin.digiclock_fadeFactor)
-            self.clock.SetHandColours(parent.settings.skin.analogclock_day_handColor_h, parent.settings.skin.analogclock_day_handColor_m, parent.settings.skin.analogclock_day_handColor_s)
-            self.clock.SetShadowColour(parent.settings.skin.analogclock_day_shadowColor)
-            self.clock.SetBackgroundColour(parent.settings.skin.analogclock_day_bgColor)
+            self.myled.SetForegroundColour(parent.settings.skin.digiClock.day_fgColor)
+            self.myled.SetBackgroundColour(parent.settings.skin.digiClock.day_bgColor)
+            self.myled.SetFadeColour(parent.settings.skin.digiClock.day_fadeColor)
+            self.myled.SetFadeFactor(parent.settings.skin.digiClock.fadeFactor)
+            self.clock.SetHandColours(parent.settings.skin.anaClock.day_handColor_h, parent.settings.skin.anaClock.day_handColor_m, parent.settings.skin.anaClock.day_handColor_s)
+            self.clock.SetShadowColour(parent.settings.skin.anaClock.day_shadowColor)
+            self.clock.SetBackgroundColour(parent.settings.skin.anaClock.day_bgColor)
             self.Refresh()
         else:
             # set night scheme
-            self.myled.SetForegroundColour(parent.settings.skin.digiclock_night_fgColor)
-            self.myled.SetBackgroundColour(parent.settings.skin.digiclock_night_bgColor)
-            self.myled.SetFadeColour(parent.settings.skin.digiclock_night_FadeColor)
-            self.myled.SetFadeFactor(parent.settings.skin.digiclock_fadeFactor)
-            self.clock.SetHandColours(parent.settings.skin.analogclock_night_handColor_h, parent.settings.skin.analogclock_night_handColor_m, parent.settings.skin.analogclock_night_handColor_s)
-            self.clock.SetShadowColour(parent.settings.skin.analogclock_night_shadowColor)
-            self.clock.SetBackgroundColour(parent.settings.skin.analogclock_night_bgColor)
+            self.myled.SetForegroundColour(parent.settings.skin.digiClock.night_fgColor)
+            self.myled.SetBackgroundColour(parent.settings.skin.digiClock.night_bgColor)
+            self.myled.SetFadeColour(parent.settings.skin.digiClock.night_fadeColor)
+            self.myled.SetFadeFactor(parent.settings.skin.digiClock.fadeFactor)
+            self.clock.SetHandColours(parent.settings.skin.anaClock.night_handColor_h, parent.settings.skin.anaClock.night_handColor_m, parent.settings.skin.anaClock.night_handColor_s)
+            self.clock.SetShadowColour(parent.settings.skin.anaClock.night_shadowColor)
+            self.clock.SetBackgroundColour(parent.settings.skin.anaClock.night_bgColor)
             self.Refresh()

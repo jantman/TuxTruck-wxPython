@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-08 20:22:35 jantman"
-# $Id: TuxTruck_Skin_DigitalClock.py,v 1.1 2008-05-09 00:21:28 jantman Exp $
+# Time-stamp: "2008-05-08 20:50:44 jantman"
+# $Id: TuxTruck_Skin_DigitalClock.py,v 1.2 2008-05-09 01:22:06 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -29,28 +29,20 @@ class TuxTruck_Skin_DigitalClock:
         NOTE: The size of buttons is exactly the size of the image used for the button.
         """
 
-        # TODO: parse the XML and read the values
-
-        # digital clock settings
-        self.digiclock_day_fgColor = wx.Colour(0,0,255)
-        self.digiclock_day_bgColor = wx.Colour(204,204,204)
-        self.digiclock_day_FadeColor = wx.Colour(51,153,255)
-        self.digiclock_night_fgColor = wx.Colour(255,0,0)
-        self.digiclock_night_bgColor = wx.Colour(51,51,51)
-        self.digiclock_night_FadeColor = wx.Colour(51,153,255)
-        self.digiclock_fadeFactor = 25
-
         skinTree = ElementTree.parse(file).getroot()
+        digitalClockTree = skinTree.find('digitalClock')
 
-        # parse the window information
-        windowTree = skinTree.find('window')
-        #self.topWindowSize = wx.Size(int(windowTree.findtext("width")), int(windowTree.findtext("height")))
-        #self.topWindowPos = wx.Point(int(windowTree.findtext("pos_X")), int(windowTree.findtext("pos_Y")))
+        self.day_fgColor = utility.str2tuple(digitalClockTree.findtext("day_fgColor"), "digitalClock.day_fgColor")
+        self.day_bgColor = utility.str2tuple(digitalClockTree.findtext("day_bgColor"), "digitalClock.day_bgColor")
+        self.day_fadeColor = utility.str2tuple(digitalClockTree.findtext("day_fadeColor"), "digitalClock.day_fadeColor")
+        self.night_fgColor = utility.str2tuple(digitalClockTree.findtext("night_fgColor"), "digitalClock.night_fgColor")
+        self.night_bgColor = utility.str2tuple(digitalClockTree.findtext("night_bgColor"), "digitalClock.night_bgColor")
+        self.night_fadeColor = utility.str2tuple(digitalClockTree.findtext("night_fadeColor"), "digitalClock.night_fadeColor")
+        self.fadeFactor = int(digitalClockTree.findtext("fadeFactor"))
 
-    def __init__(self, parent):
+    def __init__(self, parent, file):
         """
         Here, we get the default skin name from settings, then load that file.
         This must happen before we build any of the GUI.
         """
-
-        self.loadSkin("defaultSkin.xml") # DEBUG - everything else
+        self.loadSkin(file)

@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-08 20:12:16 jantman"
-# $Id: main.py,v 1.17 2008-05-09 00:16:45 jantman Exp $
+# Time-stamp: "2008-05-08 21:21:40 jantman"
+# $Id: main.py,v 1.18 2008-05-09 01:22:06 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -60,18 +60,20 @@ class TuxTruck_MainApp(wx.Frame):
             self.CenterOnScreen()
         self.SetWindowStyle(wx.NO_BORDER) # set window style to have no border
 
-        # TODO: we need to load the right images for our skin. figure out how.
-        self.loadButtonImages() # load the button images
-
         # create each of the buttons individually
-        # NOTE: buttons must be explicitly added to switchColorScheme and loadButtonImages
-        self.butn_home = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_home_active, size = (self.butn_home_image.GetWidth(), self.butn_home_image.GetHeight()))
-        self.butn_gps = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_gps, size = (self.butn_gps_image.GetWidth(), self.butn_gps_image.GetHeight()))
-        self.butn_audio = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_audio, size = (self.butn_audio_image.GetWidth(), self.butn_audio_image.GetHeight()))
-        self.butn_obd = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_obd, size = (self.butn_obd_image.GetWidth(), self.butn_obd_image.GetHeight()))
-        self.butn_phone = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_phone, size = (self.butn_phone_image.GetWidth(), self.butn_phone_image.GetHeight()))
-        self.butn_tools = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_tools, size = (self.butn_tools_image.GetWidth(), self.butn_tools_image.GetHeight()))
-        self.butn_weather = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_weather, size = (self.butn_weather_image.GetWidth(), self.butn_weather_image.GetHeight()))
+        # NOTE: buttons must be explicitly added to SetButtonImages
+        b_width = self.settings.skin.butn.width # button width
+        b_height = self.settings.skin.butn.height # button height
+        self.butn_home = wx.BitmapButton(self, size = (b_width, b_height))
+        self.butn_gps = wx.BitmapButton(self, size = (b_width, b_height))
+        self.butn_audio = wx.BitmapButton(self, size = (b_width, b_height))
+        self.butn_obd = wx.BitmapButton(self, size = (b_width, b_height))
+        self.butn_phone = wx.BitmapButton(self, size = (b_width, b_height))
+        self.butn_tools = wx.BitmapButton(self, size = (b_width, b_height))
+        self.butn_weather = wx.BitmapButton(self, size = (b_width, b_height))
+
+        # set button images
+        self.SetButtonImages(self._currentColorScheme)
 
         # TODO: how do we set the correct image for the active button?
 
@@ -161,23 +163,23 @@ class TuxTruck_MainApp(wx.Frame):
         """
         if colorSchemeName == "day":
             print "setting day button images" # DEBUG
-            self.butn_home.bitmap = self.settings.skin.butn.day_home
-            self.butn_gps.bitmap = self.settings.skin.butn.day_gps
-            self.butn_audio.bitmap = self.settings.skin.butn.day_audio
-            self.butn_obd.bitmap = self.settings.skin.butn.day_obd
-            self.butn_phone.bitmap = self.settings.skin.butn.day_phone
-            self.butn_tools.bitmap = self.settings.skin.butn.day_tools
-            self.butn_weather.bitmap = self.settings.skin.butn.day_weather
+            self.butn_home.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_home, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_gps.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_gps, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_audio.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_audio, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_obd.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_obd, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_phone.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_phone, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_tools.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_tools, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_weather.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_weather, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
         else:
             # set night images
             print "setting night button images" # DEBUG
-            self.butn_home.bitmap = self.settings.skin.butn.night_home
-            self.butn_gps.bitmap = self.settings.skin.butn.night_gps
-            self.butn_audio.bitmap = self.settings.skin.butn.night_audio
-            self.butn_obd.bitmap = self.settings.skin.butn.night_obd
-            self.butn_phone.bitmap = self.settings.skin.butn.night_phone
-            self.butn_tools.bitmap = self.settings.skin.butn.night_tools
-            self.butn_weather.bitmap = self.settings.skin.butn.night_weather
+            self.butn_home.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_home, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_gps.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_gps, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_audio.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_audio, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_obd.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_obd, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_phone.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_phone, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_tools.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_tools, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_weather.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_weather, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
 
     def switchColorScheme(self):
         """

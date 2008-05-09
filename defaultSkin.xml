@@ -9,7 +9,7 @@
     <width>800</width>
     <pos_X>100</pos_X>
     <pos_Y>200</pos_Y>
-    <centered>0</centered>
+    <is_centered>0</is_centered>
     <day_bgColor>(22,127,230)</day_bgColor>
     <day_fgColor>(3,90,166)</day_fgColor>
     <day_toolbarColor>(22,127,230)</day_toolbarColor>
@@ -22,6 +22,8 @@
     <night_highlightColor>(255,0,0)</night_highlightColor>
   </window>
   <button_images>
+    <image_width>108</image_width>
+    <image_height>60</image_height>
     <day_home>home.gif</day_home>
     <day_gps>gps.gif</day_gps>
     <day_audio>audio.gif</day_audio>
@@ -52,24 +54,24 @@
     <night_tools_active>night_tools_active.gif</night_tools_active>
   </button_images>
   <digitalClock>
-    <dayFgColor>0,255,0</dayFgColor>
-    <dayBgColor>255,255,255</dayBgColor>
-    <dayFadeColor>0,0,0</dayFadeColor>
-    <nightFgColor>255,0,0</nightFgColor>
-    <nightFgColor>0,0,0</nightFgColor>
-    <nightFadeColor>255,255,255</nightFadeColor>
+    <day_fgColor>(0,255,0)</day_fgColor>
+    <day_bgColor>(255,255,255)</day_bgColor>
+    <day_fadeColor>(0,0,0)</day_fadeColor>
+    <night_fgColor>(255,0,0)</night_fgColor>
+    <night_bgColor>(0,0,0)</night_bgColor>
+    <night_fadeColor>(255,255,255)</night_fadeColor>
     <fadeFactor>25</fadeFactor>
   </digitalClock>
   <analogClock>
-    <day_handColor_h>255,255,255</day_handColor_h>
-    <day_handColor_m>255,255,255</day_handColor_m>
-    <day_handColor_s>255,255,255</day_handColor_s>
-    <day_shadowColor>200,200,200</day_shadowColor>
-    <day_bgColor>51,51,51</day_bgColor>
-    <night_handColor_h>0,0,0</night_handColor_h>
-    <night_handColor_m>0,0,0</night_handColor_m>
-    <night_handColor_s>0,0,0</night_handColor_s>
-    <night_shadowColor>100,100,100</night_shadowColor>
-    <night_bgColor>204,204,204</night_bgColor>
+    <day_handColor_h>(255,255,255)</day_handColor_h>
+    <day_handColor_m>(255,255,255)</day_handColor_m>
+    <day_handColor_s>(255,255,255)</day_handColor_s>
+    <day_shadowColor>(200,200,200)</day_shadowColor>
+    <day_bgColor>(51,51,51)</day_bgColor>
+    <night_handColor_h>(0,0,0)</night_handColor_h>
+    <night_handColor_m>(0,0,0)</night_handColor_m>
+    <night_handColor_s>(0,0,0)</night_handColor_s>
+    <night_shadowColor>(100,100,100)</night_shadowColor>
+    <night_bgColor>(204,204,204)</night_bgColor>
   </analogClock>
 </TuxTruckSkin>
