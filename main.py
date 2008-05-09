@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-08 19:14:57 jantman"
-# $Id: main.py,v 1.16 2008-05-08 23:13:46 jantman Exp $
+# Time-stamp: "2008-05-08 20:12:16 jantman"
+# $Id: main.py,v 1.17 2008-05-09 00:16:45 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -65,13 +65,15 @@ class TuxTruck_MainApp(wx.Frame):
 
         # create each of the buttons individually
         # NOTE: buttons must be explicitly added to switchColorScheme and loadButtonImages
-        self.butn_home = wx.BitmapButton(self, bitmap=self.butn_home_image, size = (self.butn_home_image.GetWidth(), self.butn_home_image.GetHeight()))
-        self.butn_gps = wx.BitmapButton(self, bitmap=self.butn_gps_image, size = (self.butn_gps_image.GetWidth(), self.butn_gps_image.GetHeight()))
-        self.butn_audio = wx.BitmapButton(self, bitmap=self.butn_audio_image, size = (self.butn_audio_image.GetWidth(), self.butn_audio_image.GetHeight()))
-        self.butn_obd = wx.BitmapButton(self, bitmap=self.butn_obd_image, size = (self.butn_obd_image.GetWidth(), self.butn_obd_image.GetHeight()))
-        self.butn_phone = wx.BitmapButton(self, bitmap=self.butn_phone_image, size = (self.butn_phone_image.GetWidth(), self.butn_phone_image.GetHeight()))
-        self.butn_tools = wx.BitmapButton(self, bitmap=self.butn_tools_image, size = (self.butn_tools_image.GetWidth(), self.butn_tools_image.GetHeight()))
-        self.butn_weather = wx.BitmapButton(self, bitmap=self.butn_weather_image, size = (self.butn_weather_image.GetWidth(), self.butn_weather_image.GetHeight()))
+        self.butn_home = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_home_active, size = (self.butn_home_image.GetWidth(), self.butn_home_image.GetHeight()))
+        self.butn_gps = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_gps, size = (self.butn_gps_image.GetWidth(), self.butn_gps_image.GetHeight()))
+        self.butn_audio = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_audio, size = (self.butn_audio_image.GetWidth(), self.butn_audio_image.GetHeight()))
+        self.butn_obd = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_obd, size = (self.butn_obd_image.GetWidth(), self.butn_obd_image.GetHeight()))
+        self.butn_phone = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_phone, size = (self.butn_phone_image.GetWidth(), self.butn_phone_image.GetHeight()))
+        self.butn_tools = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_tools, size = (self.butn_tools_image.GetWidth(), self.butn_tools_image.GetHeight()))
+        self.butn_weather = wx.BitmapButton(self, bitmap=self.settings.skin.butn.day_weather, size = (self.butn_weather_image.GetWidth(), self.butn_weather_image.GetHeight()))
+
+        # TODO: how do we set the correct image for the active button?
 
         self.box = wx.BoxSizer(wx.HORIZONTAL) # TODO: give this a meaningful name
         self.box.Add(self.butn_home, proportion=0)
@@ -152,24 +154,36 @@ class TuxTruck_MainApp(wx.Frame):
         print "weather clicked" # DEBUG
         self._currentButton = self.butn_weather
 
-    def setButtonImages(self, colorSchemeName):
+    def SetButtonImages(self, colorSchemeName):
         """
         This method sets the images of all of the buttons to the correct images
         for the selected color scheme (day/night within a specific skin). 
         """
         if colorSchemeName == "day":
-            # set day images
-            print "day" # DEBUG
+            print "setting day button images" # DEBUG
+            self.butn_home.bitmap = self.settings.skin.butn.day_home
+            self.butn_gps.bitmap = self.settings.skin.butn.day_gps
+            self.butn_audio.bitmap = self.settings.skin.butn.day_audio
+            self.butn_obd.bitmap = self.settings.skin.butn.day_obd
+            self.butn_phone.bitmap = self.settings.skin.butn.day_phone
+            self.butn_tools.bitmap = self.settings.skin.butn.day_tools
+            self.butn_weather.bitmap = self.settings.skin.butn.day_weather
         else:
             # set night images
-            print "night" # DEBUG
+            print "setting night button images" # DEBUG
+            self.butn_home.bitmap = self.settings.skin.butn.night_home
+            self.butn_gps.bitmap = self.settings.skin.butn.night_gps
+            self.butn_audio.bitmap = self.settings.skin.butn.night_audio
+            self.butn_obd.bitmap = self.settings.skin.butn.night_obd
+            self.butn_phone.bitmap = self.settings.skin.butn.night_phone
+            self.butn_tools.bitmap = self.settings.skin.butn.night_tools
+            self.butn_weather.bitmap = self.settings.skin.butn.night_weather
 
     def switchColorScheme(self):
         """
         This method does everything needed to toggle between day/night modes
         in the current skin
         """
-        self.setButtonImages(self._currentColorScheme) # set toolbar button images
 
         # DEBUG
         print "in main.py switching color scheme from "+self._currentColorScheme
@@ -183,52 +197,29 @@ class TuxTruck_MainApp(wx.Frame):
 
     def reSkin(self, colorSchemeName):
         if self._currentColorScheme == "day":
-            # TODO - make night images
-            print "night mode not setup, need to make images" # DEBUG
-
+            # reskin myself
             self.SetBackgroundColour(self.settings.skin.night_bgColor) # reskin myself
-
-
-            self._currentColorScheme = "night" # keep track of what skin I'm using now
+            self.SetButtonImages("night")
 
             # reskin EVERYTHING else
             self.audioPanel_main.reSkin(self, "night")
             self.homePanel_clock.reSkin(self, "night")
 
-            # refresh myself
-            self.Refresh()
+            self._currentColorScheme = "night" # keep track of what skin I'm using now
+
         else:
             # reskin myself
             self.SetBackgroundColour(self.settings.skin.day_bgColor)
-            
+            self.SetButtonImages("day")
+
             # reskin EVERYTHING else
             self.audioPanel_main.reSkin(self, "day")
             self.homePanel_clock.reSkin(self, "day")
 
             self._currentColorScheme = "day" # keep track of what skin I'm using now
 
-            # refresh myself
-            self.Refresh()        
-            
-    def loadButtonImages(self):
-        """
-        This method loads all of the button images into wx.Image objects, so they can
-        quickly be changed on the display.
-        """
-        self.butn_home_image = wx.Image(self.settings.skin.buttonImagePath+"home.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_audio_image = wx.Image(self.settings.skin.buttonImagePath+"audio.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_gps_image = wx.Image(self.settings.skin.buttonImagePath+"gps.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_obd_image = wx.Image(self.settings.skin.buttonImagePath+"obd.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_phone_image = wx.Image(self.settings.skin.buttonImagePath+"phone.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_tools_image = wx.Image(self.settings.skin.buttonImagePath+"tools.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_weather_image = wx.Image(self.settings.skin.buttonImagePath+"weather.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_home_active_image = wx.Image(self.settings.skin.buttonImagePath+"home_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_audio_active_image = wx.Image(self.settings.skin.buttonImagePath+"audio_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_gps_active_image = wx.Image(self.settings.skin.buttonImagePath+"gps_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_obd_active_image = wx.Image(self.settings.skin.buttonImagePath+"obd_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_phone_active_image = wx.Image(self.settings.skin.buttonImagePath+"phone_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_tools_active_image = wx.Image(self.settings.skin.buttonImagePath+"tools_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.butn_weather_active_image = wx.Image(self.settings.skin.buttonImagePath+"weather_active.gif", wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        # refresh myself
+        self.Refresh()        
         
     def switchToModePanel(self, activePanel):
         """Hides all of the top-level mode panels and then shows the one we want"""

@@ -21,15 +21,36 @@
     <night_textColor>(0,0,0)</night_textColor>
     <night_highlightColor>(255,0,0)</night_highlightColor>
   </window>
-  <button_positions>
-    <home>29,422</home>
-    <gps>135,422</gps>
-    <audio>241,422</audio>
-    <phone>347,422</phone>
-    <weather>453,422</weather>
-    <obd>559,422</obd>
-    <tools>665,422</tools>
-  </button_positions>
+  <button_images>
+    <day_home>home.gif</day_home>
+    <day_gps>gps.gif</day_gps>
+    <day_audio>audio.gif</day_audio>
+    <day_phone>phone.gif</day_phone>
+    <day_weather>weather.gif</day_weather>
+    <day_obd>obd.gif</day_obd>
+    <day_tools>tools.gif</day_tools>
+    <day_home_active>home_active.gif</day_home_active>
+    <day_gps_active>gps_active.gif</day_gps_active>
+    <day_audio_active>audio_active.gif</day_audio_active>
+    <day_phone_active>phone_active.gif</day_phone_active>
+    <day_weather_active>weather_active.gif</day_weather_active>
+    <day_obd_active>obd_active.gif</day_obd_active>
+    <day_tools_active>tools_active.gif</day_tools_active>
+    <night_home>night_home.gif</night_home>
+    <night_gps>night_gps.gif</night_gps>
+    <night_audio>night_audio.gif</night_audio>
+    <night_phone>night_phone.gif</night_phone>
+    <night_weather>night_weather.gif</night_weather>
+    <night_obd>night_obd.gif</night_obd>
+    <night_tools>night_tools.gif</night_tools>
+    <night_home_active>night_home_active.gif</night_home_active>
+    <night_gps_active>night_gps_active.gif</night_gps_active>
+    <night_audio_active>night_audio_active.gif</night_audio_active>
+    <night_phone_active>night_phone_active.gif</night_phone_active>
+    <night_weather_active>night_weather_active.gif</night_weather_active>
+    <night_obd_active>night_obd_active.gif</night_obd_active>
+    <night_tools_active>night_tools_active.gif</night_tools_active>
+  </button_images>
   <digitalClock>
     <dayFgColor>0,255,0</dayFgColor>
     <dayBgColor>255,255,255</dayBgColor>

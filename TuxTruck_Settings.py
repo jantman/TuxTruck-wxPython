@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-07 20:46:10 jantman"
-# $Id: TuxTruck_Settings.py,v 1.3 2008-05-08 01:14:11 jantman Exp $
+# Time-stamp: "2008-05-08 19:46:00 jantman"
+# $Id: TuxTruck_Settings.py,v 1.4 2008-05-09 00:16:45 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -25,9 +25,9 @@ class TuxTruck_Settings:
     This should have a child class for every category of settings, i.e. skins, navigation, phone, podcasts, etc.
     NOTE: ALL config files are stored in ~/.tuxtruck/
     """
-    
+
     def __init__(self):
         "We instantiate all child classes, which will load in all settings and make them available."
 
         # load all settings related to the skin/GUI, from the TuxTruck_SkinManager class
-        self.skin = TuxTruck_SkinManager(self)
+        self.skin = TuxTruck_SkinManager(self) # initialize the SkinManager and load the skins
