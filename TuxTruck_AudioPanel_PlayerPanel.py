@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-12 15:43:27 jantman"
-# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.2 2008-05-12 19:42:57 jantman Exp $
+# Time-stamp: "2008-05-12 16:12:06 jantman"
+# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.3 2008-05-12 20:36:16 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -11,7 +11,8 @@ import wx # import wx for the GUI
 
 # for pymp
 import sys, os, fcntl, pygtk, gtk, gobject, time
-import pymp-1.0.prefs, pymp-1.0.menu, pymp-1.0.remote, pymp-1.0.playlist, pymp-1.0.control, pymp-1.0.mplayer
+sys.path.append('pymp')
+import prefs, menu, remote, playlist, control, mplayer
 
 class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
     """
@@ -36,37 +37,48 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
 
 	versionString = "Pymp v1.0"
 	window, prefs, menu, remote = None, None, None, None
-	playlist, control, mplayer = None, None, None
+	playlist, control = None, None
 
         #
         # begin pymp.py code
         #
 
-        window = gtk.Window(gtk.WINDOW_TOPLEVEL)  #create window
-        window.connect("destroy", self.quit)
-        window.set_title(self.versionString)
-        window.set_icon(self.getIcon())
-		
-        self.window = window
-        
-        self.prefs = prefs.Prefs(self)
+        #self.prefs = prefs.Prefs(self)
         
         self.mplayer = mplayer.Mplayer(self)
-        self.remote = remote.Remote(self)
-        self.playlist = playlist.Playlist(self)
-        self.control = control.Control(self)
-        self.menu = menu.Menu(self)
+
+        # DEBUG
+        # these are buttons to test mplayer
+        self.button1 = wx.Button(self, -1, "Play etta", (100,10), (60,50))
+        self.button1.Bind(wx.EVT_BUTTON, self.OnClick1)
+        self.button2 = wx.Button(self, -1, "Play bob", (150,10), (60,50))
+        self.button2.Bind(wx.EVT_BUTTON, self.OnClick2)
+        self.button3 = wx.Button(self, -1, "Play tom", (200,10), (60,50))
+        self.button3.Bind(wx.EVT_BUTTON, self.OnClick3)
+        self.button4 = wx.Button(self, -1, "Play pause", (250,10), (60,50))
+        self.button4.Bind(wx.EVT_BUTTON, self.OnClick4)
+        self.button5 = wx.Button(self, -1, "skip+", (300,10), (60,50))
+        self.button5.Bind(wx.EVT_BUTTON, self.OnClick5)
+        self.button6 = wx.Button(self, -1, "skip-", (350,10), (60,50))
+        self.button6.Bind(wx.EVT_BUTTON, self.OnClick6)
+        # END DEBUG
+
+        #self.remote = remote.Remote(self)
+        #self.playlist = playlist.Playlist(self)
+        #self.control = control.Control(self)
+        #self.menu = menu.Menu(self)
 		
-        vbox = gtk.VBox(False, 0)
-        vbox.pack_start(self.playlist.view, True, True, 0)
-        vbox.pack_start(self.control.hbox, False, False, 0)
+        #vbox = gtk.VBox(False, 0)
+        #vbox.pack_start(self.playlist.view, True, True, 0)
+        #vbox.pack_start(self.control.hbox, False, False, 0)
 		
-        window.add(vbox)  #prepare to start ui
-        window.show_all()
+        #window.add(vbox)  #prepare to start ui
+        #window.show_all()
 		
-        window.move(self.prefs.getInt("x"), self.prefs.getInt("y"))
-        window.resize(self.prefs.getInt("width"), self.prefs.getInt("height"))
+        #window.move(self.prefs.getInt("x"), self.prefs.getInt("y"))
+        #window.resize(self.prefs.getInt("width"), self.prefs.getInt("height"))
 		
+        """
         if targets:  #process targets
             
             for t in targets:  #add each target
@@ -79,7 +91,38 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
                     self.playlist.loadm3u()
 			
 	gtk.main()
+        """
 	
+    def OnClick1(self, event):
+        print "playing etta james"
+        self.mplayer.play("/home/jantman/cvs-temp/mp3-test/ettaJames.mp3")
+        print "playing..."
+
+    def OnClick2(self, event):
+        print "playing bob dylan"
+        self.mplayer.play("/home/jantman/cvs-temp/mp3-test/BobDylan-ModernTimes-10-AintTalkin.mp3")
+        print "playing..."
+
+    def OnClick3(self, event):
+        print "playing tom lehrer .ogg"
+        self.mplayer.play("/home/jantman/cvs-temp/mp3-test/WernherVonBraun.ogg")
+        print "playing..."
+
+    def OnClick4(self, event):
+        print "pausing..."
+        self.mplayer.pause()
+        print "paused"
+
+    def OnClick5(self, event):
+        print "seeking +5"
+        self.mplayer.seek(5)
+        print "seeked"
+
+    def OnClick6(self, event):
+        print "seeking -5"
+        self.mplayer.seek(-5)
+        print "seeked"
+
     #
     #  Returns a gtk.gdk.Pixbuf
     #
