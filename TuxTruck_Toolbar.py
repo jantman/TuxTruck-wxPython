@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Frame Toolbar
-# Time-stamp: "2008-05-12 10:59:46 jantman"
-# $Id: TuxTruck_Toolbar.py,v 1.2 2008-05-12 15:00:50 jantman Exp $
+# Time-stamp: "2008-05-12 11:09:03 jantman"
+# $Id: TuxTruck_Toolbar.py,v 1.3 2008-05-12 15:33:25 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -99,7 +99,8 @@ class TuxTruck_Toolbar(wx.Panel):
             self.butn_tools.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.night_tools, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
             self.butn_weather.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.night_weather, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
 
-
+        print "Current Button:"
+        print self._currentButton
 
     def reSkin(self, parent, colorSchemeName):
         """

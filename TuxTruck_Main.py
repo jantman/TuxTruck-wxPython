@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Frame - This is the root of everything, called from the App in main.py
-# Time-stamp: "2008-05-12 11:01:24 jantman"
-# $Id: TuxTruck_Main.py,v 1.3 2008-05-12 15:00:50 jantman Exp $ 
+# Time-stamp: "2008-05-12 11:34:37 jantman"
+# $Id: TuxTruck_Main.py,v 1.4 2008-05-12 15:33:25 jantman Exp $ 
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
