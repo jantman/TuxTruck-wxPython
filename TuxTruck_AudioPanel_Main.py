@@ -1,13 +1,16 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-12 10:30:30 jantman"
-# $Id: TuxTruck_AudioPanel_Main.py,v 1.6 2008-05-12 14:46:39 jantman Exp $
+# Time-stamp: "2008-05-12 14:38:31 jantman"
+# $Id: TuxTruck_AudioPanel_Main.py,v 1.7 2008-05-12 18:49:59 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
 # Project web site at http://www.jasonantman.com/tuxtruck/
 
 import wx # import wx for the GUI
+
+# application imports
+from TuxTruck_AudioPanel_PlayerPanel import *
 
 class TuxTruck_AudioPanel_Main(wx.Panel):
     """
@@ -25,33 +28,29 @@ class TuxTruck_AudioPanel_Main(wx.Panel):
         self.SetSize(wx.Size(800,420)) # set the main window size TODO: use settings
         #self.SetWindowStyle(wx.NO_BORDER) # set window style to have no border
         self.Hide()
-        # DEBUG
-        #
-        # family: wx.DEFAULT, wx.DECORATIVE, wx.ROMAN, wx.SCRIPT, wx.SWISS, wx.MODERN
-        # slant: wx.NORMAL, wx.SLANT or wx.ITALIC
-        # weight: wx.NORMAL, wx.LIGHT or wx.BOLD
-        #FFont(pointSize, family, flags, face, encoding) 
-        # use additional fonts this way ...
-        font1 = wx.Font(20, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 1)
-        debugText = wx.StaticText(self, -1, "Audio Panel", wx.Point(100, 200))
-        debugText.SetFont(font1)
-        debugText.SetForegroundColour(wx.Colour(255,0,0))
-        # END DEBUG
-        print parent.settings.skin.currentSkinName
+
+        # this will be a BitmapButton to access a menu popup to choose search, MP3, playlist, radio, podcasts, etc.
+        self.menu_button = wx.Button(self, -1, "Menu", (0,10), (60,50))
+
+        # add the audio player panel
+        self.playerPanel = TuxTruck_AudioPanel_PlayerPanel(self, -1)
+
+        # setup the skins
         self.reSkin(parent, parent._currentColorScheme)
+
+        # we're going to show the player panel by default.
+        self.playerPanel.Show()
 
     def reSkin(self, parent, colorSchemeName):
         # re-skin me
         
-        # DEBUG
-        print "in TuxTruck_AudioPanel_Main switching color scheme to "+colorSchemeName
-        # END DEBUG
-
         if colorSchemeName == "day":
             # switch to day
             self.SetBackgroundColour(parent.settings.skin.day_bgColor)
+            self.playerPanel.reSkin(parent, "day")
         else:
             # switch to night
             self.SetBackgroundColour(parent.settings.skin.night_bgColor)
+            self.playerPanel.reSkin(parent, "night")
         self.Refresh()
 

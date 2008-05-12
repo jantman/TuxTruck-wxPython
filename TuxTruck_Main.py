@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Frame - This is the root of everything, called from the App in main.py
-# Time-stamp: "2008-05-12 11:34:37 jantman"
-# $Id: TuxTruck_Main.py,v 1.4 2008-05-12 15:33:25 jantman Exp $ 
+# Time-stamp: "2008-05-12 14:32:51 jantman"
+# $Id: TuxTruck_Main.py,v 1.5 2008-05-12 18:49:59 jantman Exp $ 
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -149,6 +149,4 @@ class TuxTruck_Main(wx.Frame):
     def switchToModePanel(self, activePanel):
         """Hides all of the top-level mode panels and then shows the one we want"""
         # hide all of the top-level mode panels
-        self.audioPanel_main.Hide()
-        self.homePanel_clock.Hide()
         activePanel.Show()
