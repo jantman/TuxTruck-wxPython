@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-08 21:07:31 jantman"
-# $Id: TuxTruck_Skin_AnalogClock.py,v 1.2 2008-05-09 01:22:06 jantman Exp $
+# Time-stamp: "2008-05-12 11:49:41 jantman"
+# $Id: TuxTruck_Skin_AnalogClock.py,v 1.3 2008-05-12 15:51:49 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -36,11 +36,15 @@ class TuxTruck_Skin_AnalogClock:
         self.day_handColor_s = utility.str2tuple(analogClockTree.findtext("day_handColor_s"), "analogClock.day_handColor_s")
         self.day_shadowColor = utility.str2tuple(analogClockTree.findtext("day_shadowColor"), "analogClock.day_shadowColor")
         self.day_bgColor = utility.str2tuple(analogClockTree.findtext("day_bgColor"), "analogClock.day_bgColor")
+        self.day_tickColor = utility.str2tuple(analogClockTree.findtext("day_tickColor"), "analogClock.day_tickColor")
+        self.day_faceColor = utility.str2tuple(analogClockTree.findtext("day_faceColor"), "analogClock.day_faceColor")
         self.night_handColor_h = utility.str2tuple(analogClockTree.findtext("night_handColor_h"), "analogClock.night_handColor_h")
         self.night_handColor_m = utility.str2tuple(analogClockTree.findtext("night_handColor_m"), "analogClock.night_handColor_m")
         self.night_handColor_s = utility.str2tuple(analogClockTree.findtext("night_handColor_s"), "analogClock.night_handColor_s")
         self.night_shadowColor = utility.str2tuple(analogClockTree.findtext("night_shadowColor"), "analogClock.night_shadowColor")
         self.night_bgColor = utility.str2tuple(analogClockTree.findtext("night_bgColor"), "analogClock.night_bgColor")
+        self.night_tickColor = utility.str2tuple(analogClockTree.findtext("night_tickColor"), "analogClock.night_tickColor")
+        self.night_faceColor = utility.str2tuple(analogClockTree.findtext("night_faceColor"), "analogClock.night_faceColor")
 
     def __init__(self, parent, file):
         """

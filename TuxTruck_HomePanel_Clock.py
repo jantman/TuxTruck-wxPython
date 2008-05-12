@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck clock panel for home view
-# Time-stamp: "2008-05-08 21:03:49 jantman"
-# $Id: TuxTruck_HomePanel_Clock.py,v 1.6 2008-05-09 01:22:06 jantman Exp $
+# Time-stamp: "2008-05-12 11:51:10 jantman"
+# $Id: TuxTruck_HomePanel_Clock.py,v 1.7 2008-05-12 15:51:49 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -31,12 +31,11 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
         # setup the main frame
         self.SetPosition(wx.Point(0,0)) # set the main window position
         self.SetSize(wx.Size(800,420)) # set the main window size TODO: use settings
-        #self.SetWindowStyle(wx.NO_BORDER) # set window style to have no border
+        self.SetBackgroundColour(parent.settings.skin.day_bgColor)
         self.Hide()
 
         # analog clock
         self.clock = AnalogClockWindow(self)
-        self.clock.SetBackgroundColour("yellow")
 
         self.bsizer2 = wx.BoxSizer(wx.VERTICAL)
         self.bsizer2.Add(self.clock, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL|wx.SHAPED, 10)        
@@ -88,12 +87,6 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
         
 
 
-    def setBgColor(self, mycolor):
-        """
-        This is called on a skin change to update my background color
-        """
-        self.SetBackgroundColour(mycolor)
-
     def reSkin(self, parent, colorSchemeName):
         """
         This is called to re-load the skin settings.
@@ -104,6 +97,7 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
         # END DEBUG
         
         if colorSchemeName == "day":
+            self.SetBackgroundColour(parent.settings.skin.day_bgColor)
             self.myled.SetForegroundColour(parent.settings.skin.digiClock.day_fgColor)
             self.myled.SetBackgroundColour(parent.settings.skin.digiClock.day_bgColor)
             self.myled.SetFadeColour(parent.settings.skin.digiClock.day_fadeColor)
@@ -111,9 +105,11 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
             self.clock.SetHandColours(parent.settings.skin.anaClock.day_handColor_h, parent.settings.skin.anaClock.day_handColor_m, parent.settings.skin.anaClock.day_handColor_s)
             self.clock.SetShadowColour(parent.settings.skin.anaClock.day_shadowColor)
             self.clock.SetBackgroundColour(parent.settings.skin.anaClock.day_bgColor)
+            self.clock.SetTickColours(parent.settings.skin.anaClock.day_tickColor, parent.settings.skin.anaClock.day_tickColor)
             self.Refresh()
         else:
             # set night scheme
+            self.SetBackgroundColour(parent.settings.skin.night_bgColor)
             self.myled.SetForegroundColour(parent.settings.skin.digiClock.night_fgColor)
             self.myled.SetBackgroundColour(parent.settings.skin.digiClock.night_bgColor)
             self.myled.SetFadeColour(parent.settings.skin.digiClock.night_fadeColor)
@@ -121,4 +117,5 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
             self.clock.SetHandColours(parent.settings.skin.anaClock.night_handColor_h, parent.settings.skin.anaClock.night_handColor_m, parent.settings.skin.anaClock.night_handColor_s)
             self.clock.SetShadowColour(parent.settings.skin.anaClock.night_shadowColor)
             self.clock.SetBackgroundColour(parent.settings.skin.anaClock.night_bgColor)
+            self.clock.SetTickColours(parent.settings.skin.anaClock.night_tickColor, parent.settings.skin.anaClock.night_tickColor)
             self.Refresh()

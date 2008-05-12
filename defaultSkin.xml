@@ -67,11 +67,15 @@
     <day_handColor_m>(255,255,255)</day_handColor_m>
     <day_handColor_s>(255,255,255)</day_handColor_s>
     <day_shadowColor>(200,200,200)</day_shadowColor>
-    <day_bgColor>(51,51,51)</day_bgColor>
-    <night_handColor_h>(0,0,0)</night_handColor_h>
+    <day_bgColor>(22,127,230)</day_bgColor>
+    <day_tickColor>(200,200,200)</day_tickColor>
+    <day_faceColor>(0,255,0)</day_faceColor>
+    <night_handColor_h>(201,3,3)</night_handColor_h>
     <night_handColor_m>(0,0,0)</night_handColor_m>
     <night_handColor_s>(0,0,0)</night_handColor_s>
     <night_shadowColor>(100,100,100)</night_shadowColor>
-    <night_bgColor>(204,204,204)</night_bgColor>
+    <night_bgColor>(3,90,166)</night_bgColor>
+    <night_tickColor>(0,255,0)</night_tickColor>
+    <night_faceColor>(0,0,255)</night_faceColor>
   </analogClock>
 </TuxTruckSkin>

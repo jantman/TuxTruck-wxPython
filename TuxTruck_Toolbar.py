@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Frame Toolbar
-# Time-stamp: "2008-05-12 11:09:03 jantman"
-# $Id: TuxTruck_Toolbar.py,v 1.3 2008-05-12 15:33:25 jantman Exp $
+# Time-stamp: "2008-05-12 11:42:18 jantman"
+# $Id: TuxTruck_Toolbar.py,v 1.4 2008-05-12 15:51:49 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -108,6 +108,6 @@ class TuxTruck_Toolbar(wx.Panel):
         """
         self.SetButtonImages(parent, colorSchemeName)
         if colorSchemeName == "day":
-            self.SetBackgroundColour(parent.settings.skin.day_bgColor)
+            self.SetBackgroundColour(parent.settings.skin.day_toolbarColor)
         else:
-            self.SetBackgroundColour(parent.settings.skin.night_bgColor)
+            self.SetBackgroundColour(parent.settings.skin.night_toolbarColor)
