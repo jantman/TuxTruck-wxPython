@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck clock panel for home view
-# Time-stamp: "2008-05-12 12:32:04 jantman"
-# $Id: TuxTruck_HomePanel_Clock.py,v 1.8 2008-05-12 16:34:40 jantman Exp $
+# Time-stamp: "2008-05-12 12:53:43 jantman"
+# $Id: TuxTruck_HomePanel_Clock.py,v 1.9 2008-05-12 18:09:48 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -12,6 +12,8 @@
 import wx # import wx for the GUI
 
 from wx.lib.analogclock import *
+
+# TODO: add temperature display and "alet" box for important text
 
 import LEDCtrl as led
 import time
