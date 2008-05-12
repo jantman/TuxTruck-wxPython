@@ -1,0 +1,17 @@
+TuxTruck wxPython GUI
+http://www.jasonantman.com
+Time-stamp: "2008-05-12 10:02:17 jantman"
+$Id: nomenclature.txt,v 1.1 2008-05-12 14:05:55 jantman Exp $
+
+Nomenclature
+
+Within this document, we use the term "screen" to refer to the interface
+presented on the screen. There are main "modes" - home, navigation, OBD,
+phone, weather, audio, etc. Each of which may have multiple "screens"
+(wxWidgets panels). When a main mode is referred to without explicitly
+specifying a sub-screen, we're referring to the default screen for that mode -
+the one that comes up when the mode button is first pressed.
+
+The term "window" is usually used to refer to the entire screen area generated
+by TuxTruck. It is a wxWidgets frame, but most people are used to referring to
+it as a window, as this is how your window manager treats it.
