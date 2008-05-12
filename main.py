@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-12 10:24:28 jantman"
-# $Id: main.py,v 1.19 2008-05-12 14:23:48 jantman Exp $
+# Time-stamp: "2008-05-12 10:44:53 jantman"
+# $Id: main.py,v 1.20 2008-05-12 14:46:39 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -23,7 +23,7 @@ if __name__ == '__main__':
     """
     app = wx.App()
 
-    frame = TuxTruck_MainApp(parent=None, id=-1)
+    frame = TuxTruck_Main(parent=None, id=-1)
 
     frame.Show()
     app.MainLoop()

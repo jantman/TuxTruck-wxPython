@@ -1,21 +1,24 @@
 #! /usr/bin/env python
 # TuxTruck Main Frame - This is the root of everything, called from the App in main.py
-# Time-stamp: "2008-05-12 10:24:37 jantman"
-# $Id: TuxTruck_Main.py,v 1.1 2008-05-12 14:23:48 jantman Exp $ 
+# Time-stamp: "2008-05-12 10:46:53 jantman"
+# $Id: TuxTruck_Main.py,v 1.2 2008-05-12 14:46:39 jantman Exp $ 
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
 # Project web site at http://www.jasonantman.com/tuxtruck/
 
+import wx # import wx for the GUI
+
 # application includes
 from TuxTruck_Settings import * # import TuxTruck_Settings to get user settings
 from TuxTruck_AudioPanel_Main import *
 from TuxTruck_HomePanel_Clock import *
+from TuxTruck_Toolbar import *
 
-class TuxTruck_MainApp(wx.Frame):
+class TuxTruck_Main(wx.Frame):
     """
-    This is the top-level frame/window/app for TuxTruck. It's the root of everything
-    and everything happens (or is strated here). 
+    This is the top-level frame. It's the root of everything and everything happens (or is strated here).
+    THIS IS CALLED from main.py, which is the runnable main program file.
     This should just handle building the base GUI (blank main panel), and then instantiate
     child classes to do EVERYTHING else. Each part of the GUI should be its own class, that 
     holds a main panel and then does everything relating to that component (hopefully with 
@@ -38,7 +41,7 @@ class TuxTruck_MainApp(wx.Frame):
         This is the BIG function. It initiates EVERYTHING that gets initiated at start, 
         including settings, and all components that must run as long as the app is running.
         It SHOULD initiate GPS, Phone, and anything else that could take a while to start,
-        as soon as possible.
+        as soon as possible. It also initiates everything that must run constantly.
         """
         wx.Frame.__init__(self, parent, id, '', style=wx.NO_BORDER) # init the main frame
 
@@ -53,50 +56,8 @@ class TuxTruck_MainApp(wx.Frame):
             self.CenterOnScreen()
         self.SetWindowStyle(wx.NO_BORDER) # set window style to have no border
 
-        # create each of the buttons individually
-        # NOTE: buttons must be explicitly added to SetButtonImages
-        b_width = self.settings.skin.butn.width # button width
-        b_height = self.settings.skin.butn.height # button height
-        self.butn_home = wx.BitmapButton(self, size = (b_width, b_height))
-        self.butn_gps = wx.BitmapButton(self, size = (b_width, b_height))
-        self.butn_audio = wx.BitmapButton(self, size = (b_width, b_height))
-        self.butn_obd = wx.BitmapButton(self, size = (b_width, b_height))
-        self.butn_phone = wx.BitmapButton(self, size = (b_width, b_height))
-        self.butn_tools = wx.BitmapButton(self, size = (b_width, b_height))
-        self.butn_weather = wx.BitmapButton(self, size = (b_width, b_height))
-
-        # set button images
-        self.SetButtonImages(self._currentColorScheme)
-
-        # TODO: how do we set the correct image for the active button?
-
-        self.box = wx.BoxSizer(wx.HORIZONTAL) # TODO: give this a meaningful name
-        self.box.Add(self.butn_home, proportion=0)
-        self.box.Add(self.butn_gps, proportion=0)
-        self.box.Add(self.butn_audio, proportion=0)
-        self.box.Add(self.butn_obd, proportion=0)
-        self.box.Add(self.butn_phone, proportion=0)
-        self.box.Add(self.butn_tools, proportion=0)
-        self.box.Add(self.butn_weather, proportion=0)
-
-        self.SetAutoLayout(True)
-        self.SetSizer(self.box)
-        self.Layout()
-
-        # DEBUG
-        print self.box.GetSizeTuple()
-        print self.box.GetPositionTuple()
-
-        # bind each of the buttons to its' click handler
-        self.butn_home.Bind(wx.EVT_BUTTON, self.OnClick_home)
-        self.butn_gps.Bind(wx.EVT_BUTTON, self.OnClick_gps)
-        self.butn_audio.Bind(wx.EVT_BUTTON, self.OnClick_audio)
-        self.butn_obd.Bind(wx.EVT_BUTTON, self.OnClick_obd)
-        self.butn_phone.Bind(wx.EVT_BUTTON, self.OnClick_phone)
-        self.butn_tools.Bind(wx.EVT_BUTTON, self.OnClick_tools)
-        self.butn_weather.Bind(wx.EVT_BUTTON, self.OnClick_weather)
-
-        self._currentButton = self.butn_home # set butn_home to be our initial button
+        # add and init the toolbar
+        self.toolbar = TuxTruck_Toolbar(self, -1)
 
         # add main audio panel
         self.audioPanel_main = TuxTruck_AudioPanel_Main(self, -1)
@@ -149,31 +110,6 @@ class TuxTruck_MainApp(wx.Frame):
         print "weather clicked" # DEBUG
         self._currentButton = self.butn_weather
 
-    def SetButtonImages(self, colorSchemeName):
-        """
-        This method sets the images of all of the buttons to the correct images
-        for the selected color scheme (day/night within a specific skin). 
-        """
-        if colorSchemeName == "day":
-            print "setting day button images" # DEBUG
-            self.butn_home.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_home, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_gps.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_gps, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_audio.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_audio, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_obd.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_obd, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_phone.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_phone, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_tools.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_tools, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_weather.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.day_weather, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-        else:
-            # set night images
-            print "setting night button images" # DEBUG
-            self.butn_home.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_home, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_gps.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_gps, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_audio.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_audio, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_obd.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_obd, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_phone.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_phone, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_tools.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_tools, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_weather.SetBitmapLabel(wx.Image(self.settings.skin.buttonImagePath+self.settings.skin.butn.night_weather, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-
     def switchColorScheme(self):
         """
         This method does everything needed to toggle between day/night modes
@@ -194,24 +130,19 @@ class TuxTruck_MainApp(wx.Frame):
         if self._currentColorScheme == "day":
             # reskin myself
             self.SetBackgroundColour(self.settings.skin.night_bgColor) # reskin myself
-            self.SetButtonImages("night")
-
-            # reskin EVERYTHING else
-            self.audioPanel_main.reSkin(self, "night")
-            self.homePanel_clock.reSkin(self, "night")
-
+            # update _currentColorScheme
             self._currentColorScheme = "night" # keep track of what skin I'm using now
-
         else:
             # reskin myself
             self.SetBackgroundColour(self.settings.skin.day_bgColor)
-            self.SetButtonImages("day")
-
-            # reskin EVERYTHING else
-            self.audioPanel_main.reSkin(self, "day")
-            self.homePanel_clock.reSkin(self, "day")
-
+            # update _currentColorScheme
             self._currentColorScheme = "day" # keep track of what skin I'm using now
+
+        # reskin EVERYTHING else using the new _colorSchemeName
+        self.audioPanel_main.reSkin(self, self._currentColorScheme)
+        self.homePanel_clock.reSkin(self, self._currentColorScheme)
+        self.toolbar.reSkin(self, self._currentColorScheme)
+
 
         # refresh myself
         self.Refresh()        

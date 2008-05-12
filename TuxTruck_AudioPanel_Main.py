@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-07 21:13:50 jantman"
-# $Id: TuxTruck_AudioPanel_Main.py,v 1.5 2008-05-08 01:14:11 jantman Exp $
+# Time-stamp: "2008-05-12 10:30:30 jantman"
+# $Id: TuxTruck_AudioPanel_Main.py,v 1.6 2008-05-12 14:46:39 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -11,13 +11,12 @@ import wx # import wx for the GUI
 
 class TuxTruck_AudioPanel_Main(wx.Panel):
     """
-    TODO: This needs to be documented
-    This panel should hold a main page with buttons that show sub-panels.
+    This is the top-level panel for audio functions, including audio file playing, radio, and podcast playing.
     """
 
     def __init__(self, parent, id):
         """
-        TODO: This needs to be documented.
+        Init function for the audio panel. Sets everything up.
         """
         wx.Panel.__init__(self, parent, id) # init the panel
 
