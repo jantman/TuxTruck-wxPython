@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck clock panel for home view
-# Time-stamp: "2008-05-12 11:51:10 jantman"
-# $Id: TuxTruck_HomePanel_Clock.py,v 1.7 2008-05-12 15:51:49 jantman Exp $
+# Time-stamp: "2008-05-12 12:32:04 jantman"
+# $Id: TuxTruck_HomePanel_Clock.py,v 1.8 2008-05-12 16:34:40 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -35,10 +35,7 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
         self.Hide()
 
         # analog clock
-        self.clock = AnalogClockWindow(self)
-
-        self.bsizer2 = wx.BoxSizer(wx.VERTICAL)
-        self.bsizer2.Add(self.clock, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL|wx.SHAPED, 10)        
+        self.clock = AnalogClock(self)
 
         # digital clock
         self.myled = led.LEDCtrl(self)
@@ -47,21 +44,22 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
                 led.LED_AGG|          \
                 led.LED_ALLOW_COLONS| \
                 led.LED_SLANT
-        
         self.myled.SetLedStyle(style)
 
         # TODO: need to get aggdraw working for this.
 
-        #self.size = self.myled.GetSize()
         self.myled.Freeze()
         self.myled.SetWindowStyle(wx.SUNKEN_BORDER)
-        self.myled.SetSize((600, 100))
+
+        # set sizes and positons
+        self.myled.SetSize((400, 80))
+        self.myled.SetPosition((200,330))
+        self.clock.SetSize((300,300))
+        self.clock.SetPosition((250,10))
+
         self.myled.SetDigits(6)
         #self.myled.SetSize(self.size)
         self.myled.Thaw()
-
-        self.bsizer2.Add(self.myled, 1, wx.EXPAND|wx.ALIGN_CENTER|wx.ALL|wx.SHAPED, 10)        
-        self.SetSizer(self.bsizer2)
 
         self.tc = -1
         self.timer = wx.Timer(self)
@@ -97,25 +95,44 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
         # END DEBUG
         
         if colorSchemeName == "day":
+            # me (panel)
             self.SetBackgroundColour(parent.settings.skin.day_bgColor)
+
+            # LED clock
             self.myled.SetForegroundColour(parent.settings.skin.digiClock.day_fgColor)
             self.myled.SetBackgroundColour(parent.settings.skin.digiClock.day_bgColor)
             self.myled.SetFadeColour(parent.settings.skin.digiClock.day_fadeColor)
             self.myled.SetFadeFactor(parent.settings.skin.digiClock.fadeFactor)
-            self.clock.SetHandColours(parent.settings.skin.anaClock.day_handColor_h, parent.settings.skin.anaClock.day_handColor_m, parent.settings.skin.anaClock.day_handColor_s)
+
+            # analog clock
+            self.clock.SetHandBorderColour(parent.settings.skin.anaClock.day_handColor)
+            self.clock.SetHandFillColour(parent.settings.skin.anaClock.day_handColor)
             self.clock.SetShadowColour(parent.settings.skin.anaClock.day_shadowColor)
             self.clock.SetBackgroundColour(parent.settings.skin.anaClock.day_bgColor)
-            self.clock.SetTickColours(parent.settings.skin.anaClock.day_tickColor, parent.settings.skin.anaClock.day_tickColor)
+            self.clock.SetTickBorderColour(parent.settings.skin.anaClock.day_tickColor)
+            self.clock.SetTickFillColour(parent.settings.skin.anaClock.day_tickColor)
+            self.clock.SetFaceBorderColour(parent.settings.skin.anaClock.day_faceBorderColor)
+            self.clock.SetFaceFillColour(parent.settings.skin.anaClock.day_faceColor)
+
             self.Refresh()
         else:
             # set night scheme
             self.SetBackgroundColour(parent.settings.skin.night_bgColor)
+
+            # LED clock
             self.myled.SetForegroundColour(parent.settings.skin.digiClock.night_fgColor)
             self.myled.SetBackgroundColour(parent.settings.skin.digiClock.night_bgColor)
             self.myled.SetFadeColour(parent.settings.skin.digiClock.night_fadeColor)
             self.myled.SetFadeFactor(parent.settings.skin.digiClock.fadeFactor)
-            self.clock.SetHandColours(parent.settings.skin.anaClock.night_handColor_h, parent.settings.skin.anaClock.night_handColor_m, parent.settings.skin.anaClock.night_handColor_s)
+            
+            # analog clock
+            self.clock.SetHandBorderColour(parent.settings.skin.anaClock.night_handColor)
+            self.clock.SetHandFillColour(parent.settings.skin.anaClock.night_handColor)
             self.clock.SetShadowColour(parent.settings.skin.anaClock.night_shadowColor)
             self.clock.SetBackgroundColour(parent.settings.skin.anaClock.night_bgColor)
-            self.clock.SetTickColours(parent.settings.skin.anaClock.night_tickColor, parent.settings.skin.anaClock.night_tickColor)
+            self.clock.SetTickBorderColour(parent.settings.skin.anaClock.night_tickColor)
+            self.clock.SetTickFillColour(parent.settings.skin.anaClock.night_tickColor)
+            self.clock.SetFaceBorderColour(parent.settings.skin.anaClock.night_faceBorderColor)
+            self.clock.SetFaceFillColour(parent.settings.skin.anaClock.night_faceColor)
+
             self.Refresh()

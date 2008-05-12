@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Frame Toolbar
-# Time-stamp: "2008-05-12 11:42:18 jantman"
-# $Id: TuxTruck_Toolbar.py,v 1.4 2008-05-12 15:51:49 jantman Exp $
+# Time-stamp: "2008-05-12 12:23:38 jantman"
+# $Id: TuxTruck_Toolbar.py,v 1.5 2008-05-12 16:34:40 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -13,6 +13,8 @@ class TuxTruck_Toolbar(wx.Panel):
     """
     This is the main toolbar for TuxTruck, appearing on every screen.
     """
+
+    # TODO: what's with that box in the lower right that always has the day BG color?
 
     _currentButton = "" # reference to the currently selected button
 
