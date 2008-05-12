@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-12 14:57:18 jantman"
-# $Id: TuxTruck_Settings.py,v 1.5 2008-05-12 18:58:20 jantman Exp $
+# Time-stamp: "2008-05-12 15:11:29 jantman"
+# $Id: TuxTruck_Settings.py,v 1.6 2008-05-12 19:10:43 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -31,5 +31,9 @@ class TuxTruck_Settings:
         "We instantiate all child classes, which will load in all settings and make them available."
 
         # load all settings related to the skin/GUI, from the TuxTruck_SkinManager class
-        self.skin = TuxTruck_SkinManager(self) # initialize the SkinManager and load the skins
-        self.audio = TuxTruck_Settings_Audio(self) # intialize audio settings 
+
+        defaultSkinFile = "settings/skins/defaultSkin.xml" # TODO: get this from global settings
+        audioSettingsFile = "settings/audio.xml" # TODO: get this from global settings
+
+        self.skin = TuxTruck_SkinManager(self, defaultSkinFile) # initialize the SkinManager and load the skins
+        self.audio = TuxTruck_Settings_Audio(self, audioSettingsFile) # intialize audio settings 

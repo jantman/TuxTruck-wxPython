@@ -2,7 +2,7 @@
 <TuxTruckSkin>
   <globalSkin>
     <skinName>Default Skin</skinName>
-    <buttonPath>/home/jantman/cvs-temp/TuxTruck-wxPython/defaultSkin-buttons/</buttonPath>
+    <buttonPath>/home/jantman/cvs-temp/TuxTruck-wxPython/settings/skins/defaultSkin-buttons/</buttonPath>
   </globalSkin>
   <window>
     <height>480</height>

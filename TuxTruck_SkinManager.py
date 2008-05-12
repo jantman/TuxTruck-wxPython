@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-08 20:52:21 jantman"
-# $Id: TuxTruck_SkinManager.py,v 1.12 2008-05-09 01:22:06 jantman Exp $
+# Time-stamp: "2008-05-12 15:09:07 jantman"
+# $Id: TuxTruck_SkinManager.py,v 1.13 2008-05-12 19:10:43 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -38,9 +38,9 @@ class TuxTruck_SkinManager:
 
     # General information on the current skin
     # leave these as empty strings until we put something in them
-    currentSkinName = "" # name of the current skin
-    currentSkinFile = "" # filename of the current skin, 
-    buttonImagePath = "" # path, relative to ~/.tuxtruck/skins/ to the images for this skin
+    _currentSkinName = "" # name of the current skin
+    _currentSkinFile = "" # filename of the current skin, 
+    _buttonImagePath = "" # path, relative to ~/.tuxtruck/skins/ to the images for this skin
 
     def loadSkin(self, file):
         """
@@ -71,12 +71,12 @@ class TuxTruck_SkinManager:
 
         # parse global information
         globalTree = skinTree.find('globalSkin')
-        self.currentSkinName = globalTree.findtext("skinName")
-        self.currentSkinFile = file
-        self.buttonImagePath = globalTree.findtext("buttonPath")
+        self._currentSkinName = globalTree.findtext("skinName")
+        self._currentSkinFile = file
+        self._buttonImagePath = globalTree.findtext("buttonPath")
 
 
-    def __init__(self, parent):
+    def __init__(self, parent, skinFile):
         """
         Here, we get the default skin name from settings, then load that file.
         This must happen before we build any of the GUI.
@@ -84,7 +84,6 @@ class TuxTruck_SkinManager:
         #get the default skin name and file from settings
         #load the skin file. make changes to default, anything not specified stays default
         # TODO: get the skin file from settings (parent)
-        skinFile = "defaultSkin.xml"
 
         self.loadSkin(skinFile) # Load MY MAIN skin
         self.butn = TuxTruck_Skin_Button(self, skinFile) # load the buttons information
