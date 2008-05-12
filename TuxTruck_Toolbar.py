@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Frame Toolbar
-# Time-stamp: "2008-05-12 14:17:39 jantman"
-# $Id: TuxTruck_Toolbar.py,v 1.6 2008-05-12 18:49:59 jantman Exp $
+# Time-stamp: "2008-05-12 15:23:15 jantman"
+# $Id: TuxTruck_Toolbar.py,v 1.7 2008-05-12 19:22:43 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -83,23 +83,23 @@ class TuxTruck_Toolbar(wx.Panel):
         """
         if colorSchemeName == "day":
             print "setting day button images" # DEBUG
-            self.butn_home.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.day_home, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_gps.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.day_gps, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_audio.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.day_audio, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_obd.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.day_obd, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_phone.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.day_phone, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_tools.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.day_tools, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_weather.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.day_weather, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_home.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.day_home, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_gps.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.day_gps, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_audio.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.day_audio, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_obd.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.day_obd, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_phone.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.day_phone, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_tools.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.day_tools, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_weather.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.day_weather, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
         else:
             # set night images
             print "setting night button images" # DEBUG
-            self.butn_home.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.night_home, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_gps.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.night_gps, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_audio.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.night_audio, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_obd.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.night_obd, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_phone.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.night_phone, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_tools.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.night_tools, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
-            self.butn_weather.SetBitmapLabel(wx.Image(parent.settings.skin.buttonImagePath+parent.settings.skin.butn.night_weather, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_home.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.night_home, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_gps.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.night_gps, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_audio.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.night_audio, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_obd.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.night_obd, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_phone.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.night_phone, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_tools.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.night_tools, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
+            self.butn_weather.SetBitmapLabel(wx.Image(parent.settings.skin._buttonImagePath+parent.settings.skin.butn.night_weather, wx.BITMAP_TYPE_ANY).ConvertToBitmap())
 
         print "Current Button:"
         print self._currentButton

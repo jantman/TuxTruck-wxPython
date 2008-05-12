@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Frame - This is the root of everything, called from the App in main.py
-# Time-stamp: "2008-05-12 14:32:51 jantman"
-# $Id: TuxTruck_Main.py,v 1.5 2008-05-12 18:49:59 jantman Exp $ 
+# Time-stamp: "2008-05-12 15:22:01 jantman"
+# $Id: TuxTruck_Main.py,v 1.6 2008-05-12 19:22:43 jantman Exp $ 
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -45,7 +45,7 @@ class TuxTruck_Main(wx.Frame):
         wx.Frame.__init__(self, parent, id, '', style=wx.NO_BORDER) # init the main frame
 
         # setup the settings
-        print "Loaded skin "+self.settings.skin.currentSkinName+" from file "+self.settings.skin.currentSkinFile
+        print "Loaded skin "+self.settings.skin._currentSkinName+" from file "+self.settings.skin._currentSkinFile
 
         # setup the main frame
         self.SetPosition(self.settings.skin.topWindowPos) # set the main window position
