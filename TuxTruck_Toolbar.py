@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Frame Toolbar
-# Time-stamp: "2008-05-12 10:46:22 jantman"
-# $Id: TuxTruck_Toolbar.py,v 1.1 2008-05-12 14:46:39 jantman Exp $
+# Time-stamp: "2008-05-12 10:59:46 jantman"
+# $Id: TuxTruck_Toolbar.py,v 1.2 2008-05-12 15:00:50 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -23,9 +23,14 @@ class TuxTruck_Toolbar(wx.Panel):
         """
         wx.Panel.__init__(self, parent, id) # init the panel
 
-        # setup the main frame
-        self.SetPosition(wx.Point(0,0)) # set the main window position
-        self.SetSize(wx.Size(800,420)) # set the main window size TODO: use settings
+        # this is required for the position calculation that centers the toolbar horizontally
+        num_buttons = 7 # NOTE: must manually update the number of buttons on the toolbar
+
+        # this is all hard-coded for a display of 800x480px
+        pos_x = ((800/2)-((7* parent.settings.skin.butn.width)/2))
+        pos_y = 480 - parent.settings.skin.butn.height
+        self.SetPosition(wx.Point(pos_x,pos_y)) # set the main window position
+        self.SetSize(wx.Size(800,parent.settings.skin.butn.height))
 
         # create each of the buttons individually
         # NOTE: buttons must be explicitly added to SetButtonImages
@@ -101,3 +106,7 @@ class TuxTruck_Toolbar(wx.Panel):
         Re-load skin information for specified colorSchemeName (day|night)
         """
         self.SetButtonImages(parent, colorSchemeName)
+        if colorSchemeName == "day":
+            self.SetBackgroundColour(parent.settings.skin.day_bgColor)
+        else:
+            self.SetBackgroundColour(parent.settings.skin.night_bgColor)

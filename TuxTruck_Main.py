@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Frame - This is the root of everything, called from the App in main.py
-# Time-stamp: "2008-05-12 10:46:53 jantman"
-# $Id: TuxTruck_Main.py,v 1.2 2008-05-12 14:46:39 jantman Exp $ 
+# Time-stamp: "2008-05-12 11:01:24 jantman"
+# $Id: TuxTruck_Main.py,v 1.3 2008-05-12 15:00:50 jantman Exp $ 
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -33,7 +33,6 @@ class TuxTruck_Main(wx.Frame):
 
     # variables holding state of the program
     _currentColorScheme = "day" # holds the name of the current color scheme
-    _currentButton = "" # reference to the currently selected button, default to Home
     settings = TuxTruck_Settings()
 
     def __init__(self, parent, id):
@@ -71,19 +70,19 @@ class TuxTruck_Main(wx.Frame):
     def OnClick_gps(self, event):
         """ Handles click of the GPS button, switching to the GPS screen"""
         print "GPS clicked" # DEBUG
-        self._currentButton = self.butn_gps
+        self.toolbar._currentButton = self.toolbar.butn_gps
 
     def OnClick_audio(self, event):
         """ Handles click of the Audio button, switching to the audio screen (panel/frame)"""
         # TODO: update the docs for proper use of words application, window, panel, frame
         print "Audio clicked" # DEBUG
-        self._currentButton = self.butn_audio
+        self.toolbar._currentButton = self.toolbar.butn_audio
         self.switchToModePanel(self.audioPanel_main) # show the main audio panel
 
     def OnClick_home(self, event):
         """ Handles click of the home button, switching to the home screen"""
         print "Home clicked" # DEBUG
-        self._currentButton = self.butn_home # update reference to current button
+        self.toolbar._currentButton = self.toolbar.butn_home # update reference to current button
         # DEBUG - testing only since we only have one panel
         self.audioPanel_main.Hide()
         # TODO: what do we show at startup? default? selection from settings? last?
@@ -92,23 +91,23 @@ class TuxTruck_Main(wx.Frame):
     def OnClick_obd(self, event):
         """Handles click of the OBD button, switching to the OBD screen"""
         print "obd clicked" # DEBUG
-        self._currentButton = self.butn_obd
+        self.toolbar._currentButton = self.toolbar.butn_obd
 
     def OnClick_phone(self, event):
         """ Handles click of the phone button, switching to the phone screen"""
         print "phone clicked" # DEBUG
-        self._currentButton = self.butn_phone
+        self.toolbar._currentButton = self.toolbar.butn_phone
 
     def OnClick_tools(self, event):
         """Handles click of the tools button, switching to the tools screen"""
         print "tools clicked" # DEBUG
-        self._currentButton = self.butn_tools
+        self.toolbar._currentButton = self.toolbar.butn_tools
         self.switchColorScheme() # DEBUG
 
     def OnClick_weather(self, event):
         """Handles click of the weather button, switching to the weather screen"""
         print "weather clicked" # DEBUG
-        self._currentButton = self.butn_weather
+        self.toolbar._currentButton = self.toolbar.butn_weather
 
     def switchColorScheme(self):
         """
