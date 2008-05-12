@@ -1,12 +1,13 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-08 19:46:00 jantman"
-# $Id: TuxTruck_Settings.py,v 1.4 2008-05-09 00:16:45 jantman Exp $
+# Time-stamp: "2008-05-12 14:57:18 jantman"
+# $Id: TuxTruck_Settings.py,v 1.5 2008-05-12 18:58:20 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
 # Project web site at http://www.jasonantman.com/tuxtruck/
 
 from TuxTruck_SkinManager import *
+from TuxTruck_Settings_Audio import *
 
 class TuxTruck_Settings:
     """"
@@ -31,3 +32,4 @@ class TuxTruck_Settings:
 
         # load all settings related to the skin/GUI, from the TuxTruck_SkinManager class
         self.skin = TuxTruck_SkinManager(self) # initialize the SkinManager and load the skins
+        self.audio = TuxTruck_Settings_Audio(self) # intialize audio settings 
