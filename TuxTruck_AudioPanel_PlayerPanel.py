@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-12 16:12:06 jantman"
-# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.3 2008-05-12 20:36:16 jantman Exp $
+# Time-stamp: "2008-05-12 23:00:10 jantman"
+# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.4 2008-05-13 06:33:06 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -12,7 +12,7 @@ import wx # import wx for the GUI
 # for pymp
 import sys, os, fcntl, pygtk, gtk, gobject, time
 sys.path.append('pymp')
-import prefs, menu, remote, playlist, control, mplayer
+import mplayer
 
 class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
     """
@@ -38,6 +38,12 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
 	versionString = "Pymp v1.0"
 	window, prefs, menu, remote = None, None, None, None
 	playlist, control = None, None
+
+        # DEBUG
+        #self.slider1 = wx.Slider(self, -1, 0, 0, 1000)
+        #self.pause = wx.BitmapButton(self, -1, wx.Bitmap('icons/stock_media-pause.png'))
+        #self.play  = wx.BitmapButton(self, -1, wx.Bitmap('icons/stock_media-play.png'))
+        # END DEBUG
 
         #
         # begin pymp.py code
