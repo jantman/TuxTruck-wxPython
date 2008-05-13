@@ -76,4 +76,22 @@
     <night_faceColor>(61,61,61)</night_faceColor>
     <night_faceBorderColor>(0,0,0)</night_faceBorderColor>
   </analogClock>
+  <internalThermo>
+    <day_fgColor>(0,255,0)</day_fgColor>
+    <day_bgColor>(255,255,255)</day_bgColor>
+    <day_fadeColor>(0,0,0)</day_fadeColor>
+    <night_fgColor>(201,3,3)</night_fgColor>
+    <night_bgColor>(26,79,128)</night_bgColor>
+    <night_fadeColor>(255,255,255)</night_fadeColor>
+    <fadeFactor>25</fadeFactor>
+  </internalThermo>
+  <externalThermo>
+    <day_fgColor>(0,255,0)</day_fgColor>
+    <day_bgColor>(255,255,255)</day_bgColor>
+    <day_fadeColor>(0,0,0)</day_fadeColor>
+    <night_fgColor>(201,3,3)</night_fgColor>
+    <night_bgColor>(26,79,128)</night_bgColor>
+    <night_fadeColor>(255,255,255)</night_fadeColor>
+    <fadeFactor>25</fadeFactor>
+  </externalThermo>
 </TuxTruckSkin>

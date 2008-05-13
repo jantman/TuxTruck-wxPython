@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-12 15:09:07 jantman"
-# $Id: TuxTruck_SkinManager.py,v 1.13 2008-05-12 19:10:43 jantman Exp $
+# Time-stamp: "2008-05-12 21:15:29 jantman"
+# $Id: TuxTruck_SkinManager.py,v 1.14 2008-05-13 01:16:14 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -18,6 +18,8 @@ import TuxTruck_Utility as utility
 from TuxTruck_Skin_Button import *
 from TuxTruck_Skin_DigitalClock import *
 from TuxTruck_Skin_AnalogClock import *
+from TuxTruck_Skin_InternalThermo import *
+from TuxTruck_Skin_ExternalThermo import *
 
 class TuxTruck_SkinManager:
     """
@@ -89,3 +91,5 @@ class TuxTruck_SkinManager:
         self.butn = TuxTruck_Skin_Button(self, skinFile) # load the buttons information
         self.digiClock = TuxTruck_Skin_DigitalClock(self, skinFile) # load the buttons information
         self.anaClock = TuxTruck_Skin_AnalogClock(self, skinFile) # load the buttons information
+        self.inTherm = TuxTruck_Skin_InternalThermo(self, skinFile) # load the internal clock skin
+        self.exTherm = TuxTruck_Skin_ExternalThermo(self, skinFile) # load the external clock skin

@@ -52,7 +52,7 @@ class Mplayer:
 	def pause(self):
 		
 		if not self.mplayerIn:
-b			return
+			return
 			
 		if self.paused:  #unpause
 			self.startStatusQuery()

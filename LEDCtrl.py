@@ -1,3 +1,7 @@
+# LEDCtrl
+# $Id: LEDCtrl.py,v 1.3 2008-05-13 01:16:14 jantman Exp $
+# Modified by Jason Antman for TuxTruck <http://www.jasonantman.com/tuxtruck/ on lines 199 and 404
+
 __name__    = "LEDCtrl"
 __author__  = "E. A. Tacao <e.a.tacao |at| estadao.com.br>"
 __date__    = "29 Dez 2005, 17:00 GMT-03:00"
@@ -401,7 +405,7 @@ class _Digit:
 
 class LEDCtrl(wx.Window):
     def __init__(self, parent, id = -1, pos = wx.DefaultPosition,
-                 size = wx.DefaultSize, style = 0, name = "LEDCtrl",
+                 size = wx.DefaultSize, style = wx.SIMPLE_BORDER, name = "LEDCtrl",
                  digits = 12, value = "0", geometry = None,
                  ledstyle = LED_DRAW_FADED|LED_ALIGN_RIGHT|LED_AGG):
 
