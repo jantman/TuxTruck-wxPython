@@ -1,0 +1,19 @@
+#! /usr/bin/env python
+# TuxTruck Main Application (this is what you run!)
+# Time-stamp: "2008-05-12 19:38:54 jantman"
+# $Id: acknowledgements.txt,v 1.1 2008-05-13 06:33:40 jantman Exp $
+#
+# Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
+# Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
+# Project web site at http://www.jasonantman.com/tuxtruck/
+
+TuxTruck Acknowledgements, Contributors, And Supporters - The people I'd like
+to thank:
+(in chronological order)
+
+Jon "maddog" Hall, for breaking up some 15-hour coding days with friendly
+emails, and providing some much-needed encouragement. 
+
+E. A. Tacao <eatacao@lavabit.com>, the Author of the LEDCtrl module, for his
+near-instantaneous advice via the wxPython list on adding a degrees character.
+
