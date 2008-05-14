@@ -129,6 +129,8 @@ class Mplayer:
 				
 			if not line: break
 			
+			print line
+
 			if line.startswith("ANS_PERCENT_POSITION"):
 				percent = int(line.replace("ANS_PERCENT_POSITION=", ""))
 			
