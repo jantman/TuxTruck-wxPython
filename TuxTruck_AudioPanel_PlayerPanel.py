@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-12 23:00:10 jantman"
-# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.4 2008-05-13 06:33:06 jantman Exp $
+# Time-stamp: "2008-05-13 21:15:00 jantman"
+# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.5 2008-05-14 01:14:32 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -9,19 +9,10 @@
 
 import wx # import wx for the GUI
 
-# for pymp
-import sys, os, fcntl, pygtk, gtk, gobject, time
-sys.path.append('pymp')
-import mplayer
-
 class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
     """
     This is the audio player panel. It gives us an interface for playing audio files, podcasts, playlists, etc.
     """
-
-    # TODO: update these from settings
-    MPLAYER = os.path.expanduser("~/.mplayer")
-    HOME = os.path.expanduser("~/.pymp")
 
     def __init__(self, parent, id):
         """
@@ -40,18 +31,15 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
 	playlist, control = None, None
 
         # DEBUG
-        #self.slider1 = wx.Slider(self, -1, 0, 0, 1000)
+        self.gauge1 = wx.Gauge(self, -1)
+        self.gauge1.SetSize((400,20))
+        self.gauge1.SetPosition((50,200))
+        self.gauge1.SetRange(210) # just testing, this should be length in seconds
+        
         #self.pause = wx.BitmapButton(self, -1, wx.Bitmap('icons/stock_media-pause.png'))
         #self.play  = wx.BitmapButton(self, -1, wx.Bitmap('icons/stock_media-play.png'))
         # END DEBUG
 
-        #
-        # begin pymp.py code
-        #
-
-        #self.prefs = prefs.Prefs(self)
-        
-        self.mplayer = mplayer.Mplayer(self)
 
         # DEBUG
         # these are buttons to test mplayer
@@ -98,6 +86,12 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
 			
 	gtk.main()
         """
+    # DEBUG
+    def sliderUpdate(self, event):
+        print "Slider1 changed:"
+        print self.slider1.GetValue()
+    # END DEBUG
+
 	
     def OnClick1(self, event):
         print "playing etta james"
@@ -121,38 +115,16 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
 
     def OnClick5(self, event):
         print "seeking +5"
-        self.mplayer.seek(5)
+        self.gauge1.SetValue(self.gauge1.GetValue()+1)
+        #self.mplayer.seek(5)
         print "seeked"
 
     def OnClick6(self, event):
         print "seeking -5"
-        self.mplayer.seek(-5)
+        #self.mplayer.seek(-5)
+        self.gauge1.SetValue(self.gauge1.GetValue()-1)
         print "seeked"
 
-    #
-    #  Returns a gtk.gdk.Pixbuf
-    #
-    def getIcon(self):
-        
-        icons = [sys.path[0] + "/../../share/pixmaps/pymp.png",	"./pymp.png"]  #for development
-		
-        for icon in icons:
-            if os.access(icon, os.F_OK):
-                return gtk.gdk.pixbuf_new_from_file(icon)
-            
-        return None
-		
-    #
-    #  Terminates the application cleanly.
-    #
-    def quit(self, widget, data=None):
-        
-        self.mplayer.close()
-        self.remote.close()
-        self.playlist.save()
-        self.prefs.save()
-        gtk.main_quit()
-		
 
     def reSkin(self, parent, colorSchemeName):
         # re-skin me
