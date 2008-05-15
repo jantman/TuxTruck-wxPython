@@ -1,15 +1,16 @@
 #! /usr/bin/env python
 # TuxTruck Audio Player
-# Time-stamp: "2008-05-15 11:07:12 jantman"
-# $Id: TuxTruck_AudioPlayer.py,v 1.1 2008-05-15 15:08:14 jantman Exp $
+# Time-stamp: "2008-05-15 13:27:56 jantman"
+# $Id: TuxTruck_AudioPlayer.py,v 1.2 2008-05-15 17:28:33 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
 # Project web site at http://www.jasonantman.com/tuxtruck/
 
-import sys, os, fcntl, gobject, time
+import sys, os, fcntl, time, gobject
+from threading import Timer
 
-STATUS_TIMEOUT = 10000
+STATUS_TIMEOUT = 1 # in seconds
 
 class TuxTruck_AudioPlayer():
     """
@@ -20,58 +21,68 @@ class TuxTruck_AudioPlayer():
     eofHandler, statusQuery = 0, 0
     paused = False
 
+    _currentSongLength = 0
+    _currentSongName = ""
+    _currentSongArtist = ""
+    _currentSongAlbum = ""
+
+    doStatusQueries = False
+
     def __init__(self, parent, id):
         self.parent = parent
+        self.statusQuery = Timer(STATUS_TIMEOUT, self.queryStatus) # timer for status queries
 
     def play(self, target):
         
-        if os.path.exists(target):
-            mpc = "mplayer -slave -quiet \"" + target + "\" 2>/dev/null"
-        
-            self.mplayerIn, self.mplayerOut = os.popen2(mpc)  #open pipe
-            fcntl.fcntl(self.mplayerOut, fcntl.F_SETFL, os.O_NONBLOCK)
+        try:
+            if os.path.exists(target):
+                mpc = "mplayer -slave -quiet \"" + target + "\" 2>/dev/null"
+                
+                self.mplayerIn, self.mplayerOut = os.popen2(mpc)  #open pipe
+                print "opened pipe in play"
+                fcntl.fcntl(self.mplayerOut, fcntl.F_SETFL, os.O_NONBLOCK)
+                print "ran fcntl in play"
+                
+                # wait for startup output
+                time.sleep(0.05)
 
-            getSongLengthSec()
-        
-            self.startEofHandler()
-            self.startStatusQuery()
-            
-        else:
-            print "File "+target+" does not exist, not playing."
+                self.getSongInfo()
+                print "ran getSongInfo from play"
+                
+                self.startEofHandler()
+                print "ran startEofHandler from play"
+                self.startStatusQuery()
+                print "ran startStatusQuery from play"
+                
+            else:
+                print "File "+target+" does not exist, not playing."
+        except:
+            print "Unexpected error:", sys.exc_info()[0]
+            raise
         
     #
     #  Get length in seconds of current song
     #
-    def getSongLengthSec(self):
-        
-        #self.cmd("get_percent_pos")  #submit status query
+    def getSongInfo(self):
         self.cmd("get_time_length")
         
         time.sleep(0.05)  #allow time for output
         
         line, seconds = None, -1
-        
+
         while True:
             try:  #attempt to fetch last line of output
                 line = self.mplayerOut.readline()
             except StandardError:
                 break
-            
+
             if not line: break
 
-            # DEBUG
-            print line
-            # END DEBUG
-            
-            if line.startswith("ANS_PERCENT_POSITION"):
-                percent = int(line.replace("ANS_PERCENT_POSITION=", ""))
-                
-                #self.gauge1.SetValue(percent)  #reset bar
-                
-            if line.startswith("ANS_TIME_POSITION"):
-                seconds = float(line.replace("ANS_TIME_POSITION=", ""))
-                parent.updateProgressBar(seconds) # update progress bar
-		#self.pymp.control.setProgress(percent, seconds)
+            if line.startswith("ANS_LENGTH"):
+                seconds = float(line.replace("ANS_LENGTH=", ""))
+                self._currentSongLength = seconds
+                self.parent.SetSongLength(seconds) # update progress bar DEBUG commented out debugging segfault
+
         return True
 
 
@@ -79,7 +90,7 @@ class TuxTruck_AudioPlayer():
     #  Issues command to mplayer.
     #
     def cmd(self, command):
-        
+        print "running cmd with command "+command
         if not self.mplayerIn:
             return
         
@@ -88,12 +99,14 @@ class TuxTruck_AudioPlayer():
             self.mplayerIn.flush()  #flush pipe
         except StandardError:
             return
+
+        print "cmd done."
         
     #
     #  Toggles pausing of the current mplayer job and status query.
     #
     def pause(self):
-        
+        print "running pause"
         if not self.mplayerIn:
             return
         
@@ -106,6 +119,7 @@ class TuxTruck_AudioPlayer():
             self.paused = True
             
         self.cmd("pause")
+        print "pause done"
 		
     #
     #  Seeks the amount using the specified mode.  See mplayer docs.
@@ -118,7 +132,7 @@ class TuxTruck_AudioPlayer():
     #  Cleanly closes any IPC resources to mplayer.
     #
     def close(self):
-        
+        print "running close"
         if self.paused:  #untoggle pause to cleanly quit
             self.pause()
             
@@ -134,13 +148,18 @@ class TuxTruck_AudioPlayer():
             pass
 			
         self.mplayerIn, self.mplayerOut = None, None
-        self.gauge1.SetValue(0)  #reset bar
+        self.parent.updateProgressBar(0) # reset progress bar
+        self._currentSongLength = 0
+        self._currentSongName = ""
+        self._currentSongArtist = ""
+        self._currentSongAlbum = ""
+        print "close done"
 		
     #
     #  Triggered when mplayer's stdout reaches EOF.
     #
     def handleEof(self, source, condition):
-        
+        print "running handleEof"
         self.stopStatusQuery()  #cancel query
         
         self.mplayerIn, self.mplayerOut = None, None
@@ -150,15 +169,19 @@ class TuxTruck_AudioPlayer():
         else:  #reset progress bar
         self.pymp.control.setProgress(-1)
         """
-        parent.updateProgressBar(0) # reset progress bar
+        self.parent.updateProgressBar(0) # reset progress bar
+        self._currentSongLength = 0
+        self._currentSongName = ""
+        self._currentSongArtist = ""
+        self._currentSongAlbum = ""
+        print "eof done"
         return False
 		
     #
     #  Queries mplayer's playback status and upates the progress bar.
     #
     def queryStatus(self):
-        
-        #self.cmd("get_percent_pos")  #submit status query
+        print "running queryStatus"
         self.cmd("get_time_pos")
         
         time.sleep(0.05)  #allow time for output
@@ -173,45 +196,53 @@ class TuxTruck_AudioPlayer():
             
             if not line: break
 
-            # DEBUG
-            print line
-            # END DEBUG
-            
-            if line.startswith("ANS_PERCENT_POSITION"):
-                percent = int(line.replace("ANS_PERCENT_POSITION=", ""))
-                
-                #self.gauge1.SetValue(percent)  #reset bar
-                
             if line.startswith("ANS_TIME_POSITION"):
                 seconds = float(line.replace("ANS_TIME_POSITION=", ""))
-                parent.updateProgressBar(seconds) # update progress bar
-		#self.pymp.control.setProgress(percent, seconds)
+                self.parent.updateProgressBar(seconds) # update progress bar
+
+        print "query status done."
+        #self.statusQuery.start() # do it again. and again. and again...
         return True
+
 		
     #
     #  Inserts the status query monitor.
     #
     def startStatusQuery(self):
-        self.statusQuery = gobject.timeout_add(STATUS_TIMEOUT, self.queryStatus)
+        print "running startStatusQuery"
+        self.statusQuery.start()
+        #self.statusQuery = gobject.timeout_add(STATUS_TIMEOUT, self.queryStatus)
+        self.doStatusQueries = True;
+        print "startStatusQuery done."
 		
     #
     #  Removes the status query monitor.
     #
     def stopStatusQuery(self):
-        if self.eofHandler:
-            gobject.source_remove(self.statusQuery)
-        self.statusQuery = 0
+        print "running stopStatusQuery"
+        if self.statusQuery:
+            #gobject.source_remove(self.statusQuery)
+            self.statusQuery.cancel()
+            self.doStatusQueries = False
+        print "stopStatusQuery done."
 		
     #
     #  Inserts the EOF monitor.
     #
     def startEofHandler(self):
+        print "running startEofHandler"
+        #self.eofHandler = wx.Timer(self)
+        #self.Bind(wx.EVT_TIMER, self.handleEof, self.eofHandler)
+        #self.timer.Start()
         self.eofHandler = gobject.io_add_watch(self.mplayerOut, gobject.IO_HUP, self.handleEof)
+        print "startEofHandler done."
 	
     #
     #  Removes the EOF monitor.
     #
     def stopEofHandler(self):
+        print "running stopEofHandler"
         if self.eofHandler:
             gobject.source_remove(self.eofHandler)
             self.eofHandler = 0
+        print "stopEofHandler done."

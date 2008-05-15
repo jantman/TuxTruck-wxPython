@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-15 11:08:31 jantman"
-# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.7 2008-05-15 15:08:14 jantman Exp $
+# Time-stamp: "2008-05-15 13:29:04 jantman"
+# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.8 2008-05-15 17:28:33 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -33,6 +33,8 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
         """
         wx.Panel.__init__(self, parent, id) # init the panel
 
+        self.parent = parent
+
         # setup the main frame
         self.SetPosition(wx.Point(60,0)) # set the main window position
         self.SetSize(wx.Size(740,420)) # set the main window size TODO: use settings
@@ -46,7 +48,11 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
         self.gauge1.SetSize((400,20))
         self.gauge1.SetPosition((50,200))
         self.gauge1.SetRange(100) # just testing, this should be length in seconds
-        
+
+        # DEBUG text area
+        self.textBox = wx.TextCtrl(self, -1, '', style=wx.TE_LEFT)
+        self.textBox.SetPosition((100,300))
+        self.textBox.SetSize((500,50))
 
         # DEBUG
         # these are buttons to test mplayer
@@ -83,17 +89,17 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
 	
     def OnClick1(self, event):
         print "playing etta james"
-        self.mplayer.play("/home/jantman/cvs-temp/MP3test/ettaJames.mp3")
+        self.mplayer.play("/home/jantman/cvs-temp/MP3test/ettaJames-short.mp3")
         print "playing..."
 
     def OnClick2(self, event):
         print "playing bob dylan"
-        self.mplayer.play("/home/jantman/cvs-temp/mp3-test/BobDylan-ModernTimes-10-AintTalkin.mp3")
+        self.mplayer.play("/home/jantman/cvs-temp/MP3test/BobDylan-short.mp3")
         print "playing..."
 
     def OnClick3(self, event):
         print "playing tom lehrer .ogg"
-        self.mplayer.play("/home/jantman/cvs-temp/mp3-test/WernherVonBraun.ogg")
+        self.mplayer.play("/home/jantman/cvs-temp/MP3test/WernherVonBraun-short.ogg")
         print "playing..."
 
     def OnClick4(self, event):
@@ -131,6 +137,8 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
 
         # BEGIN mplayer sample code
 
+    # DEBUG: got rid of progress bar updates trying to fix segfault
+
     def updateProgressBar(self, progressValue):
         """
         This function called from mplayer class to update the progress bar
@@ -141,4 +149,5 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
         """
         This function called from mplayer class to set progress bar length in seconds.
         """
-        self.gauge1.SetRange(lengthSec):
+        self.gauge1.SetRange(lengthSec)
+        self.textBox.SetValue(str(lengthSec))
