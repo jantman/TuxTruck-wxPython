@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-15 13:29:04 jantman"
-# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.8 2008-05-15 17:28:33 jantman Exp $
+# Time-stamp: "2008-05-15 14:28:15 jantman"
+# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.9 2008-05-15 18:27:20 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -13,6 +13,8 @@ import wx # import wx for the GUI
 import sys, os, fcntl, gobject, time
 
 from TuxTruck_AudioPlayer import *
+
+from TuxTruck_Playlist import *
 
 STATUS_TIMEOUT = 10000
 
@@ -35,6 +37,10 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
 
         self.parent = parent
 
+        # setup the playlist
+        self.playlist = TuxTruck_Playlist(self)
+        self.playlist.BuildPlaylist() # DEBUG ONLY
+
         # setup the main frame
         self.SetPosition(wx.Point(60,0)) # set the main window position
         self.SetSize(wx.Size(740,420)) # set the main window size TODO: use settings
@@ -53,6 +59,8 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
         self.textBox = wx.TextCtrl(self, -1, '', style=wx.TE_LEFT)
         self.textBox.SetPosition((100,300))
         self.textBox.SetSize((500,50))
+
+        # THE LIST BOX (DEBUG)
 
         # DEBUG
         # these are buttons to test mplayer
@@ -109,12 +117,14 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
 
     def OnClick5(self, event):
         print "seeking +5"
-        self.mplayer.seek(5)
+        #self.mplayer.seek(5)
+        print self.playlist.GetFileTitle(3)
         print "seeked"
 
     def OnClick6(self, event):
         print "seeking -5"
-        self.mplayer.seek(-5)
+        #self.mplayer.seek(-5)
+        print self.playlist.GetFilePath(3)
         print "seeked"
 
 
