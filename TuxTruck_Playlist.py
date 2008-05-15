@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Playlist
-# Time-stamp: "2008-05-15 14:22:08 jantman"
-# $Id: TuxTruck_Playlist.py,v 1.1 2008-05-15 18:27:20 jantman Exp $
+# Time-stamp: "2008-05-15 15:03:46 jantman"
+# $Id: TuxTruck_Playlist.py,v 1.2 2008-05-15 20:32:43 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -25,10 +25,10 @@ class TuxTruck_Playlist():
 
     def BuildPlaylist(self):
         # DEBUG
-        self.playlist[0] = ('Etta James - Son of a Preacher Man', '/home/jantman/cvs-temp/MP3test/ettaJames.mp3')
-        self.playlist[1] = ('S-Etta James - Son of a Preacher Man', '/home/jantman/cvs-temp/MP3test/ettaJames-short.mp3')
-        self.playlist[2] = ('Bob Dylan - Aint Talkin', '/home/jantman/cvs-temp/MP3test/BobDylan-ModernTimes-10-AintTalkin.mp3')
-        self.playlist[3] = ('S-Bob Dylan - Aint Talkin', '/home/jantman/cvs-temp/MP3test/BobDylan-short.mp3')
+        self.playlist[0] = ('Etta James - Son of a Preacher Man (Pulp Fiction Soundtrack)', '/home/jantman/cvs-temp/MP3test/ettaJames.mp3')
+        self.playlist[1] = ('S-Etta James - Son of a Preacher Man (Pulp Fiction Soundtrack)', '/home/jantman/cvs-temp/MP3test/ettaJames-short.mp3')
+        self.playlist[2] = ('Bob Dylan - Aint Talkin (Modern Times)', '/home/jantman/cvs-temp/MP3test/BobDylan-ModernTimes-10-AintTalkin.mp3')
+        self.playlist[3] = ('S-Bob Dylan - Aint Talkin (Modern Times)', '/home/jantman/cvs-temp/MP3test/BobDylan-short.mp3')
         self.playlist[4] = ('Tom Lehrer - Wernher Von Braun', '/home/jantman/cvs-temp/MP3test/WernherVonBraun.ogg')
         self.playlist[5] = ('S-Tom Lehrer - Wernher Von Braun', '/home/jantman/cvs-temp/MP3test/WernherVonBraun-short.ogg')
 
@@ -37,3 +37,4 @@ class TuxTruck_Playlist():
 
     def GetFileTitle(self, playlistPos):
         return self.playlist[playlistPos][0]
+

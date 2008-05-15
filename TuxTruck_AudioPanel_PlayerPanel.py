@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-15 14:28:15 jantman"
-# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.9 2008-05-15 18:27:20 jantman Exp $
+# Time-stamp: "2008-05-15 15:02:50 jantman"
+# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.10 2008-05-15 20:32:43 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -28,6 +28,8 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
     eofHandler, statusQuery = 0, 0
     paused = False
     # end mplayer sample code
+
+    _currentPlaylistPosition = -1
 
     def __init__(self, parent, id):
         """
@@ -160,4 +162,7 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
         This function called from mplayer class to set progress bar length in seconds.
         """
         self.gauge1.SetRange(lengthSec)
-        self.textBox.SetValue(str(lengthSec))
+        # DEBUG
+        self._currentPlaylistPosition = 3
+        # END DEBUG
+        self.textBox.SetValue(self.playlist.GetFileTitle(self._currentPlaylistPosition))

@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Frame - This is the root of everything, called from the App in main.py
-# Time-stamp: "2008-05-15 11:35:43 jantman"
-# $Id: TuxTruck_Main.py,v 1.7 2008-05-15 17:28:33 jantman Exp $ 
+# Time-stamp: "2008-05-15 16:28:18 jantman"
+# $Id: TuxTruck_Main.py,v 1.8 2008-05-15 20:32:43 jantman Exp $ 
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -10,11 +10,12 @@
 import wx # import wx for the GUI
 
 # DEBUG: commented out lines 17,65,90,143 to stop clocks and suppress their output for debugging.
+# put these back in.
 
 # application includes
 from TuxTruck_Settings import * # import TuxTruck_Settings to get user settings
 from TuxTruck_AudioPanel_Main import *
-#from TuxTruck_HomePanel_Clock import *
+from TuxTruck_HomePanel_Clock import *
 from TuxTruck_Toolbar import *
 
 class TuxTruck_Main(wx.Frame):
@@ -64,7 +65,7 @@ class TuxTruck_Main(wx.Frame):
         self.audioPanel_main = TuxTruck_AudioPanel_Main(self, -1)
         # add home clock panel
         # TODO: figure out how to skin this
-        #self.homePanel_clock = TuxTruck_HomePanel_Clock(self, -1)
+        self.homePanel_clock = TuxTruck_HomePanel_Clock(self, -1)
         # commented out for mplayer debugging
 
         # now SET THE SKINS on EVERYTHING
@@ -89,7 +90,7 @@ class TuxTruck_Main(wx.Frame):
         # DEBUG - testing only since we only have one panel
         self.audioPanel_main.Hide()
         # TODO: what do we show at startup? default? selection from settings? last?
-        #self.homePanel_clock.Show()
+        self.homePanel_clock.Show()
 
     def OnClick_obd(self, event):
         """Handles click of the OBD button, switching to the OBD screen"""
@@ -142,7 +143,7 @@ class TuxTruck_Main(wx.Frame):
 
         # reskin EVERYTHING else using the new _colorSchemeName
         self.audioPanel_main.reSkin(self, self._currentColorScheme)
-        #self.homePanel_clock.reSkin(self, self._currentColorScheme)
+        self.homePanel_clock.reSkin(self, self._currentColorScheme)
         self.toolbar.reSkin(self, self._currentColorScheme)
 
 

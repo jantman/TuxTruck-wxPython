@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio Player
-# Time-stamp: "2008-05-15 13:27:56 jantman"
-# $Id: TuxTruck_AudioPlayer.py,v 1.2 2008-05-15 17:28:33 jantman Exp $
+# Time-stamp: "2008-05-15 16:26:55 jantman"
+# $Id: TuxTruck_AudioPlayer.py,v 1.3 2008-05-15 20:32:43 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -9,6 +9,10 @@
 
 import sys, os, fcntl, time, gobject
 from threading import Timer
+from os import path
+
+import id3reader
+
 
 STATUS_TIMEOUT = 1 # in seconds
 
@@ -21,6 +25,7 @@ class TuxTruck_AudioPlayer():
     eofHandler, statusQuery = 0, 0
     paused = False
 
+    _currentSongPath = ""
     _currentSongLength = 0
     _currentSongName = ""
     _currentSongArtist = ""
@@ -36,6 +41,8 @@ class TuxTruck_AudioPlayer():
         
         try:
             if os.path.exists(target):
+                self._currentSongPath = target
+
                 mpc = "mplayer -slave -quiet \"" + target + "\" 2>/dev/null"
                 
                 self.mplayerIn, self.mplayerOut = os.popen2(mpc)  #open pipe
@@ -46,7 +53,7 @@ class TuxTruck_AudioPlayer():
                 # wait for startup output
                 time.sleep(0.05)
 
-                self.getSongInfo()
+                self.GetSongInfo()
                 print "ran getSongInfo from play"
                 
                 self.startEofHandler()
@@ -63,8 +70,13 @@ class TuxTruck_AudioPlayer():
     #
     #  Get length in seconds of current song
     #
-    def getSongInfo(self):
+    def GetSongInfo(self):
         self.cmd("get_time_length")
+        # TODO: these don't seem to be working...
+        #self.cmd("get_meta_artist")
+        #self.cmd("get_meta_title")
+        #self.cmd("get_meta_album")
+        #self.cmd("get_meta_genre")
         
         time.sleep(0.05)  #allow time for output
         
@@ -78,13 +90,24 @@ class TuxTruck_AudioPlayer():
 
             if not line: break
 
+            #print line
+
             if line.startswith("ANS_LENGTH"):
                 seconds = float(line.replace("ANS_LENGTH=", ""))
                 self._currentSongLength = seconds
                 self.parent.SetSongLength(seconds) # update progress bar DEBUG commented out debugging segfault
 
-        return True
+        # Construct a reader from a file or filename.
+        try:
+            id3r = id3reader.Reader(self._currentSongPath)
+            # Ask the reader for ID3 values:
+            self._currentSongName = id3r.getValue('title')
+            self._currentSongArtist = id3r.getValue('performer')
+            self._currentSongAlbum = id3r.getValue('album')
+        except id3reader.Id3Error, message:
+            print "Id3Error: ", message
 
+        return True
 
     #
     #  Issues command to mplayer.
@@ -149,6 +172,7 @@ class TuxTruck_AudioPlayer():
 			
         self.mplayerIn, self.mplayerOut = None, None
         self.parent.updateProgressBar(0) # reset progress bar
+        self._currentSongPath = ""
         self._currentSongLength = 0
         self._currentSongName = ""
         self._currentSongArtist = ""
@@ -174,6 +198,7 @@ class TuxTruck_AudioPlayer():
         self._currentSongName = ""
         self._currentSongArtist = ""
         self._currentSongAlbum = ""
+        self._currentSongPath = ""
         print "eof done"
         return False
 		

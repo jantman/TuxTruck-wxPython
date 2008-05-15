@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck clock panel for home view
-# Time-stamp: "2008-05-12 21:16:26 jantman"
-# $Id: TuxTruck_HomePanel_Clock.py,v 1.10 2008-05-13 01:16:14 jantman Exp $
+# Time-stamp: "2008-05-15 16:29:20 jantman"
+# $Id: TuxTruck_HomePanel_Clock.py,v 1.11 2008-05-15 20:32:43 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -34,7 +34,6 @@ class TuxTruck_HomePanel_Clock(wx.Panel):
         self.SetPosition(wx.Point(0,0)) # set the main window position
         self.SetSize(wx.Size(800,420)) # set the main window size TODO: use settings
         self.SetBackgroundColour(parent.settings.skin.day_bgColor)
-        self.Hide()
 
         # analog clock
         self.clock = AnalogClock(self)
