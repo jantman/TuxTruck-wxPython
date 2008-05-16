@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio Player
-# Time-stamp: "2008-05-16 00:25:12 jantman"
-# $Id: TuxTruck_AudioPlayer.py,v 1.5 2008-05-16 04:25:52 jantman Exp $
+# Time-stamp: "2008-05-16 01:08:53 jantman"
+# $Id: TuxTruck_AudioPlayer.py,v 1.6 2008-05-16 05:15:47 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -15,7 +15,9 @@ from ContinuousTimer import *
 import id3reader
 
 
+# TODO: this needs to be optimized to keep status updates looking like realtime, but not putting too much load on the system.
 STATUS_TIMEOUT = 1 # in seconds
+
 
 class TuxTruck_AudioPlayer():
     """
@@ -26,51 +28,48 @@ class TuxTruck_AudioPlayer():
     eofHandler, statusQuery = 0, 0
     paused = False
 
+    # local variables to store state
     _currentSongPath = ""
     _currentSongLength = 0
     _currentSongName = ""
     _currentSongArtist = ""
     _currentSongAlbum = ""
 
-    __currentlyPlaying = False
-
-    #doStatusQueries = False
+    __currentlyPlaying = False # this is used to tell whether to first call close() when play() is called.
+    # close() should be called whenever we're in the middle of a job.
 
     def __init__(self, parent, id):
         self.parent = parent
-        #self.statusQuery = Timer(STATUS_TIMEOUT, self.queryStatus) # timer for status queries
-        
 
     def play(self, target):
+        """
+        This function handles playing of a file. All play requests should come through here. It quits the currently running session, if needed, cleans up, and plays a file.
+        """
         
-        # if currently playing, stop
         if self.__currentlyPlaying == True:
-            print "already playing. TODO this may be a problem."
+            # if currently playing, quit and cleanup
             self.close()
 
         try:
+            # check to make sure the file exists. if so, play it
             if os.path.exists(target):
-                self._currentSongPath = target
+                self._currentSongPath = target # update the variable holding the current path
 
-                mpc = "mplayer -slave -idle -quiet \"" + target + "\" 2>/dev/null"
+                mpc = "mplayer -slave -idle -quiet \"" + target + "\" 2>/dev/null" # command to run mplayer in slave mode
+                # NOTE: -idle keeps mplayer running after the file is done.
+                # this is a hack to prevent the whole program from SegFault'ing when the file ends and MPlayer HUPs
         
-                self.statusQuery = ContinuousTimer(self, self.queryStatus, STATUS_TIMEOUT) #
+                self.statusQuery = ContinuousTimer(self, self.queryStatus, STATUS_TIMEOUT) # this will time to check status
         
                 self.mplayerIn, self.mplayerOut = os.popen2(mpc)  #open pipe
-                print "opened pipe in play"
                 fcntl.fcntl(self.mplayerOut, fcntl.F_SETFL, os.O_NONBLOCK)
-                print "ran fcntl in play"
                 
                 # wait for startup output
                 time.sleep(0.05)
 
                 self.GetSongInfo()
-                print "ran getSongInfo from play"
                 
-                self.startEofHandler()
-                print "ran startEofHandler from play"
                 self.startStatusQuery()
-                print "ran startStatusQuery from play"
                 self.__currentlyPlaying = True
                 
             else:
@@ -79,18 +78,14 @@ class TuxTruck_AudioPlayer():
             print "Unexpected error:", sys.exc_info()[0]
             raise
         
-    #
-    #  Get length in seconds of current song
-    #
     def GetSongInfo(self):
+        """
+        This gets some basic song information, like length, for the GUI.
+        """
+        # TODO: this still has intermittent failures of not reading the value.
         self.cmd("get_time_length")
-        # TODO: these don't seem to be working...
-        #self.cmd("get_meta_artist")
-        #self.cmd("get_meta_title")
-        #self.cmd("get_meta_album")
-        #self.cmd("get_meta_genre")
         
-        time.sleep(0.05)  #allow time for output
+        time.sleep(0.1)  #allow time for output
         
         line, seconds = None, -1
 
@@ -102,14 +97,13 @@ class TuxTruck_AudioPlayer():
 
             if not line: break
 
-            print "LINE: ", line
-
             if line.startswith("ANS_LENGTH"):
                 seconds = float(line.replace("ANS_LENGTH=", ""))
                 self._currentSongLength = seconds
                 self.parent.SetSongLength(seconds) # update progress bar DEBUG commented out debugging segfault
 
-        # Construct a reader from a file or filename.
+        # TODO: This is a hack because MPlayer doesn't give us what we need.
+        # Read the rest of the information from the file directly, since MPlayer isn't telling us
         try:
             id3r = id3reader.Reader(self._currentSongPath)
             # Ask the reader for ID3 values:
@@ -119,15 +113,13 @@ class TuxTruck_AudioPlayer():
         except id3reader.Id3Error, message:
             print "Id3Error: ", message
 
-        print "Length:", seconds
-
         return True
 
-    #
-    #  Issues command to mplayer.
-    #
     def cmd(self, command):
-        print "running cmd with command "+command
+        """
+        This function handles sending commands to MPlayer.
+        """
+
         if not self.mplayerIn:
             return
         
@@ -136,14 +128,11 @@ class TuxTruck_AudioPlayer():
             self.mplayerIn.flush()  #flush pipe
         except StandardError:
             return
-
-        print "cmd done."
         
-    #
-    #  Toggles pausing of the current mplayer job and status query.
-    #
     def pause(self):
-        print "running pause"
+        """
+        This function toggles pausing of the current mplayer job, as well as the statusQuery timer.
+        """
         if not self.mplayerIn:
             return
         
@@ -156,26 +145,23 @@ class TuxTruck_AudioPlayer():
             self.paused = True
             
         self.cmd("pause")
-        print "pause done"
 		
-    #
-    #  Seeks the amount using the specified mode.  See mplayer docs.
-    #
     def seek(self, amount, mode=0):
-        self.pymp.mplayer.cmd("seek " + str(amount) + " " + str(mode))
-        self.pymp.mplayer.queryStatus()
+        """
+        This seeks the specified amount in the current file, and also updates the status.
+        """
+        self.cmd("seek " + str(amount) + " " + str(mode))
+        self.queryStatus()
 	
-    #
-    #  Cleanly closes any IPC resources to mplayer.
-    #
     def close(self):
-        print "running close"
+        """
+        This cleanly closes any IPC resources to mplayer. It is called when playback finishes, as well as when starting playback of a new file when mplayer is in the middle of a job.
+        """
         if self.paused:  #untoggle pause to cleanly quit
             self.pause()
 
         self.__currentlyPlaying = False
         self.stopStatusQuery()  #cancel query
-        self.stopEofHandler()  #cancel eof monitor
         
         self.cmd("quit")  #ask mplayer to quit
             
@@ -186,43 +172,21 @@ class TuxTruck_AudioPlayer():
             pass
 			
         self.mplayerIn, self.mplayerOut = None, None
+
         self.parent.updateProgressBar(0) # reset progress bar
+
+        # reset all local variables
         self._currentSongPath = ""
         self._currentSongLength = 0
         self._currentSongName = ""
         self._currentSongArtist = ""
         self._currentSongAlbum = ""
-        print "close done"
-		
-    #
-    #  Triggered when mplayer's stdout reaches EOF.
-    #
-    def handleEof(self, source, condition):
-        print "running handleEof"
-        self.stopStatusQuery()  #cancel query
-        
-        self.mplayerIn, self.mplayerOut = None, None
-        """
-        if self.pymp.playlist.continuous:  #play next target
-        self.pymp.playlist.next(None, None)
-        else:  #reset progress bar
-        self.pymp.control.setProgress(-1)
-        """
-        self.parent.updateProgressBar(0) # reset progress bar
-        self._currentSongLength = 0
-        self._currentSongName = ""
-        self._currentSongArtist = ""
-        self._currentSongAlbum = ""
-        self._currentSongPath = ""
-        self.__currentlyPlaying = False
-        print "eof done"
-        return False
-		
-    #
-    #  Queries mplayer's playback status and upates the progress bar.
-    #
+				
     def queryStatus(self):
-        print "running queryStatus"
+        """
+        This function queries MPlayer's status when running and updates the progress bar on the parent panel.
+        """
+
         self.cmd("get_time_pos")
         
         time.sleep(0.05)  #allow time for output
@@ -237,63 +201,29 @@ class TuxTruck_AudioPlayer():
             
             if not line: break
 
-            #print line
-
             if line.startswith("ANS_TIME_POSITION"):
                 seconds = float(line.replace("ANS_TIME_POSITION=", ""))
                 self.parent.updateProgressBar(seconds) # update progress bar
 
-        print "query status done."
-
         if seconds == -1:
             # PLAYING has STOPPED. stop the status queries.
-            print "NO SECONDS."
             self.statusQuery.stop()
 
         return True
 
 		
-    #
-    #  Inserts the status query monitor.
-    #
     def startStatusQuery(self):
-        print "running startStatusQuery"
+        """
+        This function starts the statusQuery timer.
+        """
         self.statusQuery = ContinuousTimer(self, self.queryStatus, STATUS_TIMEOUT) #
         self.statusQuery.start()
-        #self.statusQuery = gobject.timeout_add(STATUS_TIMEOUT, self.queryStatus)
-        #self.doStatusQueries = True;
-        print "startStatusQuery done."
 		
-    #
-    #  Removes the status query monitor.
-    #
     def stopStatusQuery(self):
-        print "running stopStatusQuery"
+        """
+        This function stops the statusQuery timer and cleans it up
+        """
         if self.statusQuery:
-            #gobject.source_remove(self.statusQuery)
             self.statusQuery.stop()
-            print "statusQuery stopped"
             self.statusQuery = None
-            #self.doStatusQueries = False
-        print "stopStatusQuery done."
 		
-    #
-    #  Inserts the EOF monitor.
-    #
-    def startEofHandler(self):
-        print "running startEofHandler"
-        #self.eofHandler = wx.Timer(self)
-        #self.Bind(wx.EVT_TIMER, self.handleEof, self.eofHandler)
-        #self.timer.Start()
-        self.eofHandler = gobject.io_add_watch(self.mplayerOut, gobject.IO_HUP, self.handleEof)
-        print "startEofHandler done."
-	
-    #
-    #  Removes the EOF monitor.
-    #
-    def stopEofHandler(self):
-        print "running stopEofHandler"
-        if self.eofHandler:
-            gobject.source_remove(self.eofHandler)
-            self.eofHandler = 0
-        print "stopEofHandler done."

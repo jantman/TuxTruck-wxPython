@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-15 21:52:55 jantman"
-# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.11 2008-05-16 03:25:20 jantman Exp $
+# Time-stamp: "2008-05-16 01:10:28 jantman"
+# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.12 2008-05-16 05:15:47 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -96,36 +96,24 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
 
 	
     def OnClick1(self, event):
-        print "playing etta james"
-        self.mplayer.play("/home/jantman/cvs-temp/MP3test/ettaJames-short.mp3")
-        print "playing..."
+        self.mplayer.play(self.playlist.GetFilePath(0))
 
     def OnClick2(self, event):
-        print "playing bob dylan"
         self.mplayer.play("/home/jantman/cvs-temp/MP3test/BobDylan-short.mp3")
-        print "playing..."
 
     def OnClick3(self, event):
-        print "playing tom lehrer .ogg"
         self.mplayer.play("/home/jantman/cvs-temp/MP3test/WernherVonBraun-short.ogg")
-        print "playing..."
 
     def OnClick4(self, event):
-        print "pausing..."
         self.mplayer.pause()
-        print "paused"
 
     def OnClick5(self, event):
-        print "seeking +5"
-        #self.mplayer.seek(5)
-        print self.playlist.GetFileTitle(3)
-        print "seeked"
+        self.mplayer.seek(5)
+        #print self.playlist.GetFileTitle(3)
 
     def OnClick6(self, event):
-        print "seeking -5"
-        #self.mplayer.seek(-5)
-        print self.playlist.GetFilePath(3)
-        print "seeked"
+        self.mplayer.seek(-5)
+        #print self.playlist.GetFilePath(3)
 
 
     def reSkin(self, parent, colorSchemeName):
