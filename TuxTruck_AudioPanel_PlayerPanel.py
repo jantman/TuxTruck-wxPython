@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-16 01:10:28 jantman"
-# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.12 2008-05-16 05:15:47 jantman Exp $
+# Time-stamp: "2008-05-16 01:18:00 jantman"
+# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.13 2008-05-16 05:24:14 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -11,6 +11,8 @@ import wx # import wx for the GUI
 
 #mplayer stuff
 #import sys, os, fcntl, gobject, time
+
+# TODO: document this code. remove debugging stuff.
 
 from TuxTruck_AudioPlayer import *
 
