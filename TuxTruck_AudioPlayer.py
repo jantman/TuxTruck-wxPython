@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio Player
-# Time-stamp: "2008-05-15 16:26:55 jantman"
-# $Id: TuxTruck_AudioPlayer.py,v 1.3 2008-05-15 20:32:43 jantman Exp $
+# Time-stamp: "2008-05-15 23:24:19 jantman"
+# $Id: TuxTruck_AudioPlayer.py,v 1.4 2008-05-16 03:25:20 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -43,7 +43,7 @@ class TuxTruck_AudioPlayer():
             if os.path.exists(target):
                 self._currentSongPath = target
 
-                mpc = "mplayer -slave -quiet \"" + target + "\" 2>/dev/null"
+                mpc = "mplayer -slave -idle -quiet \"" + target + "\" 2>/dev/null"
                 
                 self.mplayerIn, self.mplayerOut = os.popen2(mpc)  #open pipe
                 print "opened pipe in play"

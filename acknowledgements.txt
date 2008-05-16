@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Main Application (this is what you run!)
-# Time-stamp: "2008-05-12 19:38:54 jantman"
-# $Id: acknowledgements.txt,v 1.1 2008-05-13 06:33:40 jantman Exp $
+# Time-stamp: "2008-05-15 22:53:14 jantman"
+# $Id: acknowledgements.txt,v 1.2 2008-05-16 03:25:20 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -17,3 +17,4 @@ emails, and providing some much-needed encouragement.
 E. A. Tacao <eatacao@lavabit.com>, the Author of the LEDCtrl module, for his
 near-instantaneous advice via the wxPython list on adding a degrees character.
 
+bob2 on #python (irc.freenode.net) for helping with the timer issue in startStatusQuery() in TuxTruck_AudioPlayer.py.
