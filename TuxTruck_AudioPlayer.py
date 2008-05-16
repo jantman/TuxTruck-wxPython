@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio Player
-# Time-stamp: "2008-05-15 23:24:19 jantman"
-# $Id: TuxTruck_AudioPlayer.py,v 1.4 2008-05-16 03:25:20 jantman Exp $
+# Time-stamp: "2008-05-16 00:25:12 jantman"
+# $Id: TuxTruck_AudioPlayer.py,v 1.5 2008-05-16 04:25:52 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -10,6 +10,7 @@
 import sys, os, fcntl, time, gobject
 from threading import Timer
 from os import path
+from ContinuousTimer import *
 
 import id3reader
 
@@ -31,20 +32,30 @@ class TuxTruck_AudioPlayer():
     _currentSongArtist = ""
     _currentSongAlbum = ""
 
-    doStatusQueries = False
+    __currentlyPlaying = False
+
+    #doStatusQueries = False
 
     def __init__(self, parent, id):
         self.parent = parent
-        self.statusQuery = Timer(STATUS_TIMEOUT, self.queryStatus) # timer for status queries
+        #self.statusQuery = Timer(STATUS_TIMEOUT, self.queryStatus) # timer for status queries
+        
 
     def play(self, target):
         
+        # if currently playing, stop
+        if self.__currentlyPlaying == True:
+            print "already playing. TODO this may be a problem."
+            self.close()
+
         try:
             if os.path.exists(target):
                 self._currentSongPath = target
 
                 mpc = "mplayer -slave -idle -quiet \"" + target + "\" 2>/dev/null"
-                
+        
+                self.statusQuery = ContinuousTimer(self, self.queryStatus, STATUS_TIMEOUT) #
+        
                 self.mplayerIn, self.mplayerOut = os.popen2(mpc)  #open pipe
                 print "opened pipe in play"
                 fcntl.fcntl(self.mplayerOut, fcntl.F_SETFL, os.O_NONBLOCK)
@@ -60,6 +71,7 @@ class TuxTruck_AudioPlayer():
                 print "ran startEofHandler from play"
                 self.startStatusQuery()
                 print "ran startStatusQuery from play"
+                self.__currentlyPlaying = True
                 
             else:
                 print "File "+target+" does not exist, not playing."
@@ -90,7 +102,7 @@ class TuxTruck_AudioPlayer():
 
             if not line: break
 
-            #print line
+            print "LINE: ", line
 
             if line.startswith("ANS_LENGTH"):
                 seconds = float(line.replace("ANS_LENGTH=", ""))
@@ -106,6 +118,8 @@ class TuxTruck_AudioPlayer():
             self._currentSongAlbum = id3r.getValue('album')
         except id3reader.Id3Error, message:
             print "Id3Error: ", message
+
+        print "Length:", seconds
 
         return True
 
@@ -158,7 +172,8 @@ class TuxTruck_AudioPlayer():
         print "running close"
         if self.paused:  #untoggle pause to cleanly quit
             self.pause()
-            
+
+        self.__currentlyPlaying = False
         self.stopStatusQuery()  #cancel query
         self.stopEofHandler()  #cancel eof monitor
         
@@ -199,6 +214,7 @@ class TuxTruck_AudioPlayer():
         self._currentSongArtist = ""
         self._currentSongAlbum = ""
         self._currentSongPath = ""
+        self.__currentlyPlaying = False
         print "eof done"
         return False
 		
@@ -221,12 +237,19 @@ class TuxTruck_AudioPlayer():
             
             if not line: break
 
+            #print line
+
             if line.startswith("ANS_TIME_POSITION"):
                 seconds = float(line.replace("ANS_TIME_POSITION=", ""))
                 self.parent.updateProgressBar(seconds) # update progress bar
 
         print "query status done."
-        #self.statusQuery.start() # do it again. and again. and again...
+
+        if seconds == -1:
+            # PLAYING has STOPPED. stop the status queries.
+            print "NO SECONDS."
+            self.statusQuery.stop()
+
         return True
 
 		
@@ -235,9 +258,10 @@ class TuxTruck_AudioPlayer():
     #
     def startStatusQuery(self):
         print "running startStatusQuery"
+        self.statusQuery = ContinuousTimer(self, self.queryStatus, STATUS_TIMEOUT) #
         self.statusQuery.start()
         #self.statusQuery = gobject.timeout_add(STATUS_TIMEOUT, self.queryStatus)
-        self.doStatusQueries = True;
+        #self.doStatusQueries = True;
         print "startStatusQuery done."
 		
     #
@@ -247,8 +271,10 @@ class TuxTruck_AudioPlayer():
         print "running stopStatusQuery"
         if self.statusQuery:
             #gobject.source_remove(self.statusQuery)
-            self.statusQuery.cancel()
-            self.doStatusQueries = False
+            self.statusQuery.stop()
+            print "statusQuery stopped"
+            self.statusQuery = None
+            #self.doStatusQueries = False
         print "stopStatusQuery done."
 		
     #
