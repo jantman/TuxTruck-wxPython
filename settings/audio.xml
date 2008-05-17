@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <TuxTruck_Audio>
-  <mp3root>/home/jantman/cvs-temp/TuxTruck-wxPython/mp3-test</mp3root>
+  <mp3root>/home/jantman/cvs-temp/MP3test</mp3root>
   <podcastroot>/home/jantman/cvs-temp/TuxTruck-wxPython/podcast-test</podcastroot>
+  <playlistroot>/home/jantman/cvs-temp/TuxTruck-wxPython/playlists</playlistroot>
 </TuxTruck_Audio>

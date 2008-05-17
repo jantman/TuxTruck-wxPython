@@ -1,6 +1,6 @@
 # TuxTruck Skin Manager
-# Time-stamp: "2008-05-12 15:20:47 jantman"
-# $Id: TuxTruck_Settings_Audio.py,v 1.2 2008-05-12 19:22:43 jantman Exp $
+# Time-stamp: "2008-05-17 18:11:01 jantman"
+# $Id: TuxTruck_Settings_Audio.py,v 1.3 2008-05-17 22:20:28 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -31,6 +31,7 @@ class TuxTruck_Settings_Audio:
         audioTree = ElementTree.parse(file).getroot()
 
         self.mp3root = audioTree.findtext("mp3root")
+        self.playlistroot = audioTree.findtext("playlistroot")
         self.podcastroot = audioTree.findtext("podcastroot")
         
 
