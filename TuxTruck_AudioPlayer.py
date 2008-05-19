@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio Player
-# Time-stamp: "2008-05-16 01:08:53 jantman"
-# $Id: TuxTruck_AudioPlayer.py,v 1.6 2008-05-16 05:15:47 jantman Exp $
+# Time-stamp: "2008-05-19 00:27:24 jantman"
+# $Id: TuxTruck_AudioPlayer.py,v 1.7 2008-05-19 06:08:50 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -14,6 +14,7 @@ from ContinuousTimer import *
 
 import id3reader
 
+# TODO: remove all ID3 reading from this and do it in playlist
 
 # TODO: this needs to be optimized to keep status updates looking like realtime, but not putting too much load on the system.
 STATUS_TIMEOUT = 1 # in seconds
