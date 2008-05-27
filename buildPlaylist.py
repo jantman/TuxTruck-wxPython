@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Playlist Builder
-# Time-stamp: "2008-05-19 02:08:27 jantman"
-# $Id: buildPlaylist.py,v 1.2 2008-05-19 06:08:50 jantman Exp $
+# Time-stamp: "2008-05-24 23:21:36 jantman"
+# $Id: buildPlaylist.py,v 1.3 2008-05-27 05:55:51 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -22,13 +22,17 @@ from TuxTruck_Playlist import *
 settings = TuxTruck_Settings() # initiate the settings object
 MP3_ROOT = settings.audio.mp3root # the root directory for all audio files
 PLAYLIST_ROOT = settings.audio.playlistroot # the root directory for all playlists
+playlist_ALL = None
+playlist_dir = None
 
 paths_to_check = [MP3_ROOT, ] # need to check the root path
 
 fileExtensions = ['mp3', 'MP3', 'ogg', 'OGG'] # list of file extensions to put in playlists
 
+# DEBUG
 print "playlist root="+PLAYLIST_ROOT
 print "MP3 root="+MP3_ROOT
+# END DEBUG
 
 def testPlaylist(fpath, displayName, title, artist, album, genre):
     # DEBUG ONLY
@@ -93,7 +97,7 @@ def isNewFile(fpath,fname):
     """
     print "isNewFile called. path="+fpath+" file="+fname # DEBUG
 
-    # TODO: parse the playlist for directory `fpath` and see if this file is in it. If it is in the playlist, return false. else return true.
+    
 
     return True
 
@@ -103,16 +107,14 @@ def checkPath(fpath):
     Handle all files and subdirectories in path.
     """
 
-    #print "Checking Path "+fpath+" ..." # DEBUG
-
     paths_to_check.remove(fpath) # remove this path from the list of paths to check
 
-    # add all files in a path to the appropriate playlists.
-    # add subdirs to paths_to_check list
+    self.playlist_dir = TuxTruck_Playlist(None, PLAYLIST_ROOT)
+    self.playlist_dir.ReadOrCreatePlaylist(self, os.path.join(fpath+"dir.ttpl"), fpath, "path") # read in or create playlist
 
     dirList=os.listdir(fpath)
-    for fname in dirList:
 
+    for fname in dirList:
         if os.path.isdir(os.path.join(fpath,fname)):
             # is a directory, add to paths_to_check
             paths_to_check.append(os.path.join(fpath,fname))
@@ -124,6 +126,7 @@ def checkPath(fpath):
             fpath = fpath.replace(MP3_ROOT, '')
 
             if isNewFile(fpath,fname):
+                # TODO: left off here
                 # this is a file we haven't seen before, handle it
 
                 if extension == "mp3" or extension == "MP3":

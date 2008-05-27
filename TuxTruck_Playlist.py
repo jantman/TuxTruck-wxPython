@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Playlist
-# Time-stamp: "2008-05-19 02:07:59 jantman"
-# $Id: TuxTruck_Playlist.py,v 1.4 2008-05-19 06:08:50 jantman Exp $
+# Time-stamp: "2008-05-24 20:04:59 jantman"
+# $Id: TuxTruck_Playlist.py,v 1.5 2008-05-27 05:55:51 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -35,7 +35,7 @@ class TuxTruck_Playlist():
 
     def WriteCurrentPlaylist(self):
         """
-        This function WRITES the current playlist changes to the playlist file. It's mainly used when building a new playlist, to write the complete tree, or when updating the rank of a file.
+        This function WRITES the current playlist changes to the playlist file. It's mainly used when building a new playlist, to write the complete tree, or when updating the rank of a file. Path is absolute.
         """
         print "Writing playlist to "+self.current_file
 
@@ -78,7 +78,7 @@ class TuxTruck_Playlist():
 
     def CreateBlankPlaylist(self, filepath, name, type):
         """
-        This function creates a skeleton of a blank playlist, ready for adding entries to (for use when building playlists from disk files). Entries are added with AddEntry(). When finished, it is written to disk with WriteCurrentPlaylist(). Arguments are filepath, name and type as seen in the playlist documentation.
+        This function creates a skeleton of a blank playlist, ready for adding entries to (for use when building playlists from disk files). Entries are added with AddEntry(). When finished, it is written to disk with WriteCurrentPlaylist(). Arguments are filepath, name and type as seen in the playlist documentation. Path is absolute.
         """
         # TODO: also include playlist name, type, etc.
 
@@ -95,7 +95,7 @@ class TuxTruck_Playlist():
 
     def ReadOrCreatePlaylist(self, filepath, name, type):
         """
-        This function is used by playlist builders. If the specified path exists, it reads it in. If not, it creates it.
+        This function is used by playlist builders. If the specified path exists, it reads it in. If not, it creates it. Filepath is an absolute path.
         """
         if os.path.exists(filepath):
             ReadPlaylist(filepath)
