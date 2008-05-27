@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-16 01:18:00 jantman"
-# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.13 2008-05-16 05:24:14 jantman Exp $
+# Time-stamp: "2008-05-27 13:11:24 jantman"
+# $Id: TuxTruck_AudioPanel_PlayerPanel.py,v 1.14 2008-05-27 18:23:08 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -40,8 +40,8 @@ class TuxTruck_AudioPanel_PlayerPanel(wx.Panel):
         self.parent = parent
 
         # setup the playlist
-        self.playlist = TuxTruck_Playlist(self)
-        self.playlist.BuildPlaylist() # DEBUG ONLY
+        self.playlist = TuxTruck_Playlist(self, parent.parent.settings.audio.playlistroot) # TODO this is a hack, need program-wide globals
+        #self.playlist.BuildPlaylist() # DEBUG ONLY
 
         # setup the main frame
         self.SetPosition(wx.Point(60,0)) # set the main window position

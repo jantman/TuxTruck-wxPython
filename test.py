@@ -2,10 +2,11 @@
 
 # TuxTruck testing file - used to test functions before addition to mainline code
 # NOTICE - this is used to test simple (non object-oriented) functions ONLY
-# Time-stamp: "2008-05-21 01:18:08 jantman"
-# $Id: test.py,v 1.1 2008-05-21 06:15:09 jantman Exp $
+# Time-stamp: "2008-05-27 14:11:52 jantman"
+# $Id: test.py,v 1.2 2008-05-27 18:23:08 jantman Exp $
 
 import re
+import elementtree.ElementTree as ET
 
 def makeValidFilename(s):
     """
@@ -32,6 +33,23 @@ def makePlaylistFilename(s):
     s = s+".ttpl" # append ".ttpl"
     return s
 
+
+def IsInPlaylist(filepath):
+    """
+    Returns TRUE if the playlist located at playlistFile contains a (song) entry containing exactly filepath as its "filepath" field content. Otherwise returns false.
+    """
+    tree = ET.parse("/home/jantman/cvs-temp/MP3test/EttaJames/dir.ttpl")
+    root = tree.getroot()
+    songs = root.find("songs")
+    songsIter = songs.getiterator()
+
+    for entry in songsIter:
+        if entry.findtext('filepath') == filepath:
+            return True
+    return False
+    
+
+print IsInPlaylist("/EttaJames/ettaJames.mp3")
 
 testStr = "file Name / hi \ & $ % # ^ @ ! hi.*"
 print testStr

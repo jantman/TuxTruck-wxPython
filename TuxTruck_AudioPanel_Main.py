@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # TuxTruck Audio main frame
-# Time-stamp: "2008-05-12 14:38:31 jantman"
-# $Id: TuxTruck_AudioPanel_Main.py,v 1.7 2008-05-12 18:49:59 jantman Exp $
+# Time-stamp: "2008-05-27 13:10:50 jantman"
+# $Id: TuxTruck_AudioPanel_Main.py,v 1.8 2008-05-27 18:23:08 jantman Exp $
 #
 # Copyright 2008 Jason Antman. Licensed under GNU GPLv3 or latest version (at author's discretion).
 # Jason Antman - jason@jasonantman.com - http://www.jasonantman.com
@@ -21,6 +21,8 @@ class TuxTruck_AudioPanel_Main(wx.Panel):
         """
         Init function for the audio panel. Sets everything up.
         """
+        self.parent = parent
+
         wx.Panel.__init__(self, parent, id) # init the panel
 
         # setup the main frame
