@@ -17,6 +17,8 @@ media player in Python/wxWindows, there might be some good code to look
 at. There's also a project wiki which has been taken offline, and now is just
 in the "oldwiki/" directory in this repo.
 
+I still own tuxtruck.org. If anyone is interested in continuing the project, please contact me.
+
 Original Blog Post Description/Plan
 ------------------------------------
 
