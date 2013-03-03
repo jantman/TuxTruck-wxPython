@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<title>Software Overview - TuxTruckWiki</title>
+<meta charset="UTF-8" />
+<meta name="generator" content="MediaWiki 1.18.1" />
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="opensearch_desc.php" title="TuxTruckWiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="api.php_action_rsd" />
+<link rel="alternate" type="application/atom+xml" title="TuxTruckWiki Atom feed" href="" />
+<link rel="stylesheet" href="" />
+<!--[if lt IE 5.5000]><link rel="stylesheet" href="ie50fixes.css" media="screen" /><![endif]-->
+<!--[if IE 5.5000]><link rel="stylesheet" href="ie55fixes.css" media="screen" /><![endif]-->
+<!--[if IE 6]><link rel="stylesheet" href="ie60fixes.css" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="ie70fixes.css" media="screen" /><![endif]--><meta name="ResourceLoaderDynamicStyles" content="" />
+<style>a:lang(ar),a:lang(ckb),a:lang(fa),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}a.new,#quickbar a.new{color:#ba0000}
+
+/* cache key: wikidb-tuxtruck_wiki_:resourceloader:filter:minify-css:4:c88e2bcd56513749bec09a7e29cb3ffa */
+</style>
+<script src=""></script>
+<script>if(window.mw){
+	mw.config.set({"wgCanonicalNamespace": "", "wgCanonicalSpecialPageName": false, "wgNamespaceNumber": 0, "wgPageName": "Software_Overview", "wgTitle": "Software Overview", "wgCurRevisionId": 44, "wgArticleId": 11, "wgIsArticle": true, "wgAction": "view", "wgUserName": null, "wgUserGroups": ["*"], "wgCategories": [], "wgBreakFrames": false, "wgRestrictionEdit": [], "wgRestrictionMove": []});
+}
+</script><script>if(window.mw){
+	mw.loader.load(["mediawiki.page.startup"]);
+}
+</script>
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Software_Overview action-view skin-monobook">
+<div id="globalWrapperHacked">
+<div id="column-content"><div id="content">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">Software Overview</h1>
+	<div id="bodyContent">
+		<div id="siteSub">From TuxTruckWiki</div>
+		<div id="contentSub"></div>
+		<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>
+		<!-- start content -->
+<div lang="en" dir="ltr" class="mw-content-ltr"><table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Realtime"><span class="tocnumber">1</span> <span class="toctext">Realtime</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Links"><span class="tocnumber">1.1</span> <span class="toctext">Links</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-3"><a href="#MP3_Player"><span class="tocnumber">2</span> <span class="toctext">MP3 Player</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Navigation"><span class="tocnumber">3</span> <span class="toctext">Navigation</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Linux_GPS_Navigation_Software"><span class="tocnumber">3.1</span> <span class="toctext">Linux GPS Navigation Software</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#GPS_Nav_Software_Comparison"><span class="tocnumber">3.2</span> <span class="toctext">GPS Nav Software Comparison</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7"><a href="#Settings"><span class="tocnumber">4</span> <span class="toctext">Settings</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#Phone"><span class="tocnumber">5</span> <span class="toctext">Phone</span></a>
+<ul>
+<li class="toclevel-2 tocsection-9"><a href="#Bluetooth_Interface"><span class="tocnumber">5.1</span> <span class="toctext">Bluetooth Interface</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="Realtime">Realtime</span></h2>
+<p>Some amount of (soft) realtime will be required. Even if the unit is downloading weather data, navigating in realtime, <i>and</i> playing an MP3, if a phone call comes in, it needs to handle that call in a timely fashion (i.e., at a maximum, alert the user to that call within half a second). Of course, it's also possible to handle all of this in Python through good use of loops (possibly threads) and some sort of IPC facility.
+</p><p>One of the major considerations here is license terms. If the project goes well, I'd consider selling complete systems. If I do that, I need to make some sort of profit, to cover the time needed to build and test the systems, as well as cover the capital of buying parts. Therefore, a license that allows commercial use without any cost (I can't buy a license if I end up only selling 2 systems) is required.
+</p>
+<h3> <span class="mw-headline" id="Links">Links</span></h3>
+<ul><li><a rel="nofollow" class="external text" href="http://rt.wiki.kernel.org/index.php/Main_Page">Real-Time Linux Wiki</a>
+</li><li><a rel="nofollow" class="external text" href="http://www.rtlinuxfree.com/">RTLinuxFree from Wind River</a>
+</li><li><a rel="nofollow" class="external text" href="http://www.linuxdevices.com/articles/AT3694406595.html">LinuxDevices - An Introduction to RTLinux</a>
+</li><li><a rel="nofollow" class="external text" href="https://www.rtai.org/">RTAI</a>
+</li></ul>
+<p><br />
+</p>
+<h2> <span class="mw-headline" id="MP3_Player">MP3 Player</span></h2>
+<p><a rel="nofollow" class="external text" href="http://jdolan.dyndns.org/trac/wiki/Pymp">PyMP</a>, dependent on MPlayer.
+</p>
+<h2> <span class="mw-headline" id="Navigation">Navigation</span></h2>
+<p>GPS Software - the hard part.
+</p><p>gpsd
+</p>
+<h3> <span class="mw-headline" id="Linux_GPS_Navigation_Software">Linux GPS Navigation Software</span></h3>
+<ul><li><a rel="nofollow" class="external text" href="http://roadnav.sourceforge.net/">RoadNav</a> / LibRoadNav - seems like the front-runner. Libroadnav is coded in C++/wxWindows. Missing a lot of features that I want, but seems like the leader. Provides Libroadnav (C++) for embedding in applications.
+</li><li><a rel="nofollow" class="external text" href="http://www.navit-project.org/">Navit</a> - GTK+, designed for touchscreens. Has a *very* good UI. Uses speechd. Unfortunately written in C.
+</li></ul>
+<h3> <span class="mw-headline" id="GPS_Nav_Software_Comparison">GPS Nav Software Comparison</span></h3>
+<p>Here is a little comparison that I've come up with and will keep adding to.
+</p>
+<ul><li>I didn't even finish the chart for <a rel="nofollow" class="external text" href="http://www.gpsdrive.de/">GPSdrive</a>. It appears not to even be targeted to kayboardless computers at all, and probably not a good option either in terms of feature set or overall suitability.
+</li></ul>
+<table border="1">
+<tr>
+<th>Package</th>
+<th>License</th>
+<th>Language</th>
+<th>GUI</th>
+<th>Intended<br />Use</th>
+<th>GUI Type</th>
+<th>Skinnable?</th>
+<th>Embeddable?</th>
+<th>Speech?</th>
+<th>USGS/Census<br />TigerLine</th>
+<th><a rel="nofollow" class="external text" href="http://www.openstreetmap.org">OpenStreetMap</a>&#160;&#160;&#160;&#160;&#160;&#160;</th>
+<th>3D View</th>
+<th>Turn-by-Turn</th>
+<th>Recomputes?</th>
+<th>On-Screen<br /> Keyboard?</th>
+<th>Day/Night</th>
+<th>LCDproc</th>
+</tr>
+<tr>
+<td><a rel="nofollow" class="external text" href="http://roadnav.sourceforge.net/">RoadNav</a>&#160;&#160;&#160;&#160;</td>
+<td>GPLv2</td>
+<td>C++</td>
+<td>Mobile,<br />laptop</td>
+<td>Device-style or full</td>
+<td>C++/wxWidgets</td>
+<td>Yes</td>
+<td>LibRoadnav, C++/wx</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Exp</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Exp</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><a rel="nofollow" class="external text" href="http://www.navit-project.org/">Navit</a>&#160;&#160;&#160;&#160;</td>
+<td>GPL</td>
+<td>C</td>
+<td>Mobile,<br />embedded</td>
+<td>Device-style</td>
+<td>GTK+ / SDL</td>
+<td>Yes (SDL)</td>
+<td>Supposedly<br />(and new dbus)</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>turn-by-turn</td>
+<td>Unknown</td>
+<td>Skinnable</td>
+<td>No</td>
+</tr>
+<tr>
+<td><a rel="nofollow" class="external text" href="http://www.gpsdrive.de/">GPSdrive</a></td>
+<td>GPL</td>
+<td>C</td>
+<td>GTK</td>
+<td>Laptop</td>
+<td>cluttered</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+</table>
+<p><br />
+Key:
+</p>
+<ul><li><b>Exp</b>erimental
+</li></ul>
+<h2> <span class="mw-headline" id="Settings">Settings</span></h2>
+<p>All settings, preferences, and skins will be stored in XML files. These will be parsed, probably using the <a rel="nofollow" class="external text" href="http://effbot.org/zone/element-index.htm">elementtree</a> library for Python, which also provides easy writing of modifications to the XML file.
+</p>
+<h2> <span class="mw-headline" id="Phone">Phone</span></h2>
+<h3> <span class="mw-headline" id="Bluetooth_Interface">Bluetooth Interface</span></h3>
+<ul><li><a rel="nofollow" class="external text" href="http://www.holtmann.org/linux/bluetooth/">Linux Bluetooth Info</a>
+</li><li><a rel="nofollow" class="external text" href="http://www.holtmann.org/linux/bluetooth/audio.html">BlueZ Advanced Audio</a>
+</li><li><a rel="nofollow" class="external text" href="http://wiki.bluez.org/wiki/HOWTO/AudioDevices">BlueZ Audio Devices</a>
+</li><li><a rel="nofollow" class="external text" href="http://wiki.bluez.org/wiki/Audio">BlueZ Audio</a>
+</li></ul>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 43/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key wikidb-tuxtruck_wiki_:pcache:idhash:11-0!*!*!!en!*!* and timestamp 20130302105449 -->
+</div><div class="printfooter">
+Retrieved from "<a href="">http://www.tuxtruck.org/index.php?title=Software_Overview&amp;oldid=44</a>"</div>
+		<div id='catlinks' class='catlinks catlinks-allhidden'></div>		<!-- end content --><div class="visualClear"></div></div></div></div>
+    <div id="column-one">
+      <div id="p-cactions" class="portlet"></div>
+      <div class="portlet" id="p-personal"></div>
+      <div class="portlet" id="p-logo"></div>
+      <div class="portlet" id="p-nav">
+  
+      </div>
+      <div id="p-search" class="portlet"></div>
+      <div class="portlet" id="p-tb"></div>
+    </div>
+    <!-- end left column -->
+  <!-- end of the left (by default at least) column -->
+<div class="visualClear"></div>
+<div id="footerHacked">
+	<ul id="f-list">
+		<li id="lastmod"> This page was last modified on 8 May 2008, at 00:05.</li>
+		<li id="viewcount">This page has been accessed 584 times.</li>
+		<li id="privacy"><a href="tuxtruckwiki_privacy_policy.html" title="TuxTruckWiki:Privacy policy">Privacy policy</a></li>
+		<li id="about"><a href="tuxtruckwiki_about.html" title="TuxTruckWiki:About">About TuxTruckWiki</a></li>
+		<li id="disclaimer"><a href="tuxtruckwiki_general_disclaimer.html" title="TuxTruckWiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+</div>
+</div>
+<script>if(window.mw){
+	mw.loader.load(["mediawiki.user", "mediawiki.util", "mediawiki.page.ready", "mediawiki.legacy.wikibits", "mediawiki.legacy.ajax"]);
+}
+</script>
+<script>if(window.mw){
+	mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"monobook","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,"watchlistdays":3,"watchlisthideanons":0,
+	"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;mw.user.tokens.set({"editToken":"+\\","watchToken":false});;mw.loader.state({"user.options":"ready","user.tokens":"ready"});
+	
+	/* cache key: wikidb-tuxtruck_wiki_:resourceloader:filter:minify-js:4:99acc2c3ab516bb21085c70c2195f3df */
+}
+</script><!-- Served in 0.197 secs. --><br></body></html>
