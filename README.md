@@ -1,6 +1,8 @@
 TuxTruck-wxPython
 ==================
 
+[![Project Status: Abandoned - Initial development has started, but there has not yet been a stable, usable release; the project has been abandoned and the author(s) do not intend on continuing development.](http://www.repostatus.org/badges/0.1.0/abandoned.svg)](http://www.repostatus.org/#abandoned)
+
 This is an old and largely abandoned project to create a CarPC environment in
 wxPython. One developer has done some additional work on the audio player, but
 not much other than that does anything. It was also the project I learned
